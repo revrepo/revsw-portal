@@ -65,6 +65,8 @@ describe('Smoke', function () {
             var bruce = DataProvider.generateUser();
             if (user.role === 'Admin') {
               delete bruce.role;
+            } else {
+              bruce.company = [user.account.companyName];
             }
             Portal.addUserPage.createUser(bruce);
             // Check App alert notifications
