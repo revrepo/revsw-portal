@@ -109,6 +109,10 @@ var SecuritySettings = {
     return element(by.id(this.locators.otpTxtIn.id));
   },
 
+  clearOTPTxtIn: function () {
+    return this.getOTPTxtIn().clear();
+  },
+
   /**
 * ### SecuritySettings.getSetUpTwoFactorAuthBtn()
 *
