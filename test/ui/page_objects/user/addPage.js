@@ -212,7 +212,7 @@ var AddUser = {
     return this.clickCreateUser().then(function () {
       return Alerts.waitToDisplay(60000).then(function () {
         return Alerts.getFirst().getText().then(function (text) {
-          if (text === Constants.user.MSG_SUCCESS_ADD) {
+          if (text === Constants.alertMessages.users.MSG_SUCCESS_ADD) {
             return UsersHelper.completeInvitation(user.email).then(function () {
               return true;
             });
