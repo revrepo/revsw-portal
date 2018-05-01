@@ -68,8 +68,8 @@ describe('Workflow', function () {
             Portal.addUserPage.clickCreateUser();
           });
 
-          it('should successfully send an invitation email '
-            + 'to a newly created user', function (done) {
+          it('should successfully send an invitation email ' +
+            'to a newly created user', function (done) {
               Mailinator
                 .getInvitationURL(invitedUser.email)
                 .then(function (url) {
@@ -78,8 +78,8 @@ describe('Workflow', function () {
                 });
             });
 
-          it('should successfully set a password through the invitation link '
-            + ' and login to the portal', function (done) {
+          it('should successfully set a password through the invitation link ' +
+            ' and login to the portal', function (done) {
               Mailinator
                 .getInvitationURL(invitedUser.email)
                 .then(function (url) {
