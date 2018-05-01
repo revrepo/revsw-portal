@@ -60,6 +60,13 @@ describe('Negative', function () {
           var tom = DataProvider.generateUser();
           var jerry = DataProvider.generateUser();
           jerry.email = tom.email;
+          if (user.role === 'Admin') {
+            delete jerry.role;
+            delete tom.role;
+          } else {
+            jerry.company = [user.account.companyName];
+            tom.company = [user.account.companyName];
+          }
           Portal.userListPage.clickAddNewUser();
           Portal.addUserPage.createUser(tom);
           Portal.addUserPage.clickBackToList();

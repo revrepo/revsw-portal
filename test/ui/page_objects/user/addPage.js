@@ -21,6 +21,7 @@
 // Requiring `user form` component page object
 var UserForm = require('./form');
 var UsersHelper = require('./../../common/helpers/users');
+var Alerts = require('./../../page_objects/common/alerts');
 
 // This `Add User` Page Object abstracts all operations or actions that a common
 // user could do in the Add User page from the Portal app/site.
@@ -208,10 +209,11 @@ var AddUser = {
     }
     this.form.fill(user);
     return this.clickCreateUser().then(function () {
-      browser.sleep(5000);
-      return UsersHelper.completeInvitation(user.email).then(function () {
-        return true;
-      });
+      return Alerts.waitToDisplay(60000).then(function () {
+        return UsersHelper.completeInvitation(user.email).then(function () {
+          return true;
+        });
+      });      
     });    
   }
 };

@@ -47,6 +47,7 @@ describe('Negative: ', function () {
                         bret = DataProvider.generateUser();
                         Portal.helpers.nav.goToUsers();
                         Portal.userListPage.clickAddNewUser();
+                        delete bret.role;
                         Portal.addUserPage.createUser(bret);
                         Portal.signOut().then(function () {
                             Portal.signIn(bret);
@@ -85,6 +86,7 @@ describe('Negative: ', function () {
 
                 it('should check that Enable 2FA fails with incorrect OTP',
                     function () {
+                        Portal.alerts.getFirst().click();
                         Portal
                             .securitySettingsPage
                             .getASCIISecret().then(function (code) {
@@ -98,24 +100,32 @@ describe('Negative: ', function () {
                                     encoding: 'base32'
                                 });
 
-                                var incorrectOTP = oneTimePassword === 123456 ? 123457 : 123456;
-                                Portal
-                                    .securitySettingsPage
-                                    .setOTPTxtIn(incorrectOTP);
-                                Portal
-                                    .securitySettingsPage
-                                    .clickEnableBtn();
-
-                                var alert = Portal.alerts.getFirst();
-                                expect(alert.getText())
-                                    .toContain(Constants
-                                        .alertMessages
-                                        .users
-                                        .MSG_INCORRECT_OTP_2FA);
-                                Portal
-                                    .securitySettingsPage
-                                    .getOTPTxtIn()
-                                    .clear();
+                                var incorrectOTP = oneTimePassword === 123456 ?
+                                    [1, 2, 3, 4, 5, 7, 1] :
+                                    [1, 2, 3, 4, 5, 6, 1];
+                                Portal.securitySettingsPage.clearOTPTxtIn();
+                                for (var i = 0; i < incorrectOTP.length; i++) {
+                                    Portal
+                                        .securitySettingsPage
+                                        .setOTPTxtIn(incorrectOTP[i]);
+                                    browser.sleep(300);
+                                    if (incorrectOTP
+                                        .indexOf(incorrectOTP[i]) === incorrectOTP.length - 1) {
+                                        Portal
+                                            .securitySettingsPage
+                                            .clickEnableBtn();
+                                        var alert = Portal.alerts.getFirst();
+                                        expect(alert.getText())
+                                            .toContain(Constants
+                                                .alertMessages
+                                                .users
+                                                .MSG_INCORRECT_OTP_2FA);
+                                        Portal
+                                            .securitySettingsPage
+                                            .getOTPTxtIn()
+                                            .clear();
+                                    }
+                                }
                             });
                     });
             });
