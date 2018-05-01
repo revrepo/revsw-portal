@@ -48,6 +48,11 @@ describe('Functional', function () {
                         bret = DataProvider.generateUser();
                         Portal.helpers.nav.goToUsers();
                         Portal.userListPage.clickAddNewUser();
+                        if (user.role === 'Admin') {
+                            delete bret.role;
+                        } else {
+                            bret.company = [user.account.companyName];
+                        }
                         Portal.addUserPage.createUser(bret);
 
                         Portal.signOut().then(function () {
