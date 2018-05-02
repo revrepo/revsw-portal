@@ -75,21 +75,10 @@ describe('Negative', function () {
             expect(addBtn.isEnabled()).toBeFalsy();
           });
 
-        it('should not allow to update a user without role',
-          function () {
-            Portal.editUserPage.form.setRole('--- Select Role ---');
-            var addBtn = Portal.editUserPage.getUpdateUserBtn();
-            expect(addBtn.isEnabled()).toBeFalsy();
-          });
-
-        /* If we change role, the account input field resets. */
-        if (user.role === 'Reseller' || user.role === 'Rev Admin') {
-          it('should not allow to update a user without Account',
+        if (user.role !== 'Admin') {
+          it('should not allow to update a user without role',
             function () {
               Portal.editUserPage.form.setRole('--- Select Role ---');
-              Portal.editUserPage.form.setRole('user');
-              Portal.editUserPage.form.setRole('admin');
-              Portal.editUserPage.form.setRole('reseller');
               var addBtn = Portal.editUserPage.getUpdateUserBtn();
               expect(addBtn.isEnabled()).toBeFalsy();
             });

@@ -55,12 +55,13 @@ describe('Functional', function () {
             }
             Portal.helpers.nav.goToUsers();
             Portal.userListPage.clickAddNewUser();
-            Portal.addUserPage.createUser(bret);
-            john = bret;
-            var alert = Portal.alerts.getFirst();
-            expect(alert.getText())
-              .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
-            Portal.addUserPage.clickBackToList();
+            Portal.addUserPage.createUser(bret).then(function () {
+              john = bret;
+              var alert = Portal.alerts.getFirst();
+              expect(alert.getText())
+                .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
+              Portal.addUserPage.clickBackToList();
+            });
           });
 
         it('should be able to login with new user ', function (done) {

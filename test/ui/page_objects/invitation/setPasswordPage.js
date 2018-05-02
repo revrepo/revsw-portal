@@ -28,8 +28,7 @@ var Invitation = {
     },
     buttons: {
       send: {
-        css: 'button[type="submit"]',
-        text: 'Set Password'
+        css: 'button[type="submit"]'
       }
     }
   },
@@ -45,29 +44,31 @@ var Invitation = {
   setPass: function (value) {
     return this
       .getPassTxtIn()
-      .clear()
       .sendKeys(value);
   },
 
   setPassAgain: function (value) {
     return this
       .getPassAgainTxtIn()
-      .clear()
       .sendKeys(value);
   },
 
   getSetPassBtn: function () {
     return element(by
-      .cssContainingText(this.locators.buttons.send.css, this.locators.buttons.send.text));
+      .css(this.locators.buttons.send.css));
   },
 
   clickSetPassword: function () {
     return this
       .getSetPassBtn()
       .click();
+  },
+
+  setNewPassword: function (pass) {
+    this.setPass(pass);
+    this.setPassAgain(pass);
+    return this.clickSetPassword();
   }
-
-
 };
 
 module.exports = Invitation;

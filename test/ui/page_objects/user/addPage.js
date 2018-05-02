@@ -22,6 +22,7 @@
 var UserForm = require('./form');
 var UsersHelper = require('./../../common/helpers/users');
 var Alerts = require('./../../page_objects/common/alerts');
+var Constants = require('./../../page_objects/constants');
 
 // This `Add User` Page Object abstracts all operations or actions that a common
 // user could do in the Add User page from the Portal app/site.
@@ -210,11 +211,17 @@ var AddUser = {
     this.form.fill(user);
     return this.clickCreateUser().then(function () {
       return Alerts.waitToDisplay(60000).then(function () {
-        return UsersHelper.completeInvitation(user.email).then(function () {
-          return true;
+        return Alerts.getFirst().getText().then(function (text) {
+          if (text === Constants.alertMessages.users.MSG_SUCCESS_ADD) {
+            return UsersHelper.completeInvitation(user.email).then(function () {
+              return true;
+            });
+          } else {
+            return false;
+          }
         });
-      });      
-    });    
+      });
+    });
   }
 };
 

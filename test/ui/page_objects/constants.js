@@ -238,7 +238,9 @@ var Constants = {
       MSG_WRONG_USERNAME_PASSWORD: 'Wrong username or password',
       MSG_ENABLE_2FA: 'Two Factor Authentication (2FA) is enforced for your user account. ' +
       'Please follow instructions on the screen to enable 2FA. ' +
-      'After that you will be allowed to use the admin panel.'
+      'After that you will be allowed to use the admin panel.',
+      MSG_SUCCESS_SET_PASSWORD: 'The password has been successfully set, please login ' +
+      'using the new password'
     },
     groups: {
       MSG_SUCCESS_ADD: 'Successfully created new group',

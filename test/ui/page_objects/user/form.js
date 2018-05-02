@@ -794,8 +794,10 @@ var UserForm = {
     this.clearEmail();
     this.clearFirstName();
     this.clearLastName();
-    this.setRole('--- Select Role ---');
-    this.setGroup('--- Select Group ---');
+    if (user.role !== 'Admin') {
+      this.setRole('--- Select Role ---');
+      this.setGroup('--- Select Group ---');
+    }    
     // clear specific data for differen roles
     if (!!user && (user.role === 'revadmin' || user.role === 'reseller')) {
       // TODO: check work for 'revadmin' and 'reseller'
