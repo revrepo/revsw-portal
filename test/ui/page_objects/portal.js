@@ -349,7 +349,8 @@ var Portal = {
    *
    * @returns {Promise}
    */
-  signInNuubit: function (user) {
+  signInNuubit: function (user, introSkip) {
+    introSkip = introSkip === undefined ? true : false;
     var me = this;
     var promise = this.header
       .isPresent()
@@ -367,6 +368,18 @@ var Portal = {
           .signIn(user)
           .then(function () {
             me.session.setCurrentUser(user);
+            if (introSkip) {
+              // Check for intro
+              var until = protractor.ExpectedConditions;
+              // Wait up to 1 minute for login to finish
+              browser.wait(until.presenceOf(Portal.header.getHeaderBar()), 60000);
+              Portal.intro.getIntroContainer().isPresent().then(function (val) {
+                if (val) {
+                  Portal.intro.clickSkipBtn();
+                  browser.sleep(2000);
+                }
+              });
+            }
           });
       });
     return Promise.resolve(promise);

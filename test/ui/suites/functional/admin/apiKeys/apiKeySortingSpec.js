@@ -22,7 +22,7 @@ var DataProvider = require('./../../../../common/providers/data');
 var Constants = require('./../../../../page_objects/constants');
 var tr = require('timeago-reverse');
 
-describe('Smoke', function () {
+describe('Functional', function () {
 
   describe('API Keys Sorting', function () {
 
@@ -84,6 +84,8 @@ describe('Smoke', function () {
         var val2 = Portal.admin.apiKeys.listPage.table.getFirstRow().getLastUpdate()
           .then(function (text2) {
             val1.then(function(text1) {
+              console.log(text1);
+              console.log(text2);
               expect(tr.parse(text2)).toBeLessThan(tr.parse(text1));
             });
           });        
