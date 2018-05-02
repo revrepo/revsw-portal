@@ -24,7 +24,7 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
     var revAdmin = config.get('portal.users.revAdmin');
     var users = [];
-    var roles = ['admin', 'user', 'reseller'];
+    var roles = ['admin', 'reseller'];
     var vendors = Constants.VENDORS;
     var totalUsers = roles.length * vendors.length * 2; // total users including RO
 
@@ -41,35 +41,36 @@ describe('Functional', function () {
 
         vendors.forEach(function (vendor) {
             roles.forEach(function (role) {
-                beforeAll(function (done) {
-                    /*
-                    * Create a user for each vendor, role and read only. 18 Users total.
-                    */
-                    console.log('       > Creating user with role ' +
-                        role + ' and vendor ' + vendor.NAME);
-                    var data = {
-                        role: role,
-                        company: vendor.ACCOUNT
-                    };
-                    var bruce = DataProvider.generateUser(data, true);
-                    var bruceRO = DataProvider.generateUser(data, true);
-                    bruceRO.accessControls = [Constants.user.accessControls.READ_ONLY];
-                    Portal.addUserPage.createUser(bruce)
-                        .then(function () {
-                            return Portal.addUserPage.createUser(bruceRO);
-                        })
-                        .then(function () {
-                            users.push({
-                                user: bruce,
-                                vendor: vendor
+                [false, true].forEach(function (read) {
+                    beforeAll(function (done) {
+                        /*
+                        * Create a user for each vendor, role and read only.
+                        */
+                        console.log('       > Creating user with role ' +
+                            role + ' and vendor ' + vendor.NAME);
+                        var data = {
+                            role: role,
+                            company: vendor.ACCOUNT
+                        };
+                        var bruce = DataProvider.generateUser(data, true);
+                        bruce.company = [revAdmin.account.companyName];
+                        if (read) {
+                            console.log('       > Read only user!');
+                            bruce.permissions = {
+                                readOnly: true
+                            };
+                        }              
+                        Portal.addUserPage.createUser(bruce)
+                            .then(function () {
+                                Portal.alerts.getFirst().click();
+                                users.push({
+                                    user: bruce,
+                                    vendor: vendor
+                                });
+                                done();
                             });
-                            users.push({
-                                user: bruceRO,
-                                vendor: vendor
-                            });
-                            done();
-                        });
-                });
+                    });
+                });                
             });
         });
 

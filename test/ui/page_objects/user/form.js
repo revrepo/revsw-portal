@@ -770,6 +770,12 @@ var UserForm = {
     if (user.company !== undefined) {
       this.setCompany(user.company, user.role === 'reseller' ? true : undefined);
     }
+
+    if (user.permissions) {
+      for (var prop in user.permissions) {
+        this.permissions.setPermission(prop, user.permissions[prop]);
+      }
+    }
   },
     /**
    * ### UserForm.clear()
