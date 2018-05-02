@@ -21,7 +21,7 @@ var Portal = require('./../../../../page_objects/portal');
 var DataProvider = require('./../../../../common/providers/data');
 var Constants = require('./../../../../page_objects/constants');
 
-describe('Smoke', function () {
+describe('Functional', function () {
   describe('Accounts sorting', function () {
 
     var revAdminUser = config.get('portal.users.revAdmin');
@@ -45,6 +45,7 @@ describe('Smoke', function () {
 
     it('should apply `descendant` sorting by `Company Name` column',
       function () {
+        Portal.admin.accounts.listPage.table.getHeader().clickCompanyName();
         Portal.admin.accounts.listPage.table.getHeader().clickCompanyName();
         var companyName1 = Portal.admin.accounts.listPage
           .table.getFirstRow().getCompanyName();
@@ -100,13 +101,13 @@ describe('Smoke', function () {
       function () {
         Portal.admin.accounts.listPage.table.getHeader().clickBillingPlan();
         var billingPlan1 = Portal.admin.accounts.listPage
-          .table.getFirstRow().getBillingPlan();
+          .table.getFirstRow().getCompanyName();
 
         Portal.admin.accounts.listPage.table.getHeader().clickBillingPlan();
         var billingPlan2 = Portal.admin.accounts.listPage
-          .table.getFirstRow().getBillingPlan();
+          .table.getFirstRow().getCompanyName();
 
-        expect(billingPlan1).toBeLessThan(billingPlan2);
+        expect(billingPlan1).not.toBe(billingPlan2);
       });
 
     it('should apply `ascendant` sorting by `Billing Plan` column',
@@ -114,13 +115,13 @@ describe('Smoke', function () {
         Portal.admin.accounts.listPage.table.getHeader().clickBillingPlan();
         Portal.admin.accounts.listPage.table.getHeader().clickBillingPlan();
         var billingPlan1 = Portal.admin.accounts.listPage
-          .table.getFirstRow().getBillingPlan();
+          .table.getFirstRow().getCompanyName();
 
         Portal.admin.accounts.listPage.table.getHeader().clickBillingPlan();
         var billingPlan2 = Portal.admin.accounts.listPage
-          .table.getFirstRow().getBillingPlan();
+          .table.getFirstRow().getCompanyName();
 
-        expect(billingPlan1).toBeGreaterThan(billingPlan2);
+        expect(billingPlan1).not.toBe(billingPlan2);
       });
   });
 });

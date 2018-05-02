@@ -33,10 +33,10 @@ var headerLocators = {
     css: 'th:nth-of-type(2) a'
   },
   lastUpdate: {
-    css: 'th:nth-of-type(3) a'
+    css: 'th:nth-of-type(4) a'
   },
   active: {
-    css: 'td:nth-of-type(4)'
+    css: 'th:nth-of-type(3)'
   },
   actions: {
     css: 'th:nth-of-type(5)'
@@ -63,10 +63,10 @@ var rowLocators = {
     }
   },
   lastUpdate: {
-    css: 'td:nth-of-type(3)'
+    css: 'td:nth-of-type(4)'
   },
   active: {
-    css: 'td:nth-of-type(4)'
+    css: 'td:nth-of-type(3)'
   },
   actions: {
     css: 'td:nth-of-type(5)',
