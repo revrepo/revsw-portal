@@ -231,7 +231,7 @@
         <a ui-sref-active="active" ui-sref="index.billing.usage" class="side-menu-sub-item" ng-if="!userService.isUser() && userService.hasAccessTo('usage_reports')">
             <i class="sub-menu-icon fa fa-balance-scale"></i> Usage Report
           </a>
-        <a ui-sref-active="active" ui-sref="index.billing.company" class="side-menu-sub-item" ng-if="userService.isAdmin() && userService.hasAccessTo('account_profile')">
+        <a ui-sref-active="active" ui-sref="index.billing.company" class="side-menu-sub-item" ng-if="(userService.isAdmin() || userService.isReseller()) && userService.hasAccessTo('account_profile')">
             <i class="sub-menu-icon fa fa-gear"></i> Account Profile
           </a>
         <a ui-sref-active="active" ui-sref="index.billing.plans" class="side-menu-sub-item" ng-if="(userService.isAdmin() && userService.hasBillingPlan()) || userService.isRevadmin()">
