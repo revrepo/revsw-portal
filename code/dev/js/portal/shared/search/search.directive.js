@@ -149,8 +149,10 @@
                     item.searchBarText = item.companyName + ' (Edit Account)';
                     item.searchDisplayText = item.companyName;
                     item.searchAction = 'edit';
-                    if (User.hasAccessTo('accounts')) {
-                    results.push(item);
+                    if (User.isAdmin() && User.hasAccessTo('account_profile')) {
+                      results.push(item);
+                    } else if (User.hasAccessTo('accounts')) {
+                      results.push(item);
                     }
 
                     var companyCopy = angular.copy(item);
@@ -166,7 +168,7 @@
                     item.searchDisplayText = item.acc_name;
                     item.searchBarText = item.acc_name + ' (Billing Statements)';
                     item.searchAction = 'billing';
-                    if (User.hasAccessTo('billing_statements')) {
+                    if (User.hasAccessTo('billing_statements') && User.hasBillingPlan()) {
                     results.push(item);
                     }
                   }
@@ -278,7 +280,13 @@
                 break;
               case 'company':
                 if (item.searchAction === 'edit') {
-                  $location.path('companies/edit/' + item.id);
+                  console.log($localStorage.userMainAccount);
+                  console.log(item);
+                  if (item.id === $localStorage.userMainAccount.id) {
+                    $location.path('account');
+                  } else {
+                    $location.path('accounts/edit/' + item.id);
+                  }                  
                 } else if (item.searchAction === 'usage') {
                   selectAccount(item);
                   if ($location.path() === '/usage') {

@@ -53,7 +53,6 @@ describe('Functional', function () {
                             company: vendor.ACCOUNT
                         };
                         var bruce = DataProvider.generateUser(data, true);
-                        bruce.company = [revAdmin.account.companyName];
                         if (read) {
                             console.log('       > Read only user!');
                             bruce.permissions = {

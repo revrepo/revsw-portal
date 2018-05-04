@@ -846,6 +846,9 @@
         case 'billing_plan':
           returnState = 'index.billing.plans';
           break;
+        case 'account_profile':
+          returnState = 'index.billing.company';
+          break;
         default:
           returnState = null;
           break;
@@ -920,6 +923,9 @@
       }
       if (state.includes('index.billing.plans')) {
         return 'billing_plan';
+      }
+      if(state.includes('index.billing.company')) {
+        return 'account_profile';
       }
 
       return true;
