@@ -140,6 +140,9 @@
               },
               // @see http://api.highcharts.com/highcharts/plotOptions.areaspline.stacking
               stacking: 'normal'
+            },
+            column: {
+              maxPointWidth: 60
             }
           },
         };
