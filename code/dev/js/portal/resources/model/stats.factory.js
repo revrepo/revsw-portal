@@ -332,7 +332,12 @@
           report_type: 'cache_status',
           cache_type: 'secondary'
         }
-      }
+      },
+      edgeCacheByCType: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/edge_cache/content_type/:domainId',
+        isArray: true
+      },
     });
   }
 })();
