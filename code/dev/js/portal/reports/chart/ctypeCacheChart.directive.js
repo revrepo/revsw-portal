@@ -113,7 +113,8 @@
                   return $scope.traffic.series[0].data[this.value][0];
                 }
                 return '';
-              }
+              },
+              rotation: -45
             }
           },
           tooltip: {
