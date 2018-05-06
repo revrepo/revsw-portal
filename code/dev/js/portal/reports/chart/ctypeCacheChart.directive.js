@@ -110,6 +110,9 @@
             type: 'category',
             title: {
               text: 'Content Type'
+            },
+            labels: {
+              rotation: -45
             }
           },
           tooltip: {
