@@ -57,7 +57,7 @@
           if (hits_ + miss_ === 0) {
             return 0;
           }
-          return parseFloat((hits_ / (hits_ + miss_)) * 100).toFixed(2);
+          return Util.formatNumber((hits_ / (hits_ + miss_)) * 100, 2);
         }
 
         $scope.heading = 'Cache Hit Ratio For Top 20 Object Content Types';
@@ -124,10 +124,10 @@
                 return '<strong>'+this.points[0].key+'</strong><br>' +
                 '<span style="color:'+this.points[0].series.color+'">' +
                  this.points[0].series.name+'</span>: <b>' +
-                 this.points[0].point.y.toFixed(3)+'</b><br/>' +
+                 Util.formatNumber(this.points[0].point.y, 3) +'</b><br/>' +
                 '<span style="color:'+this.points[1].series.color+'">' +
                 this.points[1].series.name+'</span>: <b>' +
-                this.points[1].point.y.toFixed(3)+'</b><br/>' + 
+                Util.formatNumber(this.points[1].point.y, 3) +'</b><br/>' + 
                 '<span>Cache Hit Ratio</span>: <b>' + getCacheHitRatio(this.points) + '%</b><br/>';
               }
               
