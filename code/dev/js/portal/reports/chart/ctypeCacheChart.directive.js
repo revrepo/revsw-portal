@@ -107,14 +107,9 @@
             }
           },
           xAxis: {
-            labels: {
-              formatter: function() {
-                if ($scope.traffic.series[0].data[this.value]) {
-                  return $scope.traffic.series[0].data[this.value][0];
-                }
-                return '';
-              },
-              rotation: -45
+            type: 'category',
+            title: {
+              text: 'Content Type'
             }
           },
           tooltip: {
@@ -219,10 +214,15 @@
                 $scope.traffic = [];
               }
               if (data[0] && data[0].length > 0) {
-                data[0].forEach(function(item) {
-                  $scope.contentTypes.push(item.cType);
-                  series[0].data.push([item.cType, item.HIT]);
-                  series[1].data.push([item.cType, item.MISS]);
+                data[0].forEach(function(item) {     
+                  if ($scope.contentTypes.indexOf(item.cType) === -1) {
+                    $scope.contentTypes.push(item.cType);
+                  }             
+                  
+                  if (series[0].data.indexOf([item.cType, item.HIT]) === -1 ) {
+                    series[0].data.push([item.cType, item.HIT]);
+                    series[1].data.push([item.cType, item.MISS]);
+                  }                  
                 });
               }
               return $q.when(series);
@@ -232,6 +232,7 @@
               $scope.traffic = {
                 series: series
               };
+
             })
             .catch(function(err) {
               $scope.traffic = {
