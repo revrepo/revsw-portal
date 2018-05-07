@@ -18,6 +18,7 @@
     $scope.report = null;
     $scope.traffic = null;
     $scope.formatNumber = Util.formatNumber;
+    $scope.bytesToGB = Util.humanFileSizeInGB;
 
     $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
     $scope.popoverHelpHTML ={
@@ -293,11 +294,27 @@
         series: [{
           name: 'GBT',
           data: []
+        },
+        {
+          name: 'Optimized ImageEngine Traffic, GB',
+          data: []
+        },
+        {
+          name: 'Original ImageEngine Traffic, GB',
+          data: []
         }]
       };
       var labels = [];
       var series = [{
         name: 'GBT',
+        data: []
+      },
+      {
+        name: 'Optimized ImageEngine Traffic, GB',
+        data: []
+      },
+      {
+        name: 'Original ImageEngine Traffic, GB',
         data: []
       }];
       return Stats.usage_web_stats(q)
@@ -320,6 +337,16 @@
               labels.push(label);
 
               if (item.count) {
+                if (item.image_engine && item.image_engine.optimized_image_size_bytes > 0) {
+                  series[1].data.push(item.image_engine.optimized_image_size_bytes);         
+                } else {
+                  series[1].data.push(null);                
+                }
+                if (item.image_engine && item.image_engine.original_image_size_bytes > 0) {
+                  series[2].data.push(item.image_engine.original_image_size_bytes);         
+                } else {
+                  series[2].data.push(null);
+                }
                 series[0].data.push(item.sent_bytes);
               } else {
                 series[0].data.push(null);
