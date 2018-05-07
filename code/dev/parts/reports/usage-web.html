@@ -284,6 +284,43 @@
               </form>
 
             </div>
+
+            <div class="col-md-4">
+
+              <h4>ImageEngine Usage</h4>
+
+              <form class="form-horizontal">
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >Optimized Images</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">
+                      {{ formatNumber(report.image_engine ? report.image_engine.optimized_images_count : 0) }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >Original Traffic</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">
+                      {{ bytesToGB(report.image_engine ? report.image_engine.original_image_size_bytes : 0) }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >Optimized Traffic</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">
+                      {{ bytesToGB(report.image_engine ? report.image_engine.optimized_image_size_bytes: 0) }}
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
           </div>
 
           <div ng-if="showTraffic()">
@@ -358,7 +395,7 @@
                             {{domain}}
                           </h3>
 
-                          <div class="col-md-6">
+                          <div class="col-md-4">
 
                             <h4>Edge Cache Usage</h4>
 
@@ -382,7 +419,7 @@
 
                           </div>
 
-                          <div class="col-md-6">
+                          <div class="col-md-4">
 
                             <h4>HTTP/HTTPS Requests</h4>
 
@@ -398,6 +435,43 @@
                             </form>
 
                           </div>
+
+                          <div class="col-md-4">
+
+                              <h4>ImageEngine Usage</h4>
+                
+                              <form class="form-horizontal">
+                
+                                <div class="form-group">
+                                  <label class="col-sm-6 control-label" >Optimized Images</label>
+                                  <div class="col-sm-6">
+                                    <div class="form-control text-right">
+                                      {{ formatNumber(usage.image_engine ? usage.image_engine.optimized_images_count : 0) }}
+                                    </div>
+                                  </div>
+                                </div>
+                
+                                <div class="form-group">
+                                  <label class="col-sm-6 control-label" >Original Traffic</label>
+                                  <div class="col-sm-6">
+                                    <div class="form-control text-right">
+                                      {{ bytesToGB(usage.image_engine ? usage.image_engine.original_image_size_bytes : 0) }}
+                                    </div>
+                                  </div>
+                                </div>
+                
+                                <div class="form-group">
+                                  <label class="col-sm-6 control-label" >Optimized Traffic</label>
+                                  <div class="col-sm-6">
+                                    <div class="form-control text-right">
+                                      {{ bytesToGB(usage.image_engine ? usage.image_engine.optimized_image_size_bytes: 0) }}
+                                    </div>
+                                  </div>
+                                </div>
+                
+                              </form>
+                
+                            </div>
                         </div>
 
                         <hr>
