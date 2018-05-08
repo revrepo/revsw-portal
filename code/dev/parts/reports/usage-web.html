@@ -525,16 +525,26 @@
                 </thead>
                 <tbody>
                   <tr ng-repeat="account in report.accounts">
-                    <td><a ng-click="onAccountClick('{{account.acc_id}}')">{{account.acc_name}}</a></td>
+                    <td>
+                      <a ng-click="onAccountClick('{{account.acc_id}}')">{{account.acc_name}}</a>
+                    </td>
                     <td class="text-right">{{account.count}}</td>
-                    <td class="text-right">{{account.sent_bytes}}</td>
-                    <td class="text-right">{{account.received_bytes}}</td>
-                    <td class="text-right">{{account.billable_sent_bps}}</td>
-                    <td class="text-right">{{account.billable_received_bps}}</td>
+                    <td class="text-right">
+                      <span class="GBappend">{{account.sent_bytes.replace('GB', '')}}</span>
+                    </td>
+                    <td class="text-right">
+                      <span class="GBappend">{{account.received_bytes.replace('GB', '')}}</span>
+                    </td>
+                    <td class="text-right">
+                      <span class="Mbpsappend">{{account.billable_sent_bps.replace('Mbps', '')}}</span>
+                    </td>
+                    <td class="text-right">
+                      <span class="Mbpsappend">{{account.billable_received_bps.replace('Mbps', '')}}</span>
+                    </td>
                     <td class="text-right">{{account.active_domains || 0}}</td>
                     <td class="text-right">{{account.active_apps || 0}}</td>
-                  </tr>
-                </tbody>
+                    </tr>
+                    </tbody>
               </table>
 
             </div>
