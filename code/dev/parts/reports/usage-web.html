@@ -54,6 +54,10 @@
                       Update Report
                     </button>
                   </div>
+                  <div class="form-group" ng-if="auth.isRevadmin()">
+                    <input class="form-control" type="checkbox" ng-click="aggReports()" /> 
+                    Aggregated Report For Reseller Accounts
+                  </div>
 
                 </form>
               </div>
@@ -355,10 +359,10 @@
               <hr>
               <h4 class="list-title">Domains Usage</h4>
 
-              <table class="table table-stripped table-condensed">
+              <table dt-options="domainDTOptions" dt-column-defs="domainColDefs" class="table table-stripped table-condensed">
                 <thead>
                   <tr>
-                    <th style="width:30px;"></th>
+                    <th style="width:30px;">&nbsp;</th>
                     <th style="width:25%;">Domain</th>
                     <th class="text-right">Requests</th>
                     <th class="text-right">Traffic Sent</th>
@@ -373,6 +377,7 @@
                       <a ng-if="usage.count !== '0'" role="button" data-toggle="collapse" data-target="#domain-{{$index}}" >
                         <i class="glyphicon glyphicon-plus-sign"></i> <!-- glyphicon-remove-circle  glyphicon-fire -->
                       </a>
+                      <span ng-if="usage.count === '0'">&nbsp;</span>                 
                     </td>
                     <td>
                       <span ng-if="usage.deleted" style="color:darkred;">
@@ -387,7 +392,7 @@
                     <td class="text-right">{{usage.billable_received_bps}}</td>
                   </tr>
                   <tr ng-repeat-end id="domain-{{$index}}" class="panel-collapse collapse" role="tabpanel" name="{{domain}}">
-                    <td colspan="7" style="background-color: #d0d0e0; padding-left: 25px;">
+                    <td colspan="7" style="width: 100%;background-color: #d0d0e0; padding-left: 25px;">
                       <div class="panel-body" style="padding: 10px; padding-bottom: 0;">
 
                         <div class="row">
