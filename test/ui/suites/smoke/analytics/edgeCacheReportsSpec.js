@@ -73,7 +73,8 @@ describe('Smoke', function () {
         expect(Portal.edgeCachePage.getChartTitle()).toContain(titleChart);
     });
 
-    it('should display the default "Cache Hit Ratio For Top 20 Object Content Types" report with empty data',
+    it('should display the default ' +
+    '"Cache Hit Ratio For Top 20 Object Content Types" report with empty data',
       function () {
         var titleChart = Constants.edgeCache.CACHE_HIT_RATIO_BY_CONTENT_TYPE;
         expect(Portal.edgeCachePage.getSelectedDomain()).toEqual(noDomain);

@@ -23,7 +23,7 @@ var Constants = require('./../../../../page_objects/constants');
 
 describe('Functional', function () {
   var user = config.get('portal.users.revAdmin');
-  describe('Usage Report Traffic', function () {
+  describe('Usage Report Image Engine', function () {
     describe('With user: ' + user.role, function () {
       /* Too much camel_case */
       /* jshint ignore:start */
@@ -87,72 +87,27 @@ describe('Functional', function () {
         return target.replace(new RegExp(search, 'g'), replacement);
       };
 
-      it('should display correct amount of total Requests', function () {
-        Portal.billing.usageReportPage.getTotalTrafficForm().getText().then(function (text) {
+      it('should display correct amount of Optimized Images', function () {
+        Portal.billing.usageReportPage.getFormByName('ImageEngine Usage').getText().then(function (text) {
           var total = text.replaceAll('\'', '').split('\n')[2];
           date = new Date();
-          // expect approx
-          console.log(avgTrafficPerDay);
-          console.log(date.getDate());
           expect(total - (avgTrafficPerDay * 30)).toBeLessThan(100);
         });
       });
-      it('should display correct amount of traffic sent', function () {
-        Portal.billing.usageReportPage.getTotalTrafficForm().getText().then(function (text) {
-          var total = text.split('\n')[4].replace(' GB', '');
+
+      it('should display correct amount of Original Traffic', function () {
+        Portal.billing.usageReportPage.getFormByName('ImageEngine Usage').getText().then(function (text) {
+          var total = text.replaceAll('\'', '').split('\n')[4].replace(' GB', '');;
           date = new Date();
-          // expect approx
-          expect(total - (avgSentBytesPerDay * date.getDate())).toBeLessThan(0.1);
+          expect(total - (avgTrafficPerDay * 30)).toBeLessThan(100);
         });
       });
-      it('should display correct amount of traffic received', function () {
-        Portal.billing.usageReportPage.getTotalTrafficForm().getText().then(function (text) {
-          var total = text.split('\n')[6].replace(' GB', '');
+
+      it('should display correct amount of Optimized Traffic', function () {
+        Portal.billing.usageReportPage.getFormByName('ImageEngine Usage').getText().then(function (text) {
+          var total = text.replaceAll('\'', '').split('\n')[6].replace(' GB', '');;
           date = new Date();
-          // expect approx
-          expect(total - (avgRecvBytesPerDay * date.getDate())).toBeLessThan(0.1);
-        });
-      });
-      it('should display correct amount of BW sent', function () {
-        Portal.billing.usageReportPage.getTotalTrafficForm().getText().then(function (text) {
-          var total = text.split('\n')[8].replace(' Mbps', '');
-          // expect approx
-          expect(total - sentBps).toBeLessThan(0.1);
-        });
-      });
-      it('should display correct amount of BW received', function () {
-        Portal.billing.usageReportPage.getTotalTrafficForm().getText().then(function (text) {
-          var total = text.split('\n')[10].replace(' Mbps', '');
-          // expect approx
-          expect(total - recvBps).toBeLessThan(0.1);
-        });
-      });
-      it('should display correct amount of Cache HIT', function () {
-        Portal.billing.usageReportPage.getEdgeCacheUsageForm().getText().then(function (text) {
-          var total = text.split('\n')[2].replaceAll('\'', '');
-          // expect approx
-          expect(total - (cacheHits.HIT  * 30)).toBeLessThan(100);
-        });
-      });
-      it('should display correct amount of Cache MISS', function () {
-        Portal.billing.usageReportPage.getEdgeCacheUsageForm().getText().then(function (text) {
-          var total = text.split('\n')[4].replaceAll('\'', '');
-          // expect approx
-          expect(total - (cacheHits.MISS * 30)).toBeLessThan(100);
-        });
-      });
-      it('should display correct amount of HTTP requests', function () {
-        Portal.billing.usageReportPage.getHTTPHTTPSRequestsForm().getText().then(function (text) {
-          var total = text.split('\n')[2].replaceAll('\'', '');
-          // expect approx
-          expect(total - (portHits['80'] * 30)).toBeLessThan(100);
-        });
-      });
-      it('should display correct amount of HTTPS requests', function () {
-        Portal.billing.usageReportPage.getHTTPHTTPSRequestsForm().getText().then(function (text) {
-          var total = text.split('\n')[4].replaceAll('\'', '');
-          // expect approx
-          expect(total - (portHits['443'] * 30)).toBeLessThan(100);
+          expect(total - (avgTrafficPerDay * 30)).toBeLessThan(100);
         });
       });
       /* jshint ignore:end */
