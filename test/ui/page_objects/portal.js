@@ -56,6 +56,7 @@ var PurgeCacheBasicPage = require('./domain/purgeCacheBasicPage');
 var PurgeCacheAdvancedPage = require('./domain/purgeCacheAdvancedPage');
 var ProxyTrafficPage = require('./analytics/proxyTrafficPage');
 var TopReportsPage = require('./analytics/topReportsPage');
+var EdgeCachePage = require('./analytics/edgeCachePage');
 var TopObjectsPage = require('./analytics/topObjectsPage');
 var FBTReportsPage = require('./analytics/fbtReportsPage');
 var TrafficHeatmapsPage = require('./analytics/trafficHeatmapsPage');
@@ -190,6 +191,7 @@ var Portal = {
   proxyTrafficPage: ProxyTrafficPage,
   imageOptimizationPage: ImageOptimizationPage,
   topReportsPage: TopReportsPage,
+  edgeCachePage: EdgeCachePage,
   topObjectsPage: TopObjectsPage,
   fbtReportsPage: FBTReportsPage,
   trafficHeatmapsPage: TrafficHeatmapsPage,
