@@ -229,6 +229,13 @@ var NavHelper = {
     return SideBar.select(MenuItems.WEB_ANALYTICS.IMAGE_OPTIMIZATION);
   },
 
+    /**
+   * Navigates to Web Analytics > Edge Cache     
+   */
+  goToEdgeCache: function () {
+    return SideBar.select(MenuItems.WEB_ANALYTICS.EDGE_CACHE);
+  },
+
 
   /**
    * Navigates to Web Analytics > Traffic Heatmaps

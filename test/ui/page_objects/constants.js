@@ -169,6 +169,14 @@ var Constants = {
     QUIC_RATIO: 'QUIC/Non-QUIC Ratio',
     HTTP2_RATIO: 'H2/H2C/Non-HTTP2 Ratio'
   },
+  edgeCache: {
+    TITLE: 'Edge Cache Reports',
+    EDGE_CACHE_EFFICIENCY_HITS: 'Edge Cache Efficiency Hits',
+    EDGE_CACHE_HIT_MISS_RATIO: 'Edge Cache Hit/Miss Ratio',
+    SECONDARY_CACHE_EFFICIENCY_HITS: 'Secondary Cache Efficiency Hits',
+    SECONDARY_CACHE_HIT_MISS_RATIO: 'Secondary Cache Hit/Miss Ratio',
+    CACHE_HIT_RATIO_BY_CONTENT_TYPE: 'Cache Hit Ratio For Top 20 Object Content Types'
+  },
   topObjects: {
     TITLE: 'Top Objects Reports',
     TOP_MOST_REQUESTED_OBJECTS: 'Top Most Requested Objects',
