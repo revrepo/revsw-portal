@@ -59,6 +59,12 @@
         url: $config.API_URL + '/accounts/:id/subscription_summary',
         method: 'GET',
         isArray: false
+      },
+
+      getResellerAccounts: {
+        url: $config.API_URL + '/accounts/reseller_accounts',
+        method: 'GET',
+        isArray: true
       }
       }
     );

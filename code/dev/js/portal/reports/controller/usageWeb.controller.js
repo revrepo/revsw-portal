@@ -6,8 +6,8 @@
     .controller('UsageWebController', UsageWebController);
 
   /*@ngInject*/
-  function UsageWebController($scope, $q, User, DTOptionsBuilder, DTColumnDefBuilder, AlertService, Stats, Util, Locations, $uibModal, $config, $sce) {
-
+  function UsageWebController($scope, $q, User, DTOptionsBuilder, DTColumnDefBuilder, AlertService, Stats, Util, Locations, $uibModal, $config, $sce, Companies) {
+    $scope.auth = User;
     $scope._loading = true;
     $scope.accounts = [];
     $scope.selected = {
@@ -19,6 +19,8 @@
     $scope.traffic = null;
     $scope.formatNumber = Util.formatNumber;
     $scope.bytesToGB = Util.humanFileSizeInGB;
+
+    $scope.aggReportForReseller = false;
 
     $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
     $scope.popoverHelpHTML ={
@@ -46,6 +48,19 @@
     }, {
       targets: [2, 3, 4, 5],
       orderable: true
+    }];
+
+    $scope.domainDTOptions = DTOptionsBuilder.newOptions()
+      .withPaginationType('full_numbers')
+      .withDisplayLength(pageLength)
+      .withBootstrap()
+      .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>')
+      .withOption('order', [
+        [1, 'desc']
+      ]);
+
+    $scope.domainColDefs = [{
+      targets: [0, 6]
     }];
     var traffic_total_ = 0;
     var info_ = null;
@@ -120,7 +135,8 @@
       },
       plotOptions: {
         series: {
-          pointWidth: 20 //width of the column bars irrespective of the chart size
+          pointPadding: 0,
+          groupPadding: 0.1       
         }
       }
     };
@@ -262,6 +278,11 @@
         from: from,
         to: to
       };
+
+      if ($scope.aggReportForReseller) {
+        q.agg = true;
+      }
+
       return Stats.usage_web(q)
         .$promise
         .then(function(data) {
@@ -290,6 +311,11 @@
         from_timestamp: from,
         to_timestamp: to
       };
+
+      if ($scope.aggReportForReseller) {
+        q.agg = true;
+      }
+
       $scope.traffic = {
         series: [{
           name: 'GBT',
@@ -487,5 +513,35 @@
         }
       });
     };
-  }
+
+    $scope.aggReports = function () {
+      $scope._loading = true;
+      if (!$scope.aggReportForReseller) {
+        $scope.aggReportForReseller = true;
+        $scope.aggAccounts = [];
+        $scope.fullAccounts = $scope.accounts;
+        Companies.getResellerAccounts().$promise.then(function (data) {
+          data = _.map(data, function (item) {
+            return {
+              acc_name: item.companyName,
+              acc_id: item.id,
+              plan_id: item.billing_plan,// TODO:delete property name
+              billing_plan: item.billing_plan,
+              vendor_profile: item.vendor_profile
+            };
+          });
+          $scope.aggAccounts = data;
+          $scope.accounts = data;
+        });
+
+        $scope._loading = false;
+        return;
+      } else {
+        $scope.aggReportForReseller = false;
+        $scope.accounts = $scope.fullAccounts;
+        $scope._loading = false;
+        return;
+      }
+  };
+}
 })();
