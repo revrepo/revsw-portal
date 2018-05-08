@@ -120,7 +120,8 @@
       },
       plotOptions: {
         series: {
-          pointWidth: 20 //width of the column bars irrespective of the chart size
+          pointPadding: 0,
+          groupPadding: 0.1       
         }
       }
     };
