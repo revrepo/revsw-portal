@@ -39,12 +39,28 @@ var KeyTableRow = function (rowElem, locators) {
     return this.rowElem.element(by.css(this.locators.lastUpdate.css));
   };
 
+  this.getLastUsedAtCell = function () {
+    return this.rowElem.element(by.css(this.locators.lastUsedAt.css));
+  };
+
+  this.getLastUsedFromCell = function () {
+    return this.rowElem.element(by.css(this.locators.lastUsedFrom.css));
+  };
+
   this.getAccountCell = function () {
     return this.rowElem.element(by.css(this.locators.account.css));
   };
 
   this.getAccount = function () {
     return this.getAccountCell().getText();
+  };
+
+  this.getLastUsedAt = function () {
+    return this.getLastUsedAtCell().getText();
+  };
+
+  this.getLastUsedFrom = function () {
+    return this.getLastUsedFromCell().getText();
   };
 
   this.getName = function () {
