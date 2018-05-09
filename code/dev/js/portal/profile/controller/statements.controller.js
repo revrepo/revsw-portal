@@ -68,18 +68,23 @@
           AlertService.danger(err);
         })
         .finally(function() {
+          $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef([1]).withOption('type', 'date')
+          ];
           $scope.transactionsDtOptions = DTOptionsBuilder.newOptions()
             .withPaginationType('full_numbers')
             .withDisplayLength(pageLength)
             .withBootstrap()
             .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>')
-            .withOption('paging', ($scope.transactions.length > pageLength));
+            .withOption('paging', ($scope.transactions.length > pageLength))
+            .withOption('order', [1, 'desc']);
           $scope.statementsDtOptions = DTOptionsBuilder.newOptions()
             .withPaginationType('full_numbers')
             .withDisplayLength(pageLength)
             .withBootstrap()
             .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>')
-            .withOption('paging', ($scope.statements.length > pageLength));
+            .withOption('paging', ($scope.statements.length > pageLength))
+            .withOption('order', [1, 'desc']);
           $scope._loading = false;
         });
 

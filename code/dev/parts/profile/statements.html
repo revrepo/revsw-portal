@@ -63,7 +63,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="pull-left">
-                                <h2>Transactions</h2>
+                                <h2>Transactions <small>(Last 200 Records)</small></h2>
                             </div>
                         </div>
                     </div>
@@ -80,6 +80,7 @@
                            dt-options="transactionsDtOptions"
                            dt-instance="dtInstanceTransactions"
                            class="table order-column table-striped"
+                           dt-column-defs="dtColumnDefs"
                            ng-if="!_loading && !_error">
                         <thead>
 
@@ -112,7 +113,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="pull-left">
-                                <h2>Statements</h2>
+                                <h2>Statements <small>(Last 200 Records)</small></h2>
                             </div>
                         </div>
                     </div>
@@ -125,7 +126,7 @@
                     <div class="alert alert-danger" ng-if="!_loading && _error">
                         {{_error.message}}
                     </div>
-                    <table datatable="ng" dt-options="statementsDtOptions" class="table order-column table-striped" ng-if="!_loading && !_error">
+                    <table datatable="ng" dt-options="statementsDtOptions" dt-column-defs="dtColumnDefs" class="table order-column table-striped" ng-if="!_loading && !_error">
                         <thead>
 
                         <tr>
