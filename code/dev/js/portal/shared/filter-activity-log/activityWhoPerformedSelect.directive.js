@@ -10,6 +10,9 @@
         // NOTE: list will updated
         $timeout(ActivityWhoPerformedListService.init, 300);
       });
+      $rootScope.$on('clear-all', function(event, args) {
+        ActivityWhoPerformedListService.clear();
+      });
     });
 
   function ActivityWhoPerformedListService($q, DomainsConfig, Companies, Users, User, Apps, DashboardSrv, ApiKeys, DNSZones) {
@@ -17,7 +20,7 @@
     var service = this;
     this.init = function() {
       var def = $q.defer();
-      service.data.lenght = 0;
+      service.data.length = 0;
       service.data.push({ id: null, name: 'All Users and All API Keys', userType: 'all' });
       if (!User.isAuthed()) {
         return $q.when(service.data);
@@ -43,7 +46,8 @@
     };
 
     this.clear = function() {
-      this.data.lenght = 0;
+      this.data.length = 0;
+      this.data = [];
       return $q.when([]);
     };
 

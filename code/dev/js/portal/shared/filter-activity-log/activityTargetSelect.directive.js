@@ -8,16 +8,19 @@
     .run( /*ngInject*/ function($timeout, $rootScope, ActivityTargetListService) {
       $rootScope.$on('update:searchData', function() {
         // NOTE: list will update
-        $timeout(ActivityTargetListService.init, 300);
+        $timeout(ActivityTargetListService.init, 300);        
+      });
+      $rootScope.$on('clear-all', function(event, args) {
+        ActivityTargetListService.clear();
       });
     });
 
   function ActivityTargetListService($q, DomainsConfig, Companies, Users, User, Apps, DashboardSrv, ApiKeys, DNSZones) {
     'ngInject';
-    var service = this;
+    var service = this;  
     this.init = function() {
       var def = $q.defer();
-      service.data.lenght = 0;
+      service.data.length = 0;
       service.data.push({ id: null, name: 'All Activity Targets', targetType: null });
 
       if (!User.isAuthed()) {
@@ -77,7 +80,8 @@
     };
 
     this.clear = function() {
-      this.data.lenght = 0;
+      this.data.length = 0;
+      this.data = [];
       return $q.when([]);
     };
 

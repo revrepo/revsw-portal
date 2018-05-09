@@ -6,7 +6,7 @@
     .factory('User', User);
 
   /*@ngInject*/
-  function User($localStorage, $http, $config, $q, DomainsConfig, $auth, Groups, $state, AlertService, Companies) {
+  function User($localStorage, $http, $config, $q, DomainsConfig, $auth, Groups, $state, AlertService, Companies, $rootScope) {
 
     /** 
      * Polyfill for String.includes()
@@ -70,6 +70,9 @@
      * Clear all details from localstorage
      */
     function clearAll() {
+      // Broadcasting a `clear-all` message so all services can start a clean-up process
+      // This is used for logout.
+      $rootScope.$broadcast('clear-all');
       if (!$localStorage || $localStorage.intro === undefined) {
         return;
       }
