@@ -122,10 +122,10 @@
                 return '<strong>'+this.points[0].key+'</strong><br>' +
                 '<span style="color:'+this.points[0].series.color+'">' +
                  this.points[0].series.name+'</span>: <b>' +
-                 Util.formatNumber(this.points[0].point.y, 3) +'</b><br/>' +
+                 Util.formatNumber(this.points[0].point.y) +'</b><br/>' +
                 '<span style="color:'+this.points[1].series.color+'">' +
                 this.points[1].series.name+'</span>: <b>' +
-                Util.formatNumber(this.points[1].point.y, 3) +'</b><br/>' + 
+                Util.formatNumber(this.points[1].point.y) +'</b><br/>' + 
                 '<span>Cache Hit Ratio</span>: <b>' + getCacheHitRatio(this.points) + '%</b><br/>';
               }
               
