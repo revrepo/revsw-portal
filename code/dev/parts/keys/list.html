@@ -69,6 +69,14 @@
                     <a href="" ng-click="order('updated_at')">Last Update</a>
                     <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
                   </th>
+                  <th>
+                    <a href="" ng-click="order('last_used_at')">Last Used</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'last_used_at'" ng-class="{reverse: filter.reverse}"></span>
+                  </th>
+                  <th>
+                    <a href="" ng-click="order('last_used_from')">Last Used From</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'last_used_from'" ng-class="{reverse: filter.reverse}"></span>
+                  </th>
                   <!--<th class="thin">-->
                   <!--<a href="" ng-click="order('read_only_status')">Read Only</a>-->
                   <!--<span class="sortorder" ng-show="filter.predicate === 'read_only_status'" ng-class="{reverse: filter.read_only_status}"></span>-->
@@ -102,6 +110,8 @@
                   </td>
                   <td><i class="glyphicon {{ item.active ? 'glyphicon-ok-sign text-success' : 'glyphicon-remove text-danger' }}" uib-tooltip="{{ item.active ? 'API Key is active' : 'API Key is inactive' }}"></i></td>
                   <td>{{ getRelativeDate(item.updated_at) }}</td>
+                  <td>{{ item.last_used_at ? getRelativeDate(item.last_used_at) : 'Never' }}</td>
+                  <td>{{ item.last_used_from }}</td>
                   <!--<td>-->
                   <!--<i class="glyphicon pointer" uib-tooltip="Toggle active status" ng-hide="item.loading" ng-click="toggleProperty(item, 'read_only_status')" ng-class="item.read_only_status && 'glyphicon-check' || 'glyphicon-unchecked'"></i>-->
                   <!--</td>-->
