@@ -279,6 +279,12 @@
         params: {}
       },
 
+      usage_report_export_csv: {
+        method: 'GET',
+        url: $config.API_URL + '/usage_reports/export_csv',
+        params: {}
+      },
+
       dns_stats_usage: {
         isArray: true,
         method: 'GET',

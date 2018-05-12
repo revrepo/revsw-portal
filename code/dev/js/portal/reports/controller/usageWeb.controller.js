@@ -543,5 +543,39 @@
         return;
       }
   };
-}
+
+    $scope.exportCSV = function () {
+      $scope._loading = true;
+      var filter = {
+        account_id: $scope.selected.val.acc_id,
+        agg: $scope.aggReportForReseller
+      };
+      Stats.usage_report_export_csv(filter.account_id === '' ? null : filter)
+        .$promise.then(function (res) {
+          var data, filename, link;
+          var csv = res.csvContent.join('');
+          if (csv === null || csv.length === 0) {
+            $scope.alertService.danger('CSV Report is empty');
+            $scope._loading = false;
+          }
+
+          filename = 'csv_report_' + moment(res.created_at).format('MM/DD/YYYY') + '.csv';
+
+          if (!csv.match(/^data:text\/csv/i)) {
+            csv = 'data:text/csv;charset=utf-8,' + csv;
+          }
+          data = encodeURI(csv);
+
+          link = document.createElement('a');
+          link.setAttribute('href', data);
+          link.setAttribute('download', filename);
+        link.click();
+        $scope._loading = false;
+      })
+      .catch(function (err) {
+        $scope.alertService.danger(err);
+        $scope._loading = false;
+      });
+    };
+  }
 })();
