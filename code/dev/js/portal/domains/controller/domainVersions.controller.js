@@ -62,6 +62,15 @@
         .then(function(data) {
           $scope.currentData = data;
           $scope.obj.data = JSON.stringify(data, null, 2);
+          if ($scope.compareVersion) {
+            var objOne = angular.fromJson(angular.toJson($scope.currentData));
+            var objTwo = angular.fromJson(angular.toJson($scope.compareVersion));
+            var diff = ObjectDiff.diffOwnProperties(objOne, objTwo);
+            $scope.dataCompare = ObjectDiff.toJsonDiffView(diff);
+            if (diff.changed === 'equal') {
+              $scope.dataCompare = 'There are no differences between the configurations';
+            }
+          }
         })
         .catch(AlertService.danger)
         .finally(function() {
