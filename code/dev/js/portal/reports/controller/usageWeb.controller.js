@@ -569,8 +569,10 @@
           link = document.createElement('a');
           link.setAttribute('href', data);
           link.setAttribute('download', filename);
-        link.click();
-        $scope._loading = false;
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          $scope._loading = false;
       })
       .catch(function (err) {
         $scope.alertService.danger(err);

@@ -183,5 +183,9 @@ describe('Smoke: ', function () {
         });
       });
 
+      it('should display `Download CSV` Button', function() {
+        expect(Portal.billing.usageReportPage.getDownloadCSVBtn().isDisplayed()).toBeTruthy();
+      });
+
   });
 });

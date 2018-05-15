@@ -57,6 +57,10 @@ var UsageReport = {
       },
       billingZonesDetails: {
         css: '#billingZonesDetails.btn-billing-zones-details'
+      },
+      downloadCSV: {
+        css: '.btn.btn-primary',
+        text:'Download CSV'
       }
     },
     inputs: {
@@ -179,6 +183,16 @@ var UsageReport = {
    */
   getCompanySearchTxt: function () {
     return element(by.model(this.locators.inputs.companySearch.model));
+  },
+
+  getDownloadCSVBtn: function () {
+    return element(by.cssContainingText(this.locators.buttons.downloadCSV.css,
+      this.locators.buttons.downloadCSV.text));
+  },
+
+  clickDownloadCSV: function () {
+    return this.getDownloadCSVBtn()
+      .click();
   },
 
   /**
