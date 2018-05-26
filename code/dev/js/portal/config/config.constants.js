@@ -435,6 +435,14 @@
         'and we would like to run for you a quick introduction tour. ',
         'Please note that you have restricted permissions to the portal, ',
         'you will be introduced only to unrestricted resources.'
+      ],
+      API_REQUEST_THROTTLING_MESSAGE: [
+        'It looks like your customer portal activity is ',
+        'generating too many requests to our API backend. ',
+        'Please try the operation again, ',
+        'and if you will continue receiving the same rate ',
+        'limiting error please contact our support team using ',
+        '“Help” button in bottom right corner of the page.'
       ]  
     });
 
