@@ -322,7 +322,7 @@
           data: []
         },
         {
-          name: 'Optimized ImageEngine Traffic, GB',
+          name: 'Optimized ImageEngine Traffic (Smart Bytes), GB',
           data: []
         },
         {
@@ -336,7 +336,7 @@
         data: []
       },
       {
-        name: 'Optimized ImageEngine Traffic, GB',
+        name: 'Optimized ImageEngine Traffic (Smart Bytes), GB',
         data: []
       },
       {
