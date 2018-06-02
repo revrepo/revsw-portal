@@ -1,0 +1,64 @@
+<div class="panel panel-default" ng-if="model.rule_type">
+    <div class="panel-heading">
+        <label>Rule-Specific Configurations</label>
+    </div>
+    <div id="rule_spike" ng-if="model.rule_type === 'spike'">
+        <div class="panel-body">
+            <div class="form-group" ng-class="{ 'has-error': editForm.spikeDirection.$invalid && editForm.spikeDirection.$dirty }">
+                <label for="spikeDirection" class="col-sm-2 control-label">Spike Direction *</label>
+                <div class="col-sm-10">
+                    <select class="form-control inline-block" id="destination_type" name="spikeDirection" ng-model="model.rule_config.spike_direction"
+                        ng-disabled="_loading" ng-options="key as value for (key,value) in spikeDirections" required>
+                        <option value="">--- Select Spike Direction ---</option>
+                    </select>
+                    <label for="spikeDirection" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select the direction of the spike event, if set to 'up', when requests spike up, the alert will be triggred.">
+                        <i class="fa fa-question-circle"></i>
+                    </label>
+                    <div class="error-messages" ng-messages="editForm.spikeDirection.$error" role="alert" ng-messages-multiple>
+                        <div ng-messages-include="parts/shared/error-messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Destination Host -->
+            <div class="form-group" ng-class="{ 'has-error': editForm.spikeAmount.$invalid && editForm.spikeAmount.$dirty }">
+                <label for="spikeAmount" class="col-sm-2 control-label">Spike Amount *</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control inline-block" id="Host" name="spikeAmount" placeholder="Spike Amount" ng-model="model.rule_config.spike_amount"
+                        ng-maxlength="150" ng-minlength="1" ng-disabled="_loading" required>
+                    <label for="spikeAmount" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Host name for FTP, SFTP and ElasticSearch destinations, S3 bucket name for S3 destination">
+                        <i class="fa fa-question-circle"></i>
+                    </label>
+                    <div class="error-messages" ng-messages="editForm.spikeAmount.$error" role="alert" ng-messages-multiple>
+                        <div ng-messages-include="parts/shared/error-messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': editForm.timeframe.$invalid && editForm.timeframe.$dirty }">
+                <label for="timeframe" class="col-sm-2 control-label">Timeframe *</label>
+                <div class="col-sm-10">
+                    <div class="col-sm-2 no-padding">
+                        <input type="text" class="form-control" id="destination_port" name="timeframe" placeholder="Timeframe" ng-model="model.rule_config.timeframe"
+                            ng-disabled="_loading">
+                    </div>
+                    &nbsp;
+                    <div class="col-sm-2 no-padding">
+                        <select class="form-control" id="timeframe_type" name="timeframe_type" ng-model="model.rule_config.timeframe_type" ng-disabled="_loading"
+                            required>
+                            <option ng-selected="true" value="seconds">Seconds</option>
+                            <option value="minutes">Minutes</option>
+                            <option value="hours">Hours</option>
+                            <option value="days">Days</option>
+                        </select>
+                    </div>
+
+                    <label for="timeframe" class="text text-info" popover-trigger="mouseenter" uib-popover="Set the timeframe for the rule to check traffic spikes.">
+                        <i class="fa fa-question-circle"></i>
+                    </label>
+                    <div class="error-messages" ng-messages="editForm.timeframe.$error" role="alert" ng-messages-multiple>
+                        <div ng-messages-include="parts/shared/error-messages.html"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
