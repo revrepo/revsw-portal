@@ -152,11 +152,10 @@
     };
 
     $scope.onAccountClick = function(acc_id) {
-      var acc = $scope.accounts.find(function(a) {
+      var acc = $scope.fullAccounts.find(function(a) {
         return a.acc_id === acc_id;
       });
       $scope.selected.val = acc;
-      //  do not store 'All account'
       if (acc.acc_id !== '') {
         User.selectAccount(acc);
       }
