@@ -564,8 +564,12 @@
             $scope.alertService.danger('CSV Report is empty');
             $scope._loading = false;
           }
-
-          filename = 'csv_report_' + moment(res.created_at).format('MM/DD/YYYY') + '.csv';
+          //usage_report_[ACCOUNT_ID]_[ACCOUNT_NAME]_[DATE_START]_[DATE_END]--csv report name format
+          filename = 'usage_report_';
+          filename += (filter.account_id === '' ? 'all_accounts' : filter.account_id) + '_';
+          filename += filter.account_id === '' ? '' : $scope.selected.val.acc_name.replace(/ /g, '_') + '_';
+          filename += moment(from).format('YYYY-MM-DD') + '_' + moment(to).format('YYYY-MM-DD');
+          filename += '.csv';
 
           if (!csv.match(/^data:text\/csv/i)) {
             csv = 'data:text/csv;charset=utf-8,' + csv;
