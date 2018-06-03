@@ -544,11 +544,17 @@
       }
   };
 
-    $scope.exportCSV = function () {
+    $scope.exportCSV = function (month_year) {
+      month_year = month_year || $scope.month_year;
+      var from = new moment(month_year.toISOString()).utc().startOf('month').startOf('day').format('YYYY-MM-DD'); //  very beginning of the month
+      var to = new moment(month_year.toISOString()).utc().endOf('month').endOf('day').format('YYYY-MM-DD'); //  very end of month (last day of report)
+
       $scope._loading = true;
       var filter = {
         account_id: $scope.selected.val.acc_id,
-        agg: $scope.aggReportForReseller
+        agg: $scope.aggReportForReseller,
+        from: from,
+        to: to
       };
       Stats.usage_report_export_csv(filter.account_id === '' ? null : filter)
         .$promise.then(function (res) {
@@ -565,7 +571,6 @@
             csv = 'data:text/csv;charset=utf-8,' + csv;
           }
           data = encodeURI(csv);
-
           link = document.createElement('a');
           link.setAttribute('href', data);
           link.setAttribute('download', filename);
