@@ -152,7 +152,8 @@
     };
 
     $scope.onAccountClick = function(acc_id) {
-      var acc = $scope.fullAccounts.find(function(a) {
+      var acc_list = $scope.fullAccounts || $scope.accounts;
+      var acc = acc_list.find(function(a) {
         return a.acc_id === acc_id;
       });
       $scope.selected.val = acc;
