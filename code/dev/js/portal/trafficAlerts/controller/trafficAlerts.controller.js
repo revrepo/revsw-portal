@@ -6,19 +6,27 @@
     .controller('TrafficAlertsController', TrafficAlertsController);
 
   // @ngInject
-  function TrafficAlertsController($scope, $q, NotificationLists, $uibModal,
-    User, Users, AlertService, DomainsConfig, TrafficAlerts, Companies) {
+  function TrafficAlertsController($scope, $q, NotificationLists, $uibModal, $injector, $stateParams,
+    User, Users, AlertService, DomainsConfig, TrafficAlerts, Companies, CRUDController) {
+
+    $injector.invoke(CRUDController, this, {
+      $scope: $scope,
+      $stateParams: $stateParams
+    });
+
+    $scope.setState('index.accountSettings.trafficAlerts');
+    $scope.setResource(TrafficAlerts);
 
     $scope.model = {};
     $scope.auth = User;
     $scope.alertService = AlertService;
 
     $scope.rule_types = [
-      'spike'
+      'Spike'
     ];
 
     $scope.target_types = [
-      'domain'
+      'Domain'
     ];
 
     NotificationLists.query({}).$promise.then(function (res) {
@@ -36,16 +44,42 @@
       $scope.companies = res;
     });
 
+    $scope.$on('$stateChangeSuccess', function () {
+      $scope
+        .list(null)
+        .then(function (res) {
+          if (res && res.length > 0) {
+            res.forEach(function (rule) {
+              TrafficAlerts.status({ id: rule.id }).$promise.then(function (res_) {
+                rule.fileStatus = res_.status;
+              });
+            });
+          }
+        });
+    });
+
     $scope.$watch('model.target_type', function (newVal, oldVal) {
       if (newVal !== oldVal) {
         $scope.targets = [];
         switch ($scope.model.target_type) {
-          case 'domain':
-            $scope.targets = [];
-            for (var i = 0; i < $scope.domains.length; i++) {
-              var domain = $scope.domains[i];
-              domain.name = domain.domain_name;
-              $scope.targets.push(domain);
+          case 'Domain':
+            if ($scope.domains) {
+              $scope.targets = [];
+              for (var i = 0; i < $scope.domains.length; i++) {
+                var domain = $scope.domains[i];
+                domain.name = domain.domain_name;
+                $scope.targets.push(domain);
+              }
+            } else {
+              DomainsConfig.query().$promise.then(function (res) {
+                $scope.domains = res;
+                $scope.targets = [];
+                for (var i = 0; i < $scope.domains.length; i++) {
+                  var domain = $scope.domains[i];
+                  domain.name = domain.domain_name;
+                  $scope.targets.push(domain);
+                }
+              });
             }
             break;
         }
@@ -85,5 +119,52 @@
         });
     };
 
+    $scope.updateAlert = function (model) {
+
+      $scope._loading = true;
+
+      if (!model || $scope.disableSubmit === true) {
+        AlertService.danger('Please fill out the form before submitting');
+        $scope._loading = false;
+      }
+
+      TrafficAlerts.update(model).$promise.then(function (res) {
+        AlertService.success(res);
+        $scope._loading = false;
+      })
+        .catch(function (err) {
+          AlertService.danger(err);
+          $scope._loading = false;
+        });
+    };
+
+    $scope.setModel = function (id) {
+      TrafficAlerts.get({ id: id }).$promise.then(function (res) {
+        $scope.model = JSON.parse(JSON.stringify(res));
+        var targetType = $scope.model.target_type.split('');
+        targetType[0] = targetType[0].toUpperCase();
+        $scope.model.target_type = targetType.join('');
+        $scope.model.rule_type = res.rule_type;
+        $scope.model.rule_config = res.rule_config;
+      });
+    };
+
+    $scope.deleteConfig = function (model) {
+      if ($scope.isReadOnly() === true) {
+        return;
+      }
+
+      $scope.confirm('confirmModal.html', model)
+        .then(function () {
+          $scope
+            .delete(model)
+            .then($scope.alertService.success)
+            .catch($scope.alertService.danger);
+        });
+    };
+
+    $scope.getRelativeDate = function (datetime) {
+      return moment.utc(datetime).fromNow();
+    };
   }
 })();
