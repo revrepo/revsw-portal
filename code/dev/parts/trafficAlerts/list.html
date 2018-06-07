@@ -68,6 +68,10 @@
                                         <span class="sortorder" ng-show="filter.predicate === 'target'" ng-class="{reverse: filter.reverse}"></span>
                                     </th>
                                     <th>
+                                        <a href="" ng-click="order('status')">Status</a>
+                                        <span class="sortorder" ng-show="filter.predicate === 'status'" ng-class="{reverse: filter.reverse}"></span>
+                                    </th>
+                                    <th>
                                         <a href="" ng-click="order('updated_at')">Last Update</a>
                                         <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
                                     </th>
@@ -85,16 +89,21 @@
                             <tbody>
                                 <tr ng-repeat="alertConf in filteredRecords | limitTo:filter.limit:filter.skip track by $index" id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)">
                                     <td>
-                                        <a ui-sref=".edit({id: alertConf._id})" ng-if="!item.loading" uib-tooltip="Edit Alert Configuration">
+                                        <a ui-sref=".edit({id: alertConf.id})" ng-if="!item.loading" uib-tooltip="Edit Alert Configuration">
                                             {{alertConf.name}}
                                         </a>
                                     </td>
                                     <td>{{alertConf.target_type}}</td>
                                     <td>{{alertConf.target}}</td>
+                                    <td>
+                                        <i ng-show="!alertConf.fileStatus" class="glyphicon glyphicon-refresh spin"></i>
+                                        <i ng-show="alertConf.fileStatus" class="glyphicon {{ alertConf.fileStatus === 'Healthy' ? 'glyphicon-ok-sign text-success' : 'glyphicon-remove text-danger' }}"
+                                            uib-tooltip="{{ alertConf.fileStatus === 'Healthy' ? 'Traffic Alert Rule Configuration Is OK' : 'There is a problem with the configuration file' }}"></i>
+                                    </td>
                                     <td>{{ getRelativeDate(alertConf.updated_at) }}</td>
                                     <td>{{ alertConf.created_by }}</td>
                                     <td class="actions">
-                                        <a ui-sref=".edit({id: alertConf._id})" uib-tooltip="Edit Alert Configuration">
+                                        <a ui-sref=".edit({id: alertConf.id})" uib-tooltip="Edit Alert Configuration">
                                             <i class="glyphicon glyphicon-pencil"></i>
                                         </a>
                                         <a href="" ng-click="deleteConfig(alertConf)" ng-class="{'disabled':isReadOnly()}" uib-tooltip="Delete Alert Configuration">

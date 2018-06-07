@@ -11,14 +11,9 @@
     DomainsConfig, $attrs) {
 
     $scope.spikeDirections = [
-      'up',
-      'down'
+      { key: 'Both', value: 'both' },
+      { key: 'Up', value: 'up' },
+      { key: 'Down', value: 'down' }
     ];
-
-    $scope.$watch('model.rule_type', function (newVal, oldVal) {
-      if (newVal !== oldVal) {
-        $scope.model.rule_config = {};
-      }
-    });
   }
 })();

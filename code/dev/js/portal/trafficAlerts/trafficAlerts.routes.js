@@ -24,6 +24,15 @@
             templateUrl: 'parts/trafficAlerts/new.html'
           }
         }
+      })
+      .state('index.accountSettings.trafficAlerts.edit', {
+        url: '/edit/:id',
+        views: {
+          page: {
+            controller: 'TrafficAlertsController',
+            templateUrl: 'parts/trafficAlerts/edit.html'
+          }
+        }
       });
   }
 })();

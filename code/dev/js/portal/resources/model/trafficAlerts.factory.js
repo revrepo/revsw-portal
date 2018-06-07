@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -8,6 +8,11 @@
   /*@ngInject*/
   function TrafficAlertsResource(Resource, $config) {
 
-    return Resource($config.API_URL + '/traffic_alerts/:id', { id: '@id' }, {});
+    return Resource($config.API_URL + '/traffic_alerts/:id', { id: '@id' }, {
+      status: {
+        url: $config.API_URL + '/traffic_alerts/:id/status',
+        method: 'GET'
+      }
+    });
   }
 })();

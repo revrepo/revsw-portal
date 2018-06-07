@@ -2,13 +2,13 @@
     <div class="panel-heading">
         <label>Rule-Specific Configurations</label>
     </div>
-    <div id="rule_spike" ng-if="model.rule_type === 'spike'">
+    <div id="rule_spike" ng-if="model.rule_type === 'Spike'">
         <div class="panel-body">
             <div class="form-group" ng-class="{ 'has-error': editForm.spikeDirection.$invalid && editForm.spikeDirection.$dirty }">
                 <label for="spikeDirection" class="col-sm-2 control-label">Spike Direction *</label>
                 <div class="col-sm-10">
                     <select class="form-control inline-block" id="destination_type" name="spikeDirection" ng-model="model.rule_config.spike_direction"
-                        ng-disabled="_loading" ng-options="key as value for (key,value) in spikeDirections" required>
+                        ng-disabled="_loading" ng-options="item.key for item in spikeDirections track by item.value" required>
                         <option value="">--- Select Spike Direction ---</option>
                     </select>
                     <label for="spikeDirection" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select the direction of the spike event, if set to 'up', when requests spike up, the alert will be triggred.">
