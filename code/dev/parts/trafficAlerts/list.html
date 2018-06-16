@@ -95,11 +95,7 @@
                                     </td>
                                     <td>{{alertConf.target_type}}</td>
                                     <td>{{alertConf.target}}</td>
-                                    <td>
-                                        <i ng-show="!alertConf.fileStatus" class="glyphicon glyphicon-refresh spin"></i>
-                                        <i ng-show="alertConf.fileStatus" class="glyphicon {{ alertConf.fileStatus === 'Healthy' ? 'glyphicon-ok-sign text-success' : 'glyphicon-remove text-danger' }}"
-                                            uib-tooltip="{{ alertConf.fileStatus === 'Healthy' ? 'Traffic Alert Rule Configuration Is OK' : 'There is a problem with the configuration file' }}"></i>
-                                    </td>
+                                    <td>{{alertConf.status}}</td>
                                     <td>{{ getRelativeDate(alertConf.updated_at) }}</td>
                                     <td>{{ alertConf.created_by }}</td>
                                     <td class="actions">

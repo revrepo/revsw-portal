@@ -61,4 +61,60 @@
             </div>
         </div>
     </div>
+    <div id="rule_statusCode_frequency" ng-if="model.rule_type === 'Status Code Frequency'">
+        <div class="panel-body">
+            <div class="form-group" ng-class="{ 'has-error': editForm.status_code.$invalid && editForm.status_code.$dirty }">
+                <label for="spikeAmount" class="col-sm-2 control-label">Status Code *</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control inline-block" id="Host" placeholder="500" name="status_code" ng-model="model.rule_config.status_code"
+                        ng-maxlength="3" ng-minlength="1" ng-disabled="_loading" required>
+                    <label for="spikeAmount" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The status code that will trigger the alert">
+                        <i class="fa fa-question-circle"></i>
+                    </label>
+                    <div class="error-messages" ng-messages="editForm.status_code.$error" role="alert" ng-messages-multiple>
+                        <div ng-messages-include="parts/shared/error-messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': editForm.responses.$invalid && editForm.responses.$dirty }">
+                <label for="spikeAmount" class="col-sm-2 control-label">Number Of Responses *</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control inline-block" id="Host" placeholder="1" name="responses" ng-model="model.rule_config.responses"
+                        ng-maxlength="3" ng-minlength="1" ng-disabled="_loading" required>
+                    <label for="spikeAmount" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The amount of responses with the configured status code that will trigger the alert">
+                        <i class="fa fa-question-circle"></i>
+                    </label>
+                    <div class="error-messages" ng-messages="editForm.responses.$error" role="alert" ng-messages-multiple>
+                        <div ng-messages-include="parts/shared/error-messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': editForm.timeframe.$invalid && editForm.timeframe.$dirty }">
+                <label for="timeframe" class="col-sm-2 control-label">Timeframe *</label>
+                <div class="col-sm-10">
+                    <div class="col-sm-2 no-padding">
+                        <input type="text" class="form-control" id="destination_port" name="timeframe" placeholder="Timeframe" ng-model="model.rule_config.timeframe"
+                            ng-disabled="_loading">
+                    </div>
+                    &nbsp;
+                    <div class="col-sm-2 no-padding">
+                        <select class="form-control" id="timeframe_type" name="timeframe_type" ng-model="model.rule_config.timeframe_type" ng-disabled="_loading"
+                            required>
+                            <option ng-selected="true" value="seconds">Seconds</option>
+                            <option value="minutes">Minutes</option>
+                            <option value="hours">Hours</option>
+                            <option value="days">Days</option>
+                        </select>
+                    </div>
+
+                    <label for="timeframe" class="text text-info" popover-trigger="mouseenter" uib-popover="Set the timeframe for the rule to check response status codes.">
+                        <i class="fa fa-question-circle"></i>
+                    </label>
+                    <div class="error-messages" ng-messages="editForm.timeframe.$error" role="alert" ng-messages-multiple>
+                        <div ng-messages-include="parts/shared/error-messages.html"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
