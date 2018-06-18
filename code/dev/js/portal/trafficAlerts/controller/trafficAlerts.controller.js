@@ -22,7 +22,8 @@
     $scope.alertService = AlertService;
 
     $scope.rule_types = [
-      'Spike'
+      'Spike',
+      'Status Code Frequency'
     ];
 
     $scope.target_types = [
@@ -42,19 +43,26 @@
 
     Companies.query().$promise.then(function (res) {
       $scope.companies = res;
+      if ($scope.records) {
+        $scope.records.forEach(function (rule) {
+          rule.companyName = $scope.companies.find(function (acc) {
+            return acc.id === rule.account_id;
+          }).companyName;
+        });
+      }
     });
 
     $scope.$on('$stateChangeSuccess', function () {
       $scope
         .list(null)
         .then(function (res) {
-          if (res && res.length > 0) {
+          /*if (res && res.length > 0) {
             res.forEach(function (rule) {
               TrafficAlerts.status({ id: rule.id }).$promise.then(function (res_) {
                 rule.fileStatus = res_.status;
               });
             });
-          }
+          }*/
         });
     });
 
@@ -100,7 +108,21 @@
       $scope.model = {};
     };
 
+    $scope.prepModelForAPI = function (model) {
+      switch (model.rule_type) {
+        case 'Status Code Frequency':
+          model.rule_type = 'statusCode_frequency'
+          break;
+        default:
+          break;
+      };
+
+      return model;
+    };
+
     $scope.createAlert = function (model) {
+
+      model = $scope.prepModelForAPI(model);
 
       $scope._loading = true;
 
@@ -120,6 +142,8 @@
     };
 
     $scope.updateAlert = function (model) {
+
+      model = $scope.prepModelForAPI(model);
 
       $scope._loading = true;
 
