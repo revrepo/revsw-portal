@@ -111,11 +111,11 @@
     $scope.prepModelForAPI = function (model) {
       switch (model.rule_type) {
         case 'Status Code Frequency':
-          model.rule_type = 'statusCode_frequency'
+          model.rule_type = 'statusCode_frequency';
           break;
         default:
           break;
-      };
+      }
 
       return model;
     };
