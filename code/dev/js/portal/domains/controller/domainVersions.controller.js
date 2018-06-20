@@ -62,9 +62,9 @@
         .then(function(data) {
           $scope.currentData = data;
           $scope.obj.data = JSON.stringify(data, null, 2);
-          if ($scope.compareVersion) {
+          if ($scope.compareData) {
             var objOne = angular.fromJson(angular.toJson($scope.currentData));
-            var objTwo = angular.fromJson(angular.toJson($scope.compareVersion));
+            var objTwo = angular.fromJson(angular.toJson($scope.compareData));
             var diff = ObjectDiff.diffOwnProperties(objOne, objTwo);
             $scope.dataCompare = ObjectDiff.toJsonDiffView(diff);
             if (diff.changed === 'equal') {
@@ -98,6 +98,8 @@
         })
         .$promise
         .then(function(data) {
+          $scope.compareData = data;
+
           var objOne = angular.fromJson(angular.toJson($scope.currentData));
           var objTwo = angular.fromJson(angular.toJson(data));
           var diff = ObjectDiff.diffOwnProperties(objOne, objTwo);
