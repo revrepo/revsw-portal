@@ -208,7 +208,7 @@
     $scope.silenceRule = function (model) {
       model = $scope.prepModelForAPI(model);
 
-      let _model = JSON.parse(JSON.stringify(model));
+      var _model = JSON.parse(JSON.stringify(model));
 
       _model.silenced = true;
 
@@ -232,7 +232,7 @@
     $scope.unSilenceRule = function (model) {
       model = $scope.prepModelForAPI(model);
 
-      let _model = JSON.parse(JSON.stringify(model));
+      var _model = JSON.parse(JSON.stringify(model));
 
       _model.silenced = false;
 
