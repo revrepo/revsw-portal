@@ -103,6 +103,9 @@
               <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select the configuration's notifications list, the alerts will be dispatched via the notifications list configuration.">
                 <i class="fa fa-question-circle"></i>
               </label>
+              <a ui-sref="index.accountSettings.notificationsList" class="btn btn-sm btn-primary" id="btn-manage-notif-lists" uib-tooltip="Manage Notifications Lists"
+                ng-disabled="_loading">
+                <i class="fa fa-list-alt"></i> Manage Notifications Lists</a>
             </div>
           </div>
           <hr>
