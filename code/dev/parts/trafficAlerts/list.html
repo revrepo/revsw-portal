@@ -95,7 +95,10 @@
                                     </td>
                                     <td>{{alertConf.target_type}}</td>
                                     <td>{{alertConf.target}}</td>
-                                    <td>{{alertConf.status}}</td>
+                                    <td>
+                                        <label class="label" ng-class="alertConf.status === 'up' ? 'label-primary':'label-warning'" ng-bind="alertConf.status === 'up' ? 'Up' : 'Down'">{{alertConf.status}}</label>
+                                        <label ng-show="alertConf.silenced" class="label label-danger">Silenced</label>
+                                    </td>
                                     <td>{{ getRelativeDate(alertConf.updated_at) }}</td>
                                     <td>{{ alertConf.created_by }}</td>
                                     <td class="actions">
@@ -104,6 +107,10 @@
                                         </a>
                                         <a href="" ng-click="deleteConfig(alertConf)" ng-class="{'disabled':isReadOnly()}" uib-tooltip="Delete Alert Configuration">
                                             <i class="glyphicon glyphicon-trash"></i>
+                                        </a>
+                                        <a href="" ng-click="alertConf.silenced ? unSilenceRule(alertConf) : silenceRule(alertConf)" ng-class="{'disabled':isReadOnly()}"
+                                            uib-tooltip="Silence Notifications For This Alert Configuration">
+                                            <i ng-class="alertConf.silenced ? 'glyphicon glyphicon-volume-up' : 'glyphicon glyphicon-volume-off'"></i>
                                         </a>
                                     </td>
                                     <td ng-if="auth.isReseller() ||  auth.isRevadmin()">

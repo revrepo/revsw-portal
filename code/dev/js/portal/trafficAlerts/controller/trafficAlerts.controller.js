@@ -30,6 +30,20 @@
       'Domain'
     ];
 
+    $scope.$watch('model.rule_type', function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        switch (newVal) {
+          case 'Spike':
+            if (!$scope.model.rule_config) {
+              $scope.model.rule_config = {};
+              $scope.model.rule_config.spike_direction = { key: 'Both', value: 'both' };
+            }
+
+            break;
+        }
+      }
+    });
+
     NotificationLists.query({}).$promise.then(function (res) {
       $scope.notif_lists = res;
     })
@@ -189,6 +203,54 @@
 
     $scope.getRelativeDate = function (datetime) {
       return moment.utc(datetime).fromNow();
+    };
+
+    $scope.silenceRule = function (model) {
+      model = $scope.prepModelForAPI(model);
+
+      var _model = JSON.parse(JSON.stringify(model));
+
+      _model.silenced = true;
+
+      $scope._loading = true;
+
+      if (!_model) {
+        return false;
+      }
+
+      TrafficAlerts.update(_model).$promise.then(function (res) {
+        AlertService.success('Successfully silenced the alert configuration');
+        model.silenced = true;
+        $scope._loading = false;
+      })
+        .catch(function (err) {
+          AlertService.danger('Error silencing the alert configuration, ' + err);
+          $scope._loading = false;
+        });
+    };
+
+    $scope.unSilenceRule = function (model) {
+      model = $scope.prepModelForAPI(model);
+
+      var _model = JSON.parse(JSON.stringify(model));
+
+      _model.silenced = false;
+
+      $scope._loading = true;
+
+      if (!_model) {
+        return false;
+      }
+
+      TrafficAlerts.update(_model).$promise.then(function (res) {
+        AlertService.success('Successfully unsilenced the alert configuration');
+        model.silenced = false;
+        $scope._loading = false;
+      })
+        .catch(function (err) {
+          AlertService.danger('Error unsilencing the alert configuration, ' + err);
+          $scope._loading = false;
+        });
     };
   }
 })();
