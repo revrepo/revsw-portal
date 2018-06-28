@@ -31,6 +31,9 @@
                                 <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()">
                                     <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New Traffic Alert Configuration
                                 </a>
+                                <!--a href="" ng-click="silenceAll()" class="btn btn-info" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()">
+                                    <i class="glyphicon glyphicon-volume-off"></i>&nbsp; Silence All Alert Notifications
+                                </a -->
                             </div>
 
                             <div class="pull-right">
@@ -50,6 +53,13 @@
                     <div class="alert alert-info" ng-if="_loading && filteredRecords.length === 0">
                         <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading...
                     </div>
+                    <!--div class="alert alert-info" ng-if="!_loading && filteredRecords.length > 0 && isAccountSilenced()">
+                        <i class="glyphicon glyphicon-volume-off"></i>&nbsp; All alert notifications are silenced for this account.
+                        <br />
+                        <span ng-show="accountSilenceUntil()">
+                            The account will be automatically unsilenced {{accountSilenceUntil()}}
+                        </span>
+                    </div -->
                     <crud-pagination></crud-pagination>
                     <div class="table-responsive">
                         <table class="table users-list">
@@ -97,7 +107,7 @@
                                     <td>{{alertConf.target}}</td>
                                     <td>
                                         <label class="label" ng-class="alertConf.status === 'up' ? 'label-primary':'label-warning'" ng-bind="alertConf.status === 'up' ? 'Up' : 'Down'">{{alertConf.status}}</label>
-                                        <label ng-show="alertConf.silenced" class="label label-danger">Silenced</label>
+                                        <label ng-show="alertConf.silenced" uib-tooltip="{{getSilencedUntil(alertConf.silence_until)}}" class="label label-danger">Silenced</label>
                                     </td>
                                     <td>{{ getRelativeDate(alertConf.updated_at) }}</td>
                                     <td>{{ alertConf.created_by }}</td>
@@ -109,7 +119,7 @@
                                             <i class="glyphicon glyphicon-trash"></i>
                                         </a>
                                         <a href="" ng-click="alertConf.silenced ? unSilenceRule(alertConf) : silenceRule(alertConf)" ng-class="{'disabled':isReadOnly()}"
-                                            uib-tooltip="Silence Notifications For This Alert Configuration">
+                                            uib-tooltip="{{alertConf.silenced ? 'Unsilence' : 'Silence'}} Notifications For This Alert Configuration">
                                             <i ng-class="alertConf.silenced ? 'glyphicon glyphicon-volume-up' : 'glyphicon glyphicon-volume-off'"></i>
                                         </a>
                                     </td>
