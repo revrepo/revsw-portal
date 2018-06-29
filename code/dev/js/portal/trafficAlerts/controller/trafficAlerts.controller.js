@@ -206,27 +206,42 @@
     };
 
     $scope.silenceRule = function (model) {
-      model = $scope.prepModelForAPI(model);
 
-      var _model = JSON.parse(JSON.stringify(model));
+      var modalInstance = $uibModal.open({
+        templateUrl: 'parts/trafficAlerts/silenceRule.html',
+        controller: 'SilenceRuleController',
+        size: 'md',
+        resolve: {
+          model: model
+        }
+      });
 
-      _model.silenced = true;
+      modalInstance.result.then(function (result) {
 
-      $scope._loading = true;
+        model = $scope.prepModelForAPI(model);
 
-      if (!_model) {
-        return false;
-      }
+        var _model = JSON.parse(JSON.stringify(model));
 
-      TrafficAlerts.update(_model).$promise.then(function (res) {
-        AlertService.success('Successfully silenced the alert configuration');
-        model.silenced = true;
-        $scope._loading = false;
-      })
-        .catch(function (err) {
-          AlertService.danger('Error silencing the alert configuration, ' + err);
+        _model.silenced = true;
+        _model.silence_until = $scope.getSilenceDate(result);
+
+        $scope._loading = true;
+
+        if (!_model) {
+          return false;
+        }
+
+        TrafficAlerts.update(_model).$promise.then(function (res) {
+          AlertService.success('Successfully silenced the alert configuration');
+          model.silenced = true;
+          model.silence_until = $scope.getSilenceDate(result);
           $scope._loading = false;
-        });
+        })
+          .catch(function (err) {
+            AlertService.danger('Error silencing the alert configuration, ' + err);
+            $scope._loading = false;
+          });
+      });
     };
 
     $scope.unSilenceRule = function (model) {
@@ -235,6 +250,7 @@
       var _model = JSON.parse(JSON.stringify(model));
 
       _model.silenced = false;
+      _model.silence_until = null;
 
       $scope._loading = true;
 
@@ -245,12 +261,49 @@
       TrafficAlerts.update(_model).$promise.then(function (res) {
         AlertService.success('Successfully unsilenced the alert configuration');
         model.silenced = false;
+        model.silence_until = null;
         $scope._loading = false;
       })
         .catch(function (err) {
           AlertService.danger('Error unsilencing the alert configuration, ' + err);
           $scope._loading = false;
         });
+    };
+
+    $scope.getSilenceDate = function (result) {
+      if (!result) {
+        return;
+      }
+
+      switch (result) {
+        case '2hours':
+        case '4hours':
+        case '6hours':
+        case '12hours':
+        case '24hours':
+          return moment(Date.now()).add(result.split('h')[0], 'hours');
+        case '7days':
+          return moment(Date.now()).add(7, 'days');
+        case 'forever':
+          return null;
+      }
+    };
+
+    $scope.getSilencedUntil = function (silenced_until) {
+      if (!silenced_until) {
+        return 'This alert is silenced forever';
+      }
+
+      return 'This alert will be automatically unsilenced ' + moment.utc(silenced_until).fromNow();
+    };
+
+    $scope.isAccountSilenced = function () {
+      var acc = User.getAccount();
+      return acc.silence_alerts;
+    };
+
+    $scope.accountSilenceUntil = function () {
+      return;
     };
   }
 })();
