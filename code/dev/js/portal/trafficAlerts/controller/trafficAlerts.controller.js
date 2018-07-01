@@ -148,6 +148,7 @@
       TrafficAlerts.create(model).$promise.then(function (res) {
         AlertService.success(res);
         $scope._loading = false;
+        $scope.model = {};
       })
         .catch(function (err) {
           AlertService.danger(err);
@@ -168,6 +169,7 @@
 
       TrafficAlerts.update(model).$promise.then(function (res) {
         AlertService.success(res);
+        $scope.setModel($scope.model.id);
         $scope._loading = false;
       })
         .catch(function (err) {
@@ -183,6 +185,13 @@
         targetType[0] = targetType[0].toUpperCase();
         $scope.model.target_type = targetType.join('');
         $scope.model.rule_type = res.rule_type;
+
+        switch ($scope.model.rule_type) {
+          case 'statusCode_frequency':
+            $scope.model.rule_type = 'Status Code Frequency';
+            break;
+        }
+
         $scope.model.rule_config = res.rule_config;
       });
     };
