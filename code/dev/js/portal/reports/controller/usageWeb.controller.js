@@ -6,8 +6,8 @@
     .controller('UsageWebController', UsageWebController);
 
   /*@ngInject*/
-  function UsageWebController($scope, $q, User, DTOptionsBuilder, DTColumnDefBuilder, AlertService, Stats, Util, Locations, $uibModal, $config, $sce) {
-
+  function UsageWebController($scope, $q, User, DTOptionsBuilder, DTColumnDefBuilder, AlertService, Stats, Util, Locations, $uibModal, $config, $sce, Companies) {
+    $scope.auth = User;
     $scope._loading = true;
     $scope.accounts = [];
     $scope.selected = {
@@ -18,6 +18,9 @@
     $scope.report = null;
     $scope.traffic = null;
     $scope.formatNumber = Util.formatNumber;
+    $scope.bytesToGB = Util.humanFileSizeInGB;
+
+    $scope.aggReportForReseller = false;
 
     $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
     $scope.popoverHelpHTML ={
@@ -44,7 +47,20 @@
       type: 'num'
     }, {
       targets: [2, 3, 4, 5],
-      orderable: false
+      orderable: true
+    }];
+
+    $scope.domainDTOptions = DTOptionsBuilder.newOptions()
+      .withPaginationType('full_numbers')
+      .withDisplayLength(pageLength)
+      .withBootstrap()
+      .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>')
+      .withOption('order', [
+        [1, 'desc']
+      ]);
+
+    $scope.domainColDefs = [{
+      targets: [0, 6]
     }];
     var traffic_total_ = 0;
     var info_ = null;
@@ -119,7 +135,8 @@
       },
       plotOptions: {
         series: {
-          pointWidth: 20 //width of the column bars irrespective of the chart size
+          pointPadding: 0,
+          groupPadding: 0.1       
         }
       }
     };
@@ -135,11 +152,11 @@
     };
 
     $scope.onAccountClick = function(acc_id) {
-      var acc = $scope.accounts.find(function(a) {
+      var acc_list = $scope.fullAccounts || $scope.accounts;
+      var acc = acc_list.find(function(a) {
         return a.acc_id === acc_id;
       });
       $scope.selected.val = acc;
-      //  do not store 'All account'
       if (acc.acc_id !== '') {
         User.selectAccount(acc);
       }
@@ -261,6 +278,11 @@
         from: from,
         to: to
       };
+
+      if ($scope.aggReportForReseller) {
+        q.agg = true;
+      }
+
       return Stats.usage_web(q)
         .$promise
         .then(function(data) {
@@ -289,15 +311,36 @@
         from_timestamp: from,
         to_timestamp: to
       };
+
+      if ($scope.aggReportForReseller) {
+        q.agg = true;
+      }
+
       $scope.traffic = {
         series: [{
           name: 'GBT',
+          data: []
+        },
+        {
+          name: 'Optimized ImageEngine Traffic (Smart Bytes), GB',
+          data: []
+        },
+        {
+          name: 'Original ImageEngine Traffic, GB',
           data: []
         }]
       };
       var labels = [];
       var series = [{
         name: 'GBT',
+        data: []
+      },
+      {
+        name: 'Optimized ImageEngine Traffic (Smart Bytes), GB',
+        data: []
+      },
+      {
+        name: 'Original ImageEngine Traffic, GB',
         data: []
       }];
       return Stats.usage_web_stats(q)
@@ -320,6 +363,16 @@
               labels.push(label);
 
               if (item.count) {
+                if (item.image_engine && item.image_engine.optimized_image_size_bytes > 0) {
+                  series[1].data.push(item.image_engine.optimized_image_size_bytes);         
+                } else {
+                  series[1].data.push(null);                
+                }
+                if (item.image_engine && item.image_engine.original_image_size_bytes > 0) {
+                  series[2].data.push(item.image_engine.original_image_size_bytes);         
+                } else {
+                  series[2].data.push(null);
+                }
                 series[0].data.push(item.sent_bytes);
               } else {
                 series[0].data.push(null);
@@ -458,6 +511,81 @@
         if (currentMoment < itemDate.utcDateValue) {
           $dates[key].selectable = false;
         }
+      });
+    };
+
+    $scope.aggReports = function () {
+      $scope._loading = true;
+      if (!$scope.aggReportForReseller) {
+        $scope.aggReportForReseller = true;
+        $scope.aggAccounts = [];
+        $scope.fullAccounts = $scope.accounts;
+        Companies.getResellerAccounts().$promise.then(function (data) {
+          data = _.map(data, function (item) {
+            return {
+              acc_name: item.companyName,
+              acc_id: item.id,
+              plan_id: item.billing_plan,// TODO:delete property name
+              billing_plan: item.billing_plan,
+              vendor_profile: item.vendor_profile
+            };
+          });
+          $scope.aggAccounts = data;
+          $scope.accounts = data;
+        });
+
+        $scope._loading = false;
+        return;
+      } else {
+        $scope.aggReportForReseller = false;
+        $scope.accounts = $scope.fullAccounts;
+        $scope._loading = false;
+        return;
+      }
+  };
+
+    $scope.exportCSV = function (month_year) {
+      month_year = month_year || $scope.month_year;
+      var from = new moment(month_year.toISOString()).utc().startOf('month').startOf('day').format('YYYY-MM-DD'); //  very beginning of the month
+      var to = new moment(month_year.toISOString()).utc().endOf('month').endOf('day').format('YYYY-MM-DD'); //  very end of month (last day of report)
+
+      $scope._loading = true;
+      var filter = {
+        account_id: $scope.selected.val.acc_id,
+        agg: $scope.aggReportForReseller,
+        from: from,
+        to: to
+      };
+      Stats.usage_report_export_csv(filter.account_id === '' ? null : filter)
+        .$promise.then(function (res) {
+          var data, filename, link;
+          var csv = res.csvContent.join('');
+          if (csv === null || csv.length === 0) {
+            $scope.alertService.danger('CSV Report is empty');
+            $scope._loading = false;
+          }
+          //usage_report_[ACCOUNT_ID]_[ACCOUNT_NAME]_[DATE_START]_[DATE_END]--csv report name format
+          filename = 'usage_report_';
+          filename += (filter.account_id === '' ? 'all_accounts' : filter.account_id) + '_';
+          filename += filter.account_id === '' ? '' : $scope.selected.val.acc_name.replace(/ /g, '_') + '_';
+          filename += moment(from).format('YYYY-MM-DD') + '_' + moment(to).format('YYYY-MM-DD');
+          filename += '.csv';
+
+          if (!csv.match(/^data:text\/csv/i)) {
+            csv = 'data:text/csv;charset=utf-8,' + csv;
+          }
+          data = encodeURI(csv);
+          link = document.createElement('a');
+          link.setAttribute('href', data);
+          link.setAttribute('download', filename);
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          $scope._loading = false;
+      })
+      .catch(function (err) {
+        $scope.alertService.danger(err);
+        $scope._loading = false;
       });
     };
   }

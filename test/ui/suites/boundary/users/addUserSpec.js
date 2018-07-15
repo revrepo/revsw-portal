@@ -42,6 +42,7 @@ describe('Boundary', function () {
     it('should not allow to create user with long email address (> 64 chars).',
       function () {
         var tommy = DataProvider.generateUser();
+        delete tommy.role;
         tommy.email = 'email678901234567890123456789012345678901234567890' +
           '123456789012345@ui-test-email.com';
         Portal.addUserPage.form.fill(tommy);
@@ -55,6 +56,7 @@ describe('Boundary', function () {
 
     it('should not allow to create user with long First Name.', function () {
       var rocky = DataProvider.generateUser();
+      delete rocky.role;
       rocky.firstName += ' is an invalid name longer than thirty characters.';
       Portal.addUserPage.form.fill(rocky);
       var addBtn = Portal.addUserPage.getCreateUserBtn();
@@ -67,6 +69,7 @@ describe('Boundary', function () {
 
     it('should not allow to create user with long Last Name.', function () {
       var paul = DataProvider.generateUser();
+      delete paul.role;
       paul.lastName += ' is an invalid name longer than thirty characters.';
       Portal.addUserPage.form.fill(paul);
       var addBtn = Portal.addUserPage.getCreateUserBtn();
@@ -76,35 +79,5 @@ describe('Boundary', function () {
       expect(Portal.addUserPage.form.getLastNameTxtIn().getAttribute('class'))
         .toMatch('ng-invalid-maxlength');
     });
-
-    it('should not create user when the "Password" value is not 8 characters ' +
-      'long',
-      function () {
-        var michael = DataProvider.generateUser();
-        michael.password = '123';
-        michael.passwordConfirm = '123';
-        Portal.addUserPage.form.fill(michael);
-        var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
-          expect(Portal.addUserPage.form.getPasswordTxtIn().getAttribute('class'))
-          .toMatch('ng-invalid');
-        expect(Portal.addUserPage.form.getPasswordTxtIn().getAttribute('class'))
-          .toMatch('ng-invalid-minlength');
-    });
-
-    it('should not create user when the "Password" value is greater than ' +
-      '15 characters long',
-      function () {
-        var vincent = DataProvider.generateUser();
-        vincent.password = '1234567890123456789012345678901234567890';
-        vincent.passwordConfirm = '1234567890123456789012345678901234567890';
-        Portal.addUserPage.form.fill(vincent);
-        var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
-        expect(Portal.addUserPage.form.getPasswordTxtIn().getAttribute('class'))
-          .toMatch('ng-invalid');
-        expect(Portal.addUserPage.form.getPasswordTxtIn().getAttribute('class'))
-          .toMatch('ng-invalid-maxlength');
-      });
   });
 });

@@ -279,6 +279,12 @@
         params: {}
       },
 
+      usage_report_export_csv: {
+        method: 'GET',
+        url: $config.API_URL + '/usage_reports/export_csv',
+        params: {}
+      },
+
       dns_stats_usage: {
         isArray: true,
         method: 'GET',
@@ -332,7 +338,12 @@
           report_type: 'cache_status',
           cache_type: 'secondary'
         }
-      }
+      },
+      edgeCacheByCType: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/edge_cache/content_type/:domainId',
+        isArray: true
+      },
     });
   }
 })();

@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <h3 class="modal-title">Silence Alert Configuration</h3>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Silence Period</label>
+      <div class="col-sm-9">
+        <select class="form-control" ng-init="silence_time = silence_time || '2hours'" id="silence_time" name="silence_time" ng-model="silence_time"
+          ng-disabled="_loading" required>
+          <option value="2hours">2 Hours</option>
+          <option value="4hours">4 Hours</option>
+          <option value="6hours">6 Hours</option>
+          <option value="12hours">12 Hours</option>
+          <option value="24hours">24 Hours</option>
+          <option value="7days">7 Days</option>
+          <option value="forever">Forever</option>
+        </select>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default btn-cancel" type="button" ng-click="close()">
+    <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
+  </button>
+  <button class="btn btn-primary btn-change" type="button" ng-click="change()">
+    <i class="glyphicon glyphicon-volume-off"></i> Silence
+  </button>
+</div>

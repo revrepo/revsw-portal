@@ -22,11 +22,14 @@
 var Constants = require('./../constants');
 var WebElement = require('./../../common/helpers/webElement');
 var DropDownWidget = require('./../common/dropDownWidget');
+var Permissions = require('./../common/permissions');
 
 // This `User Form` Page Object abstracts all operations or actions that a
 // common user could do in the Add User and Edit User page from the Portal
 // app/site.
 var UserForm = {
+
+  permissions: Permissions,
 
   // ## Properties
 
@@ -80,11 +83,14 @@ var UserForm = {
         model: 'model.role'
       },
       company: {
-        model: 'model.companyId',
+        model: 'model.account_id',
         id: 'company'
       },
       domain: {
         model: 'model.domain'
+      },
+      group: {
+        model: 'model.group'
       }
     }
   },
@@ -137,6 +143,10 @@ var UserForm = {
    */
   getRoleDDown: function () {
     return element(by.model(this.locators.dropDowns.role.model));
+  },
+
+  getGroupDDown: function () {
+    return element(by.model(this.locators.dropDowns.group.model));
   },
 
   /**
@@ -387,6 +397,13 @@ var UserForm = {
     return this
       .getRoleDDown()
       .element(by.cssContainingText('option', role))
+      .click();
+  },
+
+  setGroup: function (group) {
+    return this
+      .getGroupDDown()
+      .element(by.cssContainingText('option', group))
       .click();
   },
 
@@ -734,6 +751,8 @@ var UserForm = {
    *        password: String,
    *        passwordConfirm: String
    *    }
+   * 
+   * @param {Boolean} skipRole skip role setting
    */
   fill: function (user) {
     if (user.email !== undefined) {
@@ -750,6 +769,12 @@ var UserForm = {
     }
     if (user.company !== undefined) {
       this.setCompany(user.company, user.role === 'reseller' ? true : undefined);
+    }
+
+    if (user.permissions) {
+      for (var prop in user.permissions) {
+        this.permissions.setPermission(prop, user.permissions[prop]);
+      }
     }
   },
     /**
@@ -775,10 +800,10 @@ var UserForm = {
     this.clearEmail();
     this.clearFirstName();
     this.clearLastName();
-    this.setRole('--- Select Role ---');
-    this.setAccessControls([]);
-    this.clearPassword();
-    this.clearPasswordConfirm();
+    if (user.role !== 'Admin') {
+      this.setRole('--- Select Role ---');
+      this.setGroup('--- Select Group ---');
+    }    
     // clear specific data for differen roles
     if (!!user && (user.role === 'revadmin' || user.role === 'reseller')) {
       // TODO: check work for 'revadmin' and 'reseller'

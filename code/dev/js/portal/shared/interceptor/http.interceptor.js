@@ -27,6 +27,11 @@
         if (!rejection.status) {
           $rootScope.$emit('not.connected');
         }
+
+        // 429 (Too Many Requests)
+        if (rejection.status === 429) {
+          $rootScope.$emit('tooManyRequests');
+        }
         return $q.reject(rejection);
       },
       'request': function(config) {

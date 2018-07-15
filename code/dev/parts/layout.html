@@ -175,7 +175,7 @@
             <i class="sub-menu-icon fa fa-users"></i> Groups
           </a>
         
-        <a ui-sref-active="active" ui-sref="index.accountSettings.companies" class="side-menu-sub-item" ng-if="userService.isReseller() || userService.isRevadmin() && userService.hasAccessTo('accounts')">
+        <a ui-sref-active="active" ui-sref="index.accountSettings.companies" class="side-menu-sub-item" ng-if="(userService.isReseller() || userService.isRevadmin()) && userService.hasAccessTo('accounts')">
             <i class="sub-menu-icon fa fa-list-alt"></i> Accounts</a>
         <a ui-sref-active="active" ui-sref="index.accountSettings.keys" class="side-menu-sub-item" ng-if="!userService.isUser() && userService.hasAccessTo('API_keys')">
             <i class="sub-menu-icon fa fa-key"></i> API Keys
@@ -189,12 +189,12 @@
         <a id="side-menu-sub-item__security-settings" ui-sref-active="active" ui-sref="index.accountSettings.2fa" class="side-menu-sub-item" href="#/2fa">
             <i class="sub-menu-icon fa fa-lock"></i> Security Settings
           </a>
-        <!-- <a ui-sref-active="active" ui-sref="index.accountSettings.notificationsList" class="side-menu-sub-item" id="side-menu-sub-item__notifications-list" ng-if="userService.isRevadmin()">
+        <a ui-sref-active="active" ui-sref="index.accountSettings.notificationsList" class="side-menu-sub-item" id="side-menu-sub-item__notifications-list" ng-if="userService.isRevadmin()">
             <i class="sub-menu-icon fa fa-server "></i>  Notification Lists
-          </a> -->
-        <!-- <a ui-sref-active="active" ui-sref="index.accountSettings.trafficAlerts" class="side-menu-sub-item" id="side-menu-sub-item__traffic-alerts-list" ng-if="userService.isRevadmin()">
+          </a>
+        <a ui-sref-active="active" ui-sref="index.accountSettings.trafficAlerts" class="side-menu-sub-item" id="side-menu-sub-item__traffic-alerts-list" ng-if="userService.isRevadmin()">
             <i class="sub-menu-icon fa fa-server "></i>  Trafic Alerts
-          </a> -->
+          </a>
         <a ui-sref-active="active" ui-sref="index.accountSettings.cdn-ip-blocks" class="side-menu-sub-item" id="side-menu-sub-item__cdn-ip-bloks">
             <i class="sub-menu-icon fa fa-server "></i>  CDN IP Blocks
           </a>
@@ -231,7 +231,7 @@
         <a ui-sref-active="active" ui-sref="index.billing.usage" class="side-menu-sub-item" ng-if="!userService.isUser() && userService.hasAccessTo('usage_reports')">
             <i class="sub-menu-icon fa fa-balance-scale"></i> Usage Report
           </a>
-        <a ui-sref-active="active" ui-sref="index.billing.company" class="side-menu-sub-item" ng-if="userService.isAdmin() && userService.hasAccessTo('account_profile')">
+        <a ui-sref-active="active" ui-sref="index.billing.company" class="side-menu-sub-item" ng-if="(userService.isAdmin() || userService.isReseller()) && userService.hasAccessTo('account_profile')">
             <i class="sub-menu-icon fa fa-gear"></i> Account Profile
           </a>
         <a ui-sref-active="active" ui-sref="index.billing.plans" class="side-menu-sub-item" ng-if="(userService.isAdmin() && userService.hasBillingPlan()) || userService.isRevadmin()">

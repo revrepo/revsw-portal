@@ -6,7 +6,28 @@
     .factory('User', User);
 
   /*@ngInject*/
-  function User($localStorage, $http, $config, $q, DomainsConfig, $auth, Groups, $state, AlertService, Companies) {
+  function User($localStorage, $http, $config, $q, DomainsConfig, $auth, Groups, $state, AlertService, Companies, $rootScope) {
+
+    /** 
+     * Polyfill for String.includes()
+     * Ignoring linting for this because we are extending a native object
+     */
+    // jshint ignore:start
+    if (!String.prototype.includes) {
+      String.prototype.includes = function(search, start) {
+        if (typeof start !== 'number') {
+          start = 0;
+        }
+        
+        if (start + search.length > this.length) {
+          return false;
+        } else {
+          return this.indexOf(search, start) !== -1;
+        }
+      };
+    }
+    // jshint ignore:end
+
     /**
      * List of Users domains
      * @type {Array}
@@ -49,6 +70,9 @@
      * Clear all details from localstorage
      */
     function clearAll() {
+      // Broadcasting a `clear-all` message so all services can start a clean-up process
+      // This is used for logout.
+      $rootScope.$broadcast('clear-all');
       if (!$localStorage || $localStorage.intro === undefined) {
         return;
       }
@@ -130,8 +154,7 @@
                 var res = data.data;           
 
                 // Check roles
-                if (res.role !== $config.ROLE.USER &&
-                  res.role !== $config.ROLE.ADMIN &&
+                if (res.role !== $config.ROLE.ADMIN &&
                   res.role !== $config.ROLE.RESELLER &&
                   res.role !== $config.ROLE.REVADMIN) {
                   // do not have permission
@@ -676,14 +699,7 @@
      */
     function getACL(){
       var user = getUser();
-      var defaultACL = {
-        readOnly: true,
-        test: false,
-        configure: false,
-        reports: false,
-        dashBoard: true
-      };
-      return (!!user)  ? user.access_control_list :  defaultACL;
+      return user.permissions;
     }
 
     function getGroup() {
@@ -827,6 +843,15 @@
         case 'usage_reports':
           returnState = 'index.billing.usage';
           break;
+        case 'billing_statements':
+          returnState = 'index.billing.statements';
+          break;
+        case 'billing_plan':
+          returnState = 'index.billing.plans';
+          break;
+        case 'account_profile':
+          returnState = 'index.billing.company';
+          break;
         default:
           returnState = null;
           break;
@@ -895,6 +920,15 @@
       }
       if (state.includes('index.billing.usage')) {
         return 'usage_reports';
+      }
+      if (state.includes('index.billing.statements')) {
+        return 'billing_statements';
+      }
+      if (state.includes('index.billing.plans')) {
+        return 'billing_plan';
+      }
+      if(state.includes('index.billing.company')) {
+        return 'account_profile';
       }
 
       return true;

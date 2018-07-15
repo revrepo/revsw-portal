@@ -100,7 +100,7 @@
             <label for="enableWafLearnMode" class="col-sm-3 control-label">Instance Number</label>
             <div class="col-md-9">
               <input type="number" name="enableWafLearnMode" class="form-control inline-block" ng-disabled="_loading || _isEditLocked"
-                ng-model="item.wallarm_instance" ng-min="1" ng-max="4000">
+                ng-model="item.wallarm_instance" ng-min="1" ng-max="10000">
               <label for="enableWafLearnMode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Please contact the customer support team to get the value of the parameter">
                 <i class="fa fa-question-circle"></i>
               </label>

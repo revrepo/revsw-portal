@@ -33,13 +33,22 @@ var headerLocators = {
     css: 'th:nth-of-type(2) a'
   },
   lastUpdate: {
-    css: 'th:nth-of-type(3) a'
+    css: 'th:nth-of-type(4) a'
+  },
+  lastUsedAt: {
+    css: 'th:nth-of-type(5) a'
+  },
+  lastUsedFrom: {
+    css: 'th:nth-of-type(6) a'
+  },
+  active: {
+    css: 'th:nth-of-type(3)'
   },
   actions: {
-    css: 'th:nth-of-type(4)'
+    css: 'th:nth-of-type(7)'
   },
   account: {
-    css: 'th:nth-of-type(5) a'
+    css: 'th:nth-of-type(8) a'
   }
 };
 
@@ -60,10 +69,19 @@ var rowLocators = {
     }
   },
   lastUpdate: {
+    css: 'td:nth-of-type(4)'
+  },
+  lastUsedAt: {
+    css: 'td:nth-of-type(5)'
+  },
+  lastUsedFrom: {
+    css: 'td:nth-of-type(6)'
+  },
+  active: {
     css: 'td:nth-of-type(3)'
   },
   actions: {
-    css: 'td:nth-of-type(4)',
+    css: 'td:nth-of-type(7)',
     buttons: {
       pencil: {
         className: 'glyphicon-pencil'
@@ -74,7 +92,7 @@ var rowLocators = {
     }
   },
   account: {
-    css: 'td:nth-of-type(5) a'
+    css: 'td:nth-of-type(8) a'
   }
 };
 

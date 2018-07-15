@@ -78,7 +78,7 @@
                 <label for="group" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here the user's permissions group">
                   <i class="fa fa-question-circle"></i>
                 </label>
-                <a ui-sref="index.accountSettings.groups" class="btn btn-sm btn-primary" uib-tooltip="Manage Groups" ng-disabled="_loading"><i class="fa fa-list-alt"></i> Manage Groups</a>
+                <a ui-sref="{{auth.hasAccessTo('groups') ? 'index.accountSettings.groups' : '.'}}" class="btn btn-sm btn-primary" uib-tooltip="Manage Groups" ng-disabled="_loading || !auth.hasAccessTo('groups')"><i class="fa fa-list-alt"></i> Manage Groups</a>
                 <div class="error-messages" ng-messages="editForm.group.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
@@ -89,7 +89,7 @@
             <div class="col-sm-10">
               <!-- Select only one account. Each user must have one main account.-->
               <span ng-show="!_loading && companies.length==0" class="loader--waite-company"><i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-              <ui-select ng-if="!_loading && companies.length>0 && !!model.companyId" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.companyId[0]" id="company" name="accountId" on-select="onOneAccountSelect($model)">
+              <ui-select ng-if="!_loading && companies.length>0 && !!model.account_id" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.account_id" id="company" name="accountId" on-select="onOneAccountSelect($model)">
                 <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
                 <ui-select-choices repeat="item.id as  item in companies | filter: {companyName: $select.search}">
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
@@ -105,7 +105,7 @@
               <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here an account the user should be associated with">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <a ui-sref="index.accountSettings.companies" class="btn btn-sm btn-primary" uib-tooltip="Manage Accounts" ng-disabled="_loading"><i class="fa fa-list-alt"></i> Manage Accounts</a>
+              <a ui-sref="{{auth.hasAccessTo('accounts') ? 'index.accountSettings.companies' : '.'}}" class="btn btn-sm btn-primary" uib-tooltip="Manage Accounts" ng-disabled="_loading || !auth.hasAccessTo('accounts')"><i class="fa fa-list-alt"></i> Manage Accounts</a>
               <div class="error-messages" ng-messages="editForm.accountId.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -120,7 +120,7 @@
               <ui-select class="inline-block" multiple="true" ng-animate-disabled theme="bootstrap" ng-model="vm.managedAccountIds" ng-disabled="_loading"
                 style="min-width: 550px;" id="managed_account_ids" name="managedAccountIds" ng-if="!_loading && companies.length>0">
                 <ui-select-match placeholder="Add account to manage ...">{{$item.companyName}}</ui-select-match>
-                <ui-select-choices repeat="item  as item  in getCompaniesManageList()| filter: {companyName: $select.search, id:'!'+ model.companyId[0]}">
+                <ui-select-choices repeat="item  as item  in getCompaniesManageList()| filter: {companyName: $select.search, id:'!'+ model.account_id}">
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>

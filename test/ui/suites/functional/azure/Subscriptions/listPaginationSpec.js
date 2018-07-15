@@ -45,7 +45,7 @@ describe('Smoke', function () {
         .azureMarketplace
         .SubscriptionsPage
         .table
-        .getFirstRow()
+        .getRow(1)
         .getSubId();
 
       Portal

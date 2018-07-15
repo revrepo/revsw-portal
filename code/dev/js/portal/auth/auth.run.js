@@ -83,7 +83,7 @@
       // NOTE: event - user signin. Can add additional rules
       // Get User Account Profile only if Azure SSO signin
       if (!!data.isAzureSSO && data.isAzureSSO === true) {
-        var accountId = data.companyId[0];
+        var accountId = data.account_id;
         Companies.get({ id: accountId }, function(data) {
           // NOTE: validation fill account profile
           if (!!data.address1 && data.address1 !== '') {

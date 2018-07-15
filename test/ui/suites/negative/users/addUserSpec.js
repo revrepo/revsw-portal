@@ -60,6 +60,13 @@ describe('Negative', function () {
           var tom = DataProvider.generateUser();
           var jerry = DataProvider.generateUser();
           jerry.email = tom.email;
+          if (user.role === 'Admin') {
+            delete jerry.role;
+            delete tom.role;
+          } else {
+            jerry.company = [user.account.companyName];
+            tom.company = [user.account.companyName];
+          }
           Portal.userListPage.clickAddNewUser();
           Portal.addUserPage.createUser(tom);
           Portal.addUserPage.clickBackToList();
@@ -78,6 +85,11 @@ describe('Negative', function () {
           var derek = DataProvider.generateUser();
           derek.email = '';
           Portal.userListPage.clickAddNewUser();
+          if (user.role === 'Admin') {
+            delete derek.role;
+          } else {
+            derek.company = [user.account.companyName];
+          }
           Portal.addUserPage.form.fill(derek);
           var addBtn = Portal.addUserPage.getCreateUserBtn();
           expect(addBtn.isEnabled()).toBeFalsy();
@@ -88,6 +100,11 @@ describe('Negative', function () {
           var mathew = DataProvider.generateUser();
           mathew.firstName = '';
           Portal.userListPage.clickAddNewUser();
+          if (user.role === 'Admin') {
+            delete mathew.role;
+          } else {
+            mathew.company = [user.account.companyName];
+          }
           Portal.addUserPage.form.fill(mathew);
           var addBtn = Portal.addUserPage.getCreateUserBtn();
           expect(addBtn.isEnabled()).toBeFalsy();
@@ -98,12 +115,18 @@ describe('Negative', function () {
           var mathew = DataProvider.generateUser();
           mathew.lastName = '';
           Portal.userListPage.clickAddNewUser();
+          if (user.role === 'Admin') {
+            delete mathew.role;
+          } else {
+            mathew.company = [user.account.companyName];
+          }
           Portal.addUserPage.form.fill(mathew);
           var addBtn = Portal.addUserPage.getCreateUserBtn();
           expect(addBtn.isEnabled()).toBeFalsy();
         });
 
-      it('should not allow to create a user without any role',
+      if (user.role === 'Reseller') {
+        it('should not allow to create a user without any role',
         function () {
           var scott = DataProvider.generateUser();
           scott.role = '--- Select Role ---';
@@ -112,41 +135,7 @@ describe('Negative', function () {
           var addBtn = Portal.addUserPage.getCreateUserBtn();
           expect(addBtn.isEnabled()).toBeFalsy();
         });
-
-      it('should not allow to create a user without password',
-        function () {
-          var brian = DataProvider.generateUser();
-          delete brian.password;
-          Portal.userListPage.clickAddNewUser();
-          Portal.addUserPage.form.fill(brian);
-          Portal.addUserPage.form.clearPassword();
-          var addBtn = Portal.addUserPage.getCreateUserBtn();
-          expect(addBtn.isEnabled()).toBeFalsy();
-        });
-
-      it('should not allow to create a user without confirmation password',
-        function () {
-          var brian = DataProvider.generateUser();
-          delete brian.passwordConfirm;
-          Portal.userListPage.clickAddNewUser();
-          Portal.addUserPage.form.fill(brian);
-          Portal.addUserPage.form.clearPasswordConfirm();
-          var addBtn = Portal.addUserPage.getCreateUserBtn();
-          expect(addBtn.isEnabled()).toBeFalsy();
-        });
-
-      it('should display an error message when creating user when "Password" ' +
-        'and "Confirmation Password" do not match',
-        function () {
-          var vincent = DataProvider.generateUser();
-          vincent.password = 'something';
-          vincent.passwordConfirm = 'different';
-          Portal.userListPage.clickAddNewUser();
-          Portal.addUserPage.createUser(vincent);
-          Portal.addUserPage.form.fill(vincent);
-          var addBtn = Portal.addUserPage.getCreateUserBtn();
-          expect(addBtn.isEnabled()).toBeFalsy();
-        });
+      }
     });
   });
 

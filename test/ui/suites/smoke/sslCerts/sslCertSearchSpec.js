@@ -18,6 +18,7 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
+var DataProvider = require('./../../../common/providers/data');
 
 describe('Smoke', function () {
 
@@ -25,6 +26,8 @@ describe('Smoke', function () {
   var users = [
     config.get('portal.users.revAdmin')
   ];
+
+  var newSSLCert = DataProvider.generateSSLCertData();
 
   users.forEach(function (user) {
 
@@ -52,11 +55,12 @@ describe('Smoke', function () {
           });
 
         it('should filter items according to text filled',
-          function () {
-            var emailToSearch = Portal.sslCerts.listPage.table
-              .getFirstRow()
-              .getCertName();
-            Portal.sslCerts.listPage.searcher.setSearchCriteria(emailToSearch);
+          function () {            
+            Portal.sslCerts.listPage.clickAddNewSSLCert();
+            Portal.sslCerts.addPage.createSSLCert(newSSLCert);
+            Portal.helpers.nav.goToSSLCertificates();
+            var phraseToSearch = newSSLCert.name;
+            Portal.sslCerts.listPage.searcher.setSearchCriteria(phraseToSearch);
             var allRows = Portal.sslCerts.listPage.table.getRows();
             expect(allRows.count()).toEqual(1);
           });

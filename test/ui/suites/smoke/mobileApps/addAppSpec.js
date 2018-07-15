@@ -25,11 +25,10 @@ describe('Smoke', function() {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    config.get('portal.users.user'),
     config.get('portal.users.admin'),
     config.get('portal.users.reseller'),
     config.get('portal.users.revAdmin'),
-    config.get('portal.users.roUser'),
+    config.get('portal.users.roUser')
   ];
   var platforms = [
     Portal.constants.mobileApps.platforms.ios,

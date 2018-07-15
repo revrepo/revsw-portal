@@ -26,7 +26,6 @@ describe('Functional', function () {
   var users = [
     config.get('portal.users.admin'),
     config.get('portal.users.reseller'),
-    config.get('portal.users.user'),
     config.get('portal.users.roUser')
   ];
 

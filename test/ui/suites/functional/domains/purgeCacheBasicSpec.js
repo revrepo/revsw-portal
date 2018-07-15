@@ -32,9 +32,7 @@ describe('Functional', function () {
 // TODO: the following user accounts belong to other customer accounts
 // so they cannot access the same test domain (qa-admin-10-portal-ui-test.com) used in the test.
 // We need to review all used user accounts and move them under the same customer account.
-//      config.get('portal.users.reseller'),
-//      config.get('portal.users.user'),
-//      config.get('portal.users.roUser')
+//      config.get('portal.users.reseller')
     ];
 
     users.forEach(function (user) {

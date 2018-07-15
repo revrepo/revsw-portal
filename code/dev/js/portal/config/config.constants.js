@@ -428,13 +428,21 @@
         urlenc: 'Urlenc',
         xml: 'XML'
       },
-      INVITATION_COOLDOWN_MS: 3600000, // 1h
+      INVITATION_COOLDOWN_MS: 0, // 1h
       INTRO_RESTRICTED_ACCESS_TEXT: [
         'Welcome to the Customer Portal! ',
         'It looks like you are a new user of the service, ',
         'and we would like to run for you a quick introduction tour. ',
         'Please note that you have restricted permissions to the portal, ',
         'you will be introduced only to unrestricted resources.'
+      ],
+      API_REQUEST_THROTTLING_MESSAGE: [
+        'It looks like your customer portal activity is ',
+        'generating too many requests to our API backend. ',
+        'Please try the operation again, ',
+        'and if you will continue receiving the same rate ',
+        'limiting error please contact our support team using ',
+        '“Help” button in bottom right corner of the page.'
       ]  
     });
 

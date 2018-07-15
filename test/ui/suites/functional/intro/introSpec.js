@@ -22,7 +22,7 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
   describe('Intro Window', function () {
 
-    var user = config.get('portal.users.user');
+    var user = config.get('portal.users.admin');
 
     beforeEach(function () {
       Portal.signIn(user, false);

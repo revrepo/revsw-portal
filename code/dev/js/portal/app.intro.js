@@ -17,32 +17,34 @@
         }, 
         {
           element: '#side-menu-sub-item__update-password',
-          intro: 'update pass section',
+          intro: 'Here you can change your password for portal access.',
           position: 'right'
         },
         {
           element: '#side-menu-sub-item__security-settings',
-          intro: '2fa section',
+          intro: 'This function allows you to enable two-factor authentication (2FA) for your user account for additional protection. You will need to ' +
+            'install free "Google Authenticator" application on your smartphone.',
           position: 'right'
         },
         {
           element: '#side-menu-sub-item__API-documentation',
-          intro: 'api',
+          intro: 'This link will open for you a new browser page with a description of our customer API specification. The interactive specification ' +
+            'will allow you to easily try all available API functionality.',
           position: 'right'
         },
         {
           element: '#side-menu-sub-item__know-base',
-          intro: 'base',
+          intro: 'This link will bring you to a detailed Knowledge Base hosted on our Support site.',
           position: 'right'
         },
         {
           element: '#side-menu-sub-item__open-ticket',
-          intro: 'ticket',
+          intro: 'Using this link you can easily open a ticket with our Customer Success center. A human will reply to you within 10 minutes.',
           position: 'right'
         },
         {
           element: '#side-menu-sub-item__network-status',
-          intro: 'status',
+          intro: 'The current status of our platform is available on a separate page which can be accessed using the menu item.',
           position: 'right'
         },
         {
@@ -60,13 +62,13 @@
           permission:'ssl_certs',
           element: '#side-menu-sub-item__webApp-ssl_certs',
           intro: 'We highly recommend to use SSL protocol for your websites - it will increase the website security and also allow your visitors to use modern and ' +
-            'fast HTTP/2 protocol',
+            'fast HTTP/2 protocol.',
           position: 'right'
         }, {
           permission:'ssl_names',
           element: '#side-menu-sub-item__webApp-ssl_names',
           intro: 'When using {{companyNameShort}} shared SSL certificate managed by GlobalSign CA you can use this section to manage SSL ' +
-            'domain names protected by the certificate',
+            'domain names protected by the certificate.',
           position: 'right'
         }, {
           permission:'cache_purge',

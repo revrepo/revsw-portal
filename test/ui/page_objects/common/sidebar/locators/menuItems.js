@@ -113,6 +113,10 @@ var MenuItems = {
     IMAGE_OPTIMIZATION: {
       linkText: 'ImageEngine',
       area: MenuAreas.WEB_ANALYTICS
+    },
+    EDGE_CACHE: {
+      linkText: 'Edge Cache',
+      area: MenuAreas.WEB_ANALYTICS
     }
   },
   SECURITY_ANALYTICS:{
@@ -150,6 +154,10 @@ var MenuItems = {
   ADMIN: {
     USERS: {
       linkText: 'Users',
+      area: MenuAreas.ADMIN
+    },
+    GROUPS: {
+      linkText: 'Groups',
       area: MenuAreas.ADMIN
     },
     ACCOUNTS: {

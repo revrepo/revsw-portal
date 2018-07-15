@@ -56,6 +56,7 @@ var PurgeCacheBasicPage = require('./domain/purgeCacheBasicPage');
 var PurgeCacheAdvancedPage = require('./domain/purgeCacheAdvancedPage');
 var ProxyTrafficPage = require('./analytics/proxyTrafficPage');
 var TopReportsPage = require('./analytics/topReportsPage');
+var EdgeCachePage = require('./analytics/edgeCachePage');
 var TopObjectsPage = require('./analytics/topObjectsPage');
 var FBTReportsPage = require('./analytics/fbtReportsPage');
 var TrafficHeatmapsPage = require('./analytics/trafficHeatmapsPage');
@@ -137,6 +138,10 @@ var ApiKeysHelpers = require('./../common/helpers/apiKeys.js');
 var DomainsHelpers = require('./../common/helpers/domains.js');
 var SSLCertsHelpers = require('./../common/helpers/sslCerts');
 var UsageReportHelpers = require('./../common/helpers/usageReport.js');
+var InvitationPage = require('./../page_objects/invitation/setPasswordPage');
+var ListGroupsPage = require('./../page_objects/group/listPage');
+var AddGroupsPage = require('./../page_objects/group/addPage');
+var EditGroupsPage = require('./../page_objects/group/editPage');
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
 var Portal = {
@@ -161,11 +166,17 @@ var Portal = {
   globalSearcher: GlobalSearcher,
 
   // Pages that compound this Portal app/site
+  invitationPage: InvitationPage,
   loginPage: LoginPage,
   goodByePage: GoodByePage,
   userListPage: ListUsersPage,
   editUserPage: EditUserPage,
   addUserPage: AddUserPage,
+  groups: {
+    listPage: ListGroupsPage,
+    addPage:  AddGroupsPage,
+    editPage: EditGroupsPage
+  },
   securitySettingsPage: SecuritySettingsPage,
   updatePasswordPage: UpdatePasswordPage,
   dashboards: Dashboards,
@@ -180,6 +191,7 @@ var Portal = {
   proxyTrafficPage: ProxyTrafficPage,
   imageOptimizationPage: ImageOptimizationPage,
   topReportsPage: TopReportsPage,
+  edgeCachePage: EdgeCachePage,
   topObjectsPage: TopObjectsPage,
   fbtReportsPage: FBTReportsPage,
   trafficHeatmapsPage: TrafficHeatmapsPage,
@@ -339,7 +351,8 @@ var Portal = {
    *
    * @returns {Promise}
    */
-  signInNuubit: function (user) {
+  signInNuubit: function (user, introSkip) {
+    introSkip = introSkip === undefined ? true : false;
     var me = this;
     var promise = this.header
       .isPresent()
@@ -357,6 +370,18 @@ var Portal = {
           .signIn(user)
           .then(function () {
             me.session.setCurrentUser(user);
+            if (introSkip) {
+              // Check for intro
+              var until = protractor.ExpectedConditions;
+              // Wait up to 1 minute for login to finish
+              browser.wait(until.presenceOf(Portal.header.getHeaderBar()), 60000);
+              Portal.intro.getIntroContainer().isPresent().then(function (val) {
+                if (val) {
+                  Portal.intro.clickSkipBtn();
+                  browser.sleep(2000);
+                }
+              });
+            }
           });
       });
     return Promise.resolve(promise);
@@ -870,6 +895,17 @@ var Portal = {
           .clickManageRecords();
       });
   },
+
+  /**
+   * ### Portal.isLoggedIn()
+   * 
+   * @returns {Boolean} is logged in or not
+   */
+  isLoggedIn: function () {
+    return this.header.getHeaderBar().isPresent().then(function (val) {
+      return val;
+    });
+  }
 };
 
 module.exports = Portal;

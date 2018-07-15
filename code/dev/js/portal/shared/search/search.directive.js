@@ -110,6 +110,8 @@
           }
 
           scope.getFilteredList = function(term) {
+            /* jshint maxstatements:100 */
+            /* Ignore statements, its a long search.. */
             scope.searchTerm = term;
             $rootScope.searchTerm = term;
 
@@ -123,17 +125,23 @@
                     item.searchBarText = item.domain_name + ' (Edit Domain)';
                     item.searchDisplayText = item.domain_name;
                     item.searchAction = 'edit';
+                    if (User.hasAccessTo('domains')) {
                     results.push(item);
+                    }
 
                     var copy = angular.copy(item);
                     copy.searchBarText = copy.domain_name + ' (Web Analytics)';
                     copy.searchAction = 'analytics';
+                    if (User.hasAccessTo('web_analytics')) {
                     results.push(copy);
+                    }
 
                     var purgeCopy = angular.copy(item);
                     purgeCopy.searchBarText = purgeCopy.domain_name + ' (Purge Cache)';
                     purgeCopy.searchAction = 'purge';
+                    if (User.hasAccessTo('cache_purge')) {
                     results.push(purgeCopy);
+                    }
                   }
                   break;
                 case 'company':
@@ -141,12 +149,18 @@
                     item.searchBarText = item.companyName + ' (Edit Account)';
                     item.searchDisplayText = item.companyName;
                     item.searchAction = 'edit';
-                    results.push(item);
+                    if (User.isAdmin() && User.hasAccessTo('account_profile')) {
+                      results.push(item);
+                    } else if (User.hasAccessTo('accounts')) {
+                      results.push(item);
+                    }
 
                     var companyCopy = angular.copy(item);
                     companyCopy.searchBarText = companyCopy.companyName + ' (Usage Report)';
                     companyCopy.searchAction = 'usage';
-                    results.push(companyCopy);
+                    if (User.hasAccessTo('usage_reports')) {
+                      results.push(companyCopy);
+                    }                    
                   }
                   break;
                 case 'billing':
@@ -154,7 +168,9 @@
                     item.searchDisplayText = item.acc_name;
                     item.searchBarText = item.acc_name + ' (Billing Statements)';
                     item.searchAction = 'billing';
+                    if (User.hasAccessTo('billing_statements') && User.hasBillingPlan()) {
                     results.push(item);
+                    }
                   }
                   break;
                 case 'user':
@@ -165,7 +181,9 @@
                     item.searchBarText = fullName + ' (Edit User)';
                     item.searchDisplayText = fullName;
                     item.searchAction = 'edit';
+                    if (User.hasAccessTo('users')) {
                     results.push(item);
+                    }
                   }
                   break;
                 case 'group':
@@ -173,7 +191,9 @@
                     item.searchBarText = item.name + ' (Edit Group)';
                     item.searchDisplayText = item.name;
                     item.searchAction = 'edit';
+                    if (User.hasAccessTo('groups')) {
                     results.push(item);
+                    }
                   }
                   break;
                 case 'app':
@@ -188,7 +208,9 @@
                     appCopy.searchBarText = appCopy.app_name +
                       '<i>'+item.app_platform.replace('_',' ')+'</i>  (Mobile Analytics)';
                     appCopy.searchAction = 'analytics';
+                    if (User.hasAccessTo('mobile_analytics')) {
                     results.push(appCopy);
+                    }
                   }
                   break;
                 case 'apiKey':
@@ -204,7 +226,9 @@
                     item.searchBarText = item.title + ' (Dashboard)';
                     item.searchDisplayText = item.title;
                     item.searchAction = 'edit';
+                    if (User.hasAccessTo('dashboards')) {
                     results.push(item);
+                    }
                   }
                   break;
                 case 'zones':
@@ -256,7 +280,13 @@
                 break;
               case 'company':
                 if (item.searchAction === 'edit') {
-                  $location.path('companies/edit/' + item.id);
+                  console.log($localStorage.userMainAccount);
+                  console.log(item);
+                  if (item.id === $localStorage.userMainAccount.id) {
+                    $location.path('account');
+                  } else {
+                    $location.path('accounts/edit/' + item.id);
+                  }                  
                 } else if (item.searchAction === 'usage') {
                   selectAccount(item);
                   if ($location.path() === '/usage') {

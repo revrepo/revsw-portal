@@ -44,6 +44,7 @@
     'revapm.Portal.WAFAnalytics',
     'revapm.Portal.WAFRules',
     'revapm.Portal.Notifications',
+    'revapm.Portal.TrafficAlerts',
     'revapm.Portal.networkIPBlocks',
     'revapm.Portal.Invitation',
     'ngYoutubeEmbed',

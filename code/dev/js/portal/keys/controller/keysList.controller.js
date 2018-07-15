@@ -58,7 +58,7 @@
           // Fetch id
           var user = $scope.auth.getUser();
           $scope.companies = [{
-            id: user.companyId[0]
+            id: user.account_id
           }];
         }
       });
@@ -149,7 +149,7 @@
      * @returns {Object}
      */
     function clearUpdateData(data) {
-      var fields = ['key_name', 'account_id', 'domains', 'allowed_ops', 'read_only_status', 'active'];
+      var fields = ['key_name', 'account_id', 'read_only_status', 'active'];
       return _.pick(_.clone(data), fields);
     }
 
