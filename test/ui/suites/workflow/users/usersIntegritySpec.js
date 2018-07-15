@@ -29,6 +29,7 @@ describe('Workflow', function () {
         /* jshint camelcase:false */
         describe('Users Add Edit Integrity', function () {
             var newUser = DataProvider.generateUser();
+            delete newUser.role;
             var newUserUpdated = newUser;
             var userObj = {};
             beforeAll(function (done) {
@@ -38,6 +39,7 @@ describe('Workflow', function () {
                 Portal.addUserPage.createUser(newUser).then(function () {
                     Portal.helpers.users.getUser(newUser.email).then(function (usr) {
                         userObj = usr;
+                        newUser.role = 'admin';
                         done();
                     });
                 });
@@ -64,7 +66,7 @@ describe('Workflow', function () {
                         .toBe('');
                     expect(userObj.role)
                         .toBe(newUser.role);
-                    expect(userObj.access_control_list.readOnly)
+                    expect(userObj.permissions.readOnly)
                         .toBeFalsy();
                 });
 
@@ -78,9 +80,6 @@ describe('Workflow', function () {
                     });
                     Portal.editUserPage.form.getEmail().then(function (email) {
                         expect(email).toBe(userObj.email);
-                    });
-                    Portal.editUserPage.form.getRole().then(function (role) {
-                        expect(role).toBe(userObj.role);
                     });
                 });
 
@@ -109,7 +108,7 @@ describe('Workflow', function () {
                                     .toBe(newUserUpdated.comment);
                                 expect(userObj.role)
                                     .toBe(newUserUpdated.role);
-                                expect(userObj.access_control_list.readOnly)
+                                expect(userObj.permissions.read_only)
                                     .toBeFalsy();
                                 done();
                             });
@@ -126,9 +125,6 @@ describe('Workflow', function () {
                     });
                     Portal.editUserPage.form.getEmail().then(function (email) {
                         expect(email).toBe(userObj.email);
-                    });
-                    Portal.editUserPage.form.getRole().then(function (role) {
-                        expect(role).toBe(userObj.role);
                     });
                     Portal.editUserPage.form.getComment().then(function (comment) {
                         expect(comment).toBe(userObj.comment);

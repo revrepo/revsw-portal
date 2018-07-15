@@ -47,6 +47,7 @@ describe('Negative: ', function () {
                         bret = DataProvider.generateUser();
                         Portal.helpers.nav.goToUsers();
                         Portal.userListPage.clickAddNewUser();
+                        delete bret.role;
                         Portal.addUserPage.createUser(bret);
                         Portal.signOut().then(function () {
                             Portal.signIn(bret);

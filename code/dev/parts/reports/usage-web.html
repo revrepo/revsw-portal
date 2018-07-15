@@ -54,12 +54,24 @@
                       Update Report
                     </button>
                   </div>
+                  <br />
+                  <div class="form-group" ng-if="auth.isRevadmin()">
+                    <input class="form-control no-margin" type="checkbox" ng-click="aggReports()" /> 
+                    Aggregated Report For Reseller Accounts
+                  </div>
 
                 </form>
               </div>
 
               <div class="pull-right" ng-if="_loading" >
                 <i style="font-size: 34px;" class="glyphicon glyphicon-refresh spin"></i>
+              </div>
+
+              <div class="pull-right">
+                  <button class="btn btn-primary" ng-click="exportCSV()" ng-disabled="_loading || !selected.val || !report">
+                      <i class="glyphicon glyphicon-export"></i>&nbsp;
+                      Download CSV
+                    </button>     
               </div>
 
             </div>
@@ -284,6 +296,43 @@
               </form>
 
             </div>
+
+            <div class="col-md-4">
+
+              <h4>ImageEngine Usage</h4>
+
+              <form class="form-horizontal">
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >Optimized Images</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">
+                      {{ formatNumber(report.image_engine ? report.image_engine.optimized_images_count : 0) }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >Original Traffic</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">
+                      {{ bytesToGB(report.image_engine ? report.image_engine.original_image_size_bytes : 0) }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >Optimized Traffic (Smart Bytes)</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">
+                      {{ bytesToGB(report.image_engine ? report.image_engine.optimized_image_size_bytes: 0) }}
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
           </div>
 
           <div ng-if="showTraffic()">
@@ -318,10 +367,10 @@
               <hr>
               <h4 class="list-title">Domains Usage</h4>
 
-              <table class="table table-stripped table-condensed">
+              <table dt-options="domainDTOptions" dt-column-defs="domainColDefs" class="table table-stripped table-condensed">
                 <thead>
                   <tr>
-                    <th style="width:30px;"></th>
+                    <th style="width:30px;">&nbsp;</th>
                     <th style="width:25%;">Domain</th>
                     <th class="text-right">Requests</th>
                     <th class="text-right">Traffic Sent</th>
@@ -336,6 +385,7 @@
                       <a ng-if="usage.count !== '0'" role="button" data-toggle="collapse" data-target="#domain-{{$index}}" >
                         <i class="glyphicon glyphicon-plus-sign"></i> <!-- glyphicon-remove-circle  glyphicon-fire -->
                       </a>
+                      <span ng-if="usage.count === '0'">&nbsp;</span>                 
                     </td>
                     <td>
                       <span ng-if="usage.deleted" style="color:darkred;">
@@ -350,7 +400,7 @@
                     <td class="text-right">{{usage.billable_received_bps}}</td>
                   </tr>
                   <tr ng-repeat-end id="domain-{{$index}}" class="panel-collapse collapse" role="tabpanel" name="{{domain}}">
-                    <td colspan="7" style="background-color: #d0d0e0; padding-left: 25px;">
+                    <td colspan="7" style="width: 100%;background-color: #d0d0e0; padding-left: 25px;">
                       <div class="panel-body" style="padding: 10px; padding-bottom: 0;">
 
                         <div class="row">
@@ -358,7 +408,7 @@
                             {{domain}}
                           </h3>
 
-                          <div class="col-md-6">
+                          <div class="col-md-4">
 
                             <h4>Edge Cache Usage</h4>
 
@@ -382,7 +432,7 @@
 
                           </div>
 
-                          <div class="col-md-6">
+                          <div class="col-md-4">
 
                             <h4>HTTP/HTTPS Requests</h4>
 
@@ -398,6 +448,43 @@
                             </form>
 
                           </div>
+
+                          <div class="col-md-4">
+
+                              <h4>ImageEngine Usage</h4>
+                
+                              <form class="form-horizontal">
+                
+                                <div class="form-group">
+                                  <label class="col-sm-6 control-label" >Optimized Images</label>
+                                  <div class="col-sm-6">
+                                    <div class="form-control text-right">
+                                      {{ formatNumber(usage.image_engine ? usage.image_engine.optimized_images_count : 0) }}
+                                    </div>
+                                  </div>
+                                </div>
+                
+                                <div class="form-group">
+                                  <label class="col-sm-6 control-label" >Original Traffic</label>
+                                  <div class="col-sm-6">
+                                    <div class="form-control text-right">
+                                      {{ bytesToGB(usage.image_engine ? usage.image_engine.original_image_size_bytes : 0) }}
+                                    </div>
+                                  </div>
+                                </div>
+                
+                                <div class="form-group">
+                                  <label class="col-sm-6 control-label" >Optimized Traffic<br />(Smart Bytes)</label>
+                                  <div class="col-sm-6">
+                                    <div class="form-control text-right">
+                                      {{ bytesToGB(usage.image_engine ? usage.image_engine.optimized_image_size_bytes: 0) }}
+                                    </div>
+                                  </div>
+                                </div>
+                
+                              </form>
+                
+                            </div>
                         </div>
 
                         <hr>
@@ -451,16 +538,26 @@
                 </thead>
                 <tbody>
                   <tr ng-repeat="account in report.accounts">
-                    <td><a ng-click="onAccountClick('{{account.acc_id}}')">{{account.acc_name}}</a></td>
+                    <td>
+                      <a ng-click="onAccountClick('{{account.acc_id}}')">{{account.acc_name}}</a>
+                    </td>
                     <td class="text-right">{{account.count}}</td>
-                    <td class="text-right">{{account.sent_bytes}}</td>
-                    <td class="text-right">{{account.received_bytes}}</td>
-                    <td class="text-right">{{account.billable_sent_bps}}</td>
-                    <td class="text-right">{{account.billable_received_bps}}</td>
+                    <td class="text-right">
+                      <span class="GBappend">{{account.sent_bytes.replace('GB', '')}}</span>
+                    </td>
+                    <td class="text-right">
+                      <span class="GBappend">{{account.received_bytes.replace('GB', '')}}</span>
+                    </td>
+                    <td class="text-right">
+                      <span class="Mbpsappend">{{account.billable_sent_bps.replace('Mbps', '')}}</span>
+                    </td>
+                    <td class="text-right">
+                      <span class="Mbpsappend">{{account.billable_received_bps.replace('Mbps', '')}}</span>
+                    </td>
                     <td class="text-right">{{account.active_domains || 0}}</td>
                     <td class="text-right">{{account.active_apps || 0}}</td>
-                  </tr>
-                </tbody>
+                    </tr>
+                    </tbody>
               </table>
 
             </div>

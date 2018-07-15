@@ -85,7 +85,7 @@
                       {{Group.name}}
                     </a>
                   </td>
-                  <td style="overflow-x: auto;">
+                  <td style="overflow-x: auto; text-overflow: initial;">
                     <span ng-show="!Group.users"><i class="glyphicon glyphicon-refresh spin"></i></span>
                     <span ng-if="Group.users.count === 0">None</span>
                     <span ng-repeat="user in Group.users.users">{{user.email || user.key_name}}{{ Group.users.users.indexOf(user) === Group.users.users.length - 1 ? null : ', '}}</span>

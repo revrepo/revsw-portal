@@ -21,7 +21,7 @@ var Portal = require('./../../../../page_objects/portal');
 var DataProvider = require('./../../../../common/providers/data');
 var Constants = require('./../../../../page_objects/constants');
 
-describe('Smoke', function () {
+describe('Boundary', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
@@ -83,16 +83,7 @@ describe('Smoke', function () {
           var allRows = Portal.admin.apiKeys.listPage.table.getRows();
           expect(allRows.count()).toEqual(0);
           apiKeyData.name = apiKeyName;
-        });
-
-        if (user.role !== 'Admin') {
-          it('should display "Additional Accounts To Manage"', function () {
-            Portal.admin.apiKeys.listPage.searchAndClickEdit(apiKeyData.name);
-            expect(checkDisplay('getAdditionalAccountsToManageInputTxt')).toBe(true);
-          });
-        }
-        
-
+        });  
       });
     });
   });

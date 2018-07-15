@@ -172,5 +172,20 @@ describe('Smoke: ', function () {
         });
       });
 
+      it('should display ImageEngine section with correct report properties', function() {
+
+        var result = Portal.billing.usageReportPage.getFormTextByFormName('ImageEngine Usage');
+
+        result.then(function(dataText){
+          expect(dataText).toContain('Optimized Images');
+          expect(dataText).toContain('Original Traffic');
+          expect(dataText).toContain('Optimized Traffic');
+        });
+      });
+
+      it('should display `Download CSV` Button', function() {
+        expect(Portal.billing.usageReportPage.getDownloadCSVBtn().isDisplayed()).toBeTruthy();
+      });
+
   });
 });

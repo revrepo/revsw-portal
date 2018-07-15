@@ -14,7 +14,7 @@
       $urlRouterProvider.deferIntercept();
   }
   /*@ngInject*/
-  function runApp($rootScope, $http, $location, AlertService, $state, User, Vendors, $urlRouter) {
+  function runApp($rootScope, $http, $location, AlertService, $state, User, Vendors, $urlRouter, $config) {
     $rootScope.user = User;
     $rootScope.alertService = AlertService;
     $rootScope.$state = $state;
@@ -34,6 +34,11 @@
         }, 0);
       });
     $rootScope.$on('$stateChangeError', console.log.bind(console));
+
+    $rootScope.$on('tooManyRequests', function () {
+      AlertService.clear();
+      AlertService.danger($config.API_REQUEST_THROTTLING_MESSAGE.join(''));
+    });
 
     $rootScope.goToState = function(state, dashboardID){
 

@@ -35,6 +35,34 @@ var DataProvider = {
   session: Session,
 
   /**
+   * ### DataProvider.generateGroup()
+   *
+   * Generate a valid group object with all the data we require
+   *
+   * @param {Object} prefix
+   * @param {Object} data
+   *
+   * @returns {Object}, generate user data with the following schema:
+   *
+   *     {
+   *         name: string,
+   *         account_id: objectId,
+   *         comment: string,
+   *     }
+   */
+  generateGroup: function (prefix, data) {
+    if (!data) {
+      data = {};
+    }
+  
+    return {
+      name: data.name || ((prefix || '') + 'test-group-' + Date.now()),
+      account: data.account,
+      comment:  data.comment || 'test-group-' + Date.now()
+    };
+  },
+
+  /**
    * ### DataProvider.generateUser()
    *
    * Generates user data object based on the unique para that it requires.
@@ -60,13 +88,6 @@ var DataProvider = {
     var lastName = data.lastName || faker.name.lastName();
     var currentUser = Session.getCurrentUser();
 
-    // Special case when the portal user is creating a new user
-    // is a reseller or rev-admin which require the specify the
-    // company the new user should be associated with
-    if (currentUser !== undefined && currentUser.role !== 'Admin' && vendorData === undefined) {
-      data.company = ['API QA Reseller Company'];
-    }
-
     return {
       email: [firstName, Date.now() + '@mailinator.com']
         .join('-')
@@ -75,8 +96,7 @@ var DataProvider = {
       lastName: lastName,
       role: data.role || Constants.user.roles.ADMIN,
       password: 'password1',
-      passwordConfirm: 'password1',
-      company: data.company
+      passwordConfirm: 'password1'
     };
   },
 

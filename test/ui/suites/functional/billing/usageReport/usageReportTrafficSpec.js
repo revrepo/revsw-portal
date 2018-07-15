@@ -33,7 +33,7 @@ describe('Functional', function () {
       var avgTrafficPerDay = 0;
       var avgSentBytesPerDay = 0;
       var avgRecvBytesPerDay = 0;
-      var revTestId = config.get('portal.users.user').account.id;
+      var revTestId = config.get('portal.users.admin').account.id;
       var sentBps = 0;
       var recvBps = 0;
       var cacheHits = {};
@@ -93,7 +93,8 @@ describe('Functional', function () {
           date = new Date();
           // expect approx
           console.log(avgTrafficPerDay);
-          expect(total - (avgTrafficPerDay * date.getDate())).toBeLessThan(100);
+          console.log(date.getDate());
+          expect(total - (avgTrafficPerDay * 30)).toBeLessThan(100);
         });
       });
       it('should display correct amount of traffic sent', function () {
@@ -116,42 +117,42 @@ describe('Functional', function () {
         Portal.billing.usageReportPage.getTotalTrafficForm().getText().then(function (text) {
           var total = text.split('\n')[8].replace(' Mbps', '');
           // expect approx
-          expect(total - sentBps).toBeLessThan(0.01);
+          expect(total - sentBps).toBeLessThan(0.1);
         });
       });
       it('should display correct amount of BW received', function () {
         Portal.billing.usageReportPage.getTotalTrafficForm().getText().then(function (text) {
           var total = text.split('\n')[10].replace(' Mbps', '');
           // expect approx
-          expect(total - recvBps).toBeLessThan(0.01);
+          expect(total - recvBps).toBeLessThan(0.1);
         });
       });
       it('should display correct amount of Cache HIT', function () {
         Portal.billing.usageReportPage.getEdgeCacheUsageForm().getText().then(function (text) {
           var total = text.split('\n')[2].replaceAll('\'', '');
           // expect approx
-          expect(total - cacheHits.HIT).toBeLessThan(100);
+          expect(total - (cacheHits.HIT  * 30)).toBeLessThan(100);
         });
       });
       it('should display correct amount of Cache MISS', function () {
         Portal.billing.usageReportPage.getEdgeCacheUsageForm().getText().then(function (text) {
           var total = text.split('\n')[4].replaceAll('\'', '');
           // expect approx
-          expect(total - cacheHits.MISS).toBeLessThan(100);
+          expect(total - (cacheHits.MISS * 30)).toBeLessThan(100);
         });
       });
       it('should display correct amount of HTTP requests', function () {
         Portal.billing.usageReportPage.getHTTPHTTPSRequestsForm().getText().then(function (text) {
           var total = text.split('\n')[2].replaceAll('\'', '');
           // expect approx
-          expect(total - portHits['80']).toBeLessThan(100);
+          expect(total - (portHits['80'] * 30)).toBeLessThan(100);
         });
       });
       it('should display correct amount of HTTPS requests', function () {
         Portal.billing.usageReportPage.getHTTPHTTPSRequestsForm().getText().then(function (text) {
           var total = text.split('\n')[4].replaceAll('\'', '');
           // expect approx
-          expect(total - portHits['443']).toBeLessThan(100);
+          expect(total - (portHits['443'] * 30)).toBeLessThan(100);
         });
       });
       /* jshint ignore:end */

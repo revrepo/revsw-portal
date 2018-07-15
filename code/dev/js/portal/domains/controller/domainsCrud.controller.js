@@ -914,8 +914,8 @@
           // NOTE: set default values for new Origin Health Probe
           var _default = {
             HTTP_REQUEST: 'GET / HTTP/1.1',
-            PROBE_TIMEOUT: 1,
-            PROBE_INTERVAL: 2,
+            PROBE_TIMEOUT: 2,
+            PROBE_INTERVAL: 60,
             HTTP_STATUS: 200
           };
           if (!$scope.model.origin_health_probe) {

@@ -84,83 +84,17 @@ var GroupList = {
     return element.all(by.css(this.locators.views.listItems.css));
   },
 
-
-  /**
-   * ### UserList.getAddNewUserBtn()
-   *
-   * Returns the reference to the `Add New User` button (Selenium WebDriver
-   * Element) from the User List page from the Portal app.
-   *
-   * @returns {Selenium WebDriver Element}
-   */
-  getAddNewUserBtn: function () {
+  getAddNewGroupBtn: function () {
     return element.all(
-      by.className(this.locators.buttons.addNewUser.className));
+      by.className(this.locators.buttons.addNewGroup.className));
   },
   
-  // ## Methods to interact with the User List Page components
-
-  /**
-   * ### UserList.clickAddNewUser()
-   *
-   * Triggers a click to the `Add New User` button from the User List page
-   * from the Portal app
-   *
-   * @returns {Promise}
-   */
-  clickAddNewUser: function () {
+  clickAddNewGroup: function () {
     return this
-      .getAddNewUserBtn()
+      .getAddNewGroupBtn()
       .click();
   },
 
-  /**
-   * ### UserList.getTitle()
-   *
-   * Gets the `Title` label from the User List page
-   *
-   * @returns {Promise}
-   */
-  getTitle: function () {
-    return this
-      .getTitleLbl()
-      .getText();
-  },
-
-  // ## Helper Methods
-
-  /**
-   * Simulates a refresh of users list page by going to other view and returning
-   * to users list.
-   */
-  refresh: function () {
-    NavHelper.goToDashboards();
-    NavHelper.goToUsers();
-  },
-
-  /**
-   * ### UserList.isDisplayed()
-   *
-   * Checks whether the User List page is being displayed in the UI or not.
-   *
-   * @returns {Promise}
-   */
-  isDisplayed: function () {
-    return this.searcher
-      .getSearchCriteriaTxtIn()
-      .isPresent();
-  },
-
-  /**
-   * ### UserList.searchAndGetFirstRow()
-   *
-   * Filters the User List table by the given criteria and returns the first
-   * result of the table.
-   *
-   * @param {String} criteria, to filter
-   *
-   * @returns {TableRow}
-   */
   searchAndGetFirstRow: function (criteria) {
     this.searcher.clearSearchCriteria();
     this.searcher.setSearchCriteria(criteria);
@@ -198,6 +132,10 @@ var GroupList = {
     return this
       .searchAndGetFirstRow(criteria)
       .clickEdit();
+  },
+
+  isDisplayed: function () {
+    return this.getTitleLbl().isDisplayed();
   }
 };
 

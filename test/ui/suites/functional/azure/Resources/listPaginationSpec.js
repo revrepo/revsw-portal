@@ -20,7 +20,7 @@ var config = require('config');
 var Portal = require('./../../../../page_objects/portal');
 var Constants = require('./../../../../page_objects/constants');
 
-describe('Smoke', function () {
+describe('Functional', function () {
   describe('Resources pagination', function () {
 
     var revAdminUser = config.get('portal.users.revAdmin');
@@ -70,7 +70,7 @@ describe('Smoke', function () {
         .ResourcesPage
         .table
         .getFirstRow()
-        .getSubId();
+        .getName();
 
       Portal
         .azureMarketplace
@@ -84,7 +84,7 @@ describe('Smoke', function () {
           .ResourcesPage
           .table
           .getFirstRow()
-          .getSubId()
+          .getName()
       ).not.toEqual(firstRow);
 
       Portal
@@ -101,7 +101,7 @@ describe('Smoke', function () {
         .ResourcesPage
         .table
         .getFirstRow()
-        .getSubId();
+        .getName();
 
       Portal
         .azureMarketplace
@@ -115,7 +115,7 @@ describe('Smoke', function () {
           .ResourcesPage
           .table
           .getFirstRow()
-          .getSubId()
+          .getName()
       ).not.toEqual(firstRow);
 
     });
@@ -126,7 +126,7 @@ describe('Smoke', function () {
         .ResourcesPage
         .table
         .getFirstRow()
-        .getSubId();
+        .getName();
 
       Portal
         .azureMarketplace
@@ -140,7 +140,7 @@ describe('Smoke', function () {
           .ResourcesPage
           .table
           .getFirstRow()
-          .getSubId()
+          .getName()
       ).not.toEqual(firstRow);
 
     });

@@ -24,14 +24,14 @@ var GroupTableRow = function (rowEl, locators) {
 
   // Methods
   this.getNameCell = function () {
-    return this.rowEl.element(by.css(this.locators.name.css));
+    return this.rowEl.element(by.css(this.locators.groupName.css));
   };
   this.getName = function () {
     return this.getNameCell().getText();
   };
 
   this.getUsersCell = function () {
-    return this.rowEl.element(by.css(this.locators.users.css));
+    return this.rowEl.element(by.css(this.locators.usersInGroup.css));
   };
   this.getUsers = function () {
     return this.getUsersCell().getText();
@@ -59,10 +59,18 @@ var GroupTableRow = function (rowEl, locators) {
   };
 
   this.getEditBtn = function () {
-    return this.rowEl.element(by.css(this.locators.editBtn.css));
+    return this.rowEl.element(by.className(this.locators.actions.buttons.pencil.className));
   };
   this.getDeleteBtn = function () {
-    return this.rowEl.element(by.css(this.locators.deleteBtn.css));
+    return this.rowEl.element(by.className(this.locators.actions.buttons.trash.className));
+  };
+
+  this.clickEdit = function () {
+    return this.getEditBtn().click();
+  };
+
+  this.clickDelete = function () {
+    return this.getDeleteBtn().click();
   };
 };
 

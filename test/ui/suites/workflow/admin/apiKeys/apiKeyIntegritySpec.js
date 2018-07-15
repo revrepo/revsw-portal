@@ -89,69 +89,6 @@ describe('Workflow', function () {
                     .getActive().then(function (val) {
                         expect(val).toBe(keyObj.active);
                     });
-
-                Portal
-                    .admin
-                    .apiKeys
-                    .editPage
-                    .form
-                    .getReadOnly().then(function (val) {
-                        expect(val).toBe(keyObj.read_only_status);
-                    });
-
-                Portal
-                    .admin
-                    .apiKeys
-                    .editPage
-                    .form
-                    .getRead().then(function (val) {
-                        expect(val).toBe(keyObj.allowed_ops.read_config);
-                    });
-
-                Portal
-                    .admin
-                    .apiKeys
-                    .editPage
-                    .form
-                    .getModify().then(function (val) {
-                        expect(val).toBe(keyObj.allowed_ops.modify_config);
-                    });
-
-                Portal
-                    .admin
-                    .apiKeys
-                    .editPage
-                    .form
-                    .getDelete().then(function (val) {
-                        expect(val).toBe(keyObj.allowed_ops.delete_config);
-                    });
-
-                Portal
-                    .admin
-                    .apiKeys
-                    .editPage
-                    .form
-                    .getPurge().then(function (val) {
-                        expect(val).toBe(keyObj.allowed_ops.purge);
-                    });
-
-                Portal
-                    .admin
-                    .apiKeys
-                    .editPage
-                    .form
-                    .getReports().then(function (val) {
-                        expect(val).toBe(keyObj.allowed_ops.reports);
-                    });
-
-                Portal
-                    .admin
-                    .apiKeys
-                    .editPage
-                    .form
-                    .getAdmin().then(function (val) {
-                        expect(val).toBe(keyObj.allowed_ops.admin);
-                    });
                 });
 
             it('should contain correct data in the API Key JSON object after update',
@@ -159,7 +96,6 @@ describe('Workflow', function () {
                     newKeyUpdated.name += ' NEW';
 
                     Portal.admin.apiKeys.editPage.form.setName(newKeyUpdated.name);
-                    Portal.admin.apiKeys.editPage.form.checkAll();
                     Portal.admin.apiKeys.editPage.clickUpdate();
                     Portal.alerts.waitToDisplay().then(function () {
                         Portal
@@ -169,13 +105,6 @@ describe('Workflow', function () {
                                 keyObj = key;
                                 expect(keyObj.key_name).toBe(newKeyUpdated.name);
                                 expect(keyObj.active).toBeTruthy();
-                                expect(keyObj.read_only_status).toBeTruthy();
-                                expect(keyObj.allowed_ops.admin).toBeTruthy();
-                                expect(keyObj.allowed_ops.reports).toBeTruthy();
-                                expect(keyObj.allowed_ops.purge).toBeTruthy();
-                                expect(keyObj.allowed_ops.delete_config).toBeTruthy();
-                                expect(keyObj.allowed_ops.modify_config).toBeTruthy();
-                                expect(keyObj.allowed_ops.read_config).toBeTruthy();
                                 done();
                             });
 
@@ -211,70 +140,7 @@ describe('Workflow', function () {
                         .form
                         .getActive().then(function (val) {
                             expect(val).toBe(keyObj.active);
-                        });
-
-                    Portal
-                        .admin
-                        .apiKeys
-                        .editPage
-                        .form
-                        .getReadOnly().then(function (val) {
-                            expect(val).toBe(keyObj.read_only_status);
-                        });
-
-                    Portal
-                        .admin
-                        .apiKeys
-                        .editPage
-                        .form
-                        .getRead().then(function (val) {
-                            expect(val).toBe(keyObj.allowed_ops.read_config);
-                        });
-
-                    Portal
-                        .admin
-                        .apiKeys
-                        .editPage
-                        .form
-                        .getModify().then(function (val) {
-                            expect(val).toBe(keyObj.allowed_ops.modify_config);
-                        });
-
-                    Portal
-                        .admin
-                        .apiKeys
-                        .editPage
-                        .form
-                        .getDelete().then(function (val) {
-                            expect(val).toBe(keyObj.allowed_ops.delete_config);
-                        });
-
-                    Portal
-                        .admin
-                        .apiKeys
-                        .editPage
-                        .form
-                        .getPurge().then(function (val) {
-                            expect(val).toBe(keyObj.allowed_ops.purge);
-                        });
-
-                    Portal
-                        .admin
-                        .apiKeys
-                        .editPage
-                        .form
-                        .getReports().then(function (val) {
-                            expect(val).toBe(keyObj.allowed_ops.reports);
-                        });
-
-                    Portal
-                        .admin
-                        .apiKeys
-                        .editPage
-                        .form
-                        .getAdmin().then(function (val) {
-                            expect(val).toBe(keyObj.allowed_ops.admin);
-                        });
+                        });                    
                 });
         });
     });

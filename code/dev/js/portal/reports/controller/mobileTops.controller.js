@@ -11,7 +11,7 @@
     $scope._loading = false;
     $scope.application = null;
     var u = User.getUser();
-    $scope.account = u.companyId[0] || null;
+    $scope.account = u.account_id || null;
     $scope.countries = Countries.query();
 
     $scope.country_hits = [];

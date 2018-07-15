@@ -94,6 +94,28 @@ var MailinatorHelper = {
         var tokenUrlRegExp = /http.*[0-9a-fA-F]{0}/;
         return msgBody.match(tokenUrlRegExp)[0];
       });
+  },
+
+  /**
+   * Gets the invitation URL from an invitation email
+   *
+   * @param {String} emailAddress
+   * @returns {Promise}
+   */
+  getInvitationURL: function (emailAddress) {
+    return MailinatorHelper
+      .waitWhileInboxIsEmpty(emailAddress)
+      .then(function () {
+        return MailinatorHelper.getLastMessage(emailAddress);
+      })
+      .then(function (msg) {
+        return MailinatorResource.getEmail(msg.id);
+      })
+      .then(function (fullMsg) {
+        var msgBody = fullMsg.data.parts[0].body;
+        var invitationURLRegex = /http.*[0-9a-fA-F]{0}\/invitation\/[0-9a-fA-F]*\/[0-9a-fA-F]*/;
+        return msgBody.match(invitationURLRegex)[0];
+      });
   }
 };
 

@@ -236,12 +236,8 @@
             $scope.model.account_id = $scope.companies[0].id;
           }
         });
-      } else if (!angular.isArray($scope.auth.getUser().companyId)) {
-        $scope.model.account_id = $scope.auth.getUser().companyId;
-      } else if ($scope.auth.getUser().companyId.length === 1) {
-        $scope.model.account_id = $scope.auth.getUser().companyId[0];
       } else {
-        $scope.fetchCompanies($scope.auth.getUser().companyId);
+        $scope.model.account_id = $scope.auth.getUser().account_id;
       }
     };
 
@@ -400,11 +396,13 @@
           !model.rule_name ||
           (!model.account_id && !$scope.model.account_id) ||
           !model.rule_type ||
+          !model.rule_body ||
           !model.visibility;
       } else {
         return $scope._loading ||
           (!model.account_id && !$scope.model.account_id) ||
           !model.rule_type ||
+          !model.rule_body ||
           !model.visibility;
       }
     };

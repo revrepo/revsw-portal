@@ -34,6 +34,10 @@
     if ($state.is('index.accountSettings.accountresources')) {
       // child accounts
       $scope.filter.limit = $config.MIN_LIMIT_RECORDS_IN_TABLE;
+      if ($localStorage[STORAGE_NAME_LIST_FILTER_]) {
+        $localStorage[STORAGE_NAME_LIST_FILTER_].limit = $scope.filter.limit;
+      }
+      
       var data = {
         filters: {
           parent_account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
@@ -46,6 +50,11 @@
         .then(function (res) {
           $scope.records = res;           
         });
+    } else {
+      $scope.filter.limit = $config.DEFAULT_LIMIT_RECORDS_IN_TABLE;
+      if ($localStorage[STORAGE_NAME_LIST_FILTER_]) {
+        $localStorage[STORAGE_NAME_LIST_FILTER_].limit = $scope.filter.limit;
+      }
     }
 
     $scope.companies = [];
@@ -87,19 +96,44 @@
               r.subscription_name = 'Manual';
               return r;
             });
+
+            $scope.records.forEach(function (comp) {
+              if (comp.parent_account_id && comp.parent_account_id !== '') {
+                if ($localStorage.userMainAccount && (comp.parent_account_id === $localStorage.userMainAccount.id)) {
+                  comp.parentAccount = $localStorage.userMainAccount;
+                  comp.parentAccountName = $localStorage.userMainAccount.companyName;
+                } else {
+                  Companies.get({ id: comp.parent_account_id }).$promise.then(function (parentAcc) {
+                    comp.parentAccount = parentAcc;
+                    comp.parentAccountName = parentAcc.companyName;
+                  });
+                }            
+              }
+            });
           });
       }
 
       $scope.list().then(function (res) {
         $scope.listOfAccs = [];
         $scope.companies = res;
+        $scope.parentCompanies = _.filter($scope.companies, function (acc) {
+          return !acc.parent_account_id;
+        });
+
+        var emptyParent = {
+          companyName: '--- No Parent Account Selected ---',
+          id: null
+        };
+        $scope.parentCompanies.splice(0, 0, emptyParent);
         $scope.companies.forEach(function (comp) {
           if (comp.parent_account_id && comp.parent_account_id !== '') {
             if ($localStorage.userMainAccount && (comp.parent_account_id === $localStorage.userMainAccount.id)) {
               comp.parentAccount = $localStorage.userMainAccount;
+              comp.parentAccountName = $localStorage.userMainAccount.companyName;
             } else {
               Companies.get({ id: comp.parent_account_id }).$promise.then(function (parentAcc) {
                 comp.parentAccount = parentAcc;
+                comp.parentAccountName = parentAcc.companyName;
               });
             }            
           }
@@ -114,7 +148,7 @@
       }
     });
 
-    $scope.filterKeys = ['companyName', 'comment', 'createdBy', 'updated_at', 'subscription_name', 'subscription_state', 'created_at'];
+    $scope.filterKeys = ['companyName', 'comment', 'createdBy', 'updated_at', 'subscription_name', 'subscription_state', 'created_at', 'parentAccountName'];
     /**
      * @name  getCompany
      * @description

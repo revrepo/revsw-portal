@@ -1,0 +1,142 @@
+<script type="text/ng-template" id="confirmModal.html">
+    <div class="modal-header">
+      <h3 class="modal-title">Confirm</h3>
+    </div>
+    <div class="modal-body">
+      Are you sure you want to delete Alert Config
+      <strong>{{model.name}}</strong>?
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+      <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
+    </div>
+  </script>
+
+<div class="container-fluid" ui-view="page">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2 class="pull-left page-title">
+                Traffic Alerts Configurations List
+            </h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-left">
+                                <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()">
+                                    <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New Traffic Alert Configuration
+                                </a>
+                                <!--a href="" ng-click="silenceAll()" class="btn btn-info" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()">
+                                    <i class="glyphicon glyphicon-volume-off"></i>&nbsp; Silence All Alert Notifications
+                                </a -->
+                            </div>
+
+                            <div class="pull-right">
+                                <list-filter></list-filter>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
+                        Currently you don't have any configurations registered in the system. You can click on "Add New Traffic Alert Configuration"
+                        button above to add a user.
+                    </div>
+                    <div class="alert alert-warning" ng-if="records == null && !_loading">
+                        Failed to retrieve a list of resources - please try again later
+                    </div>
+                    <div class="alert alert-info" ng-if="_loading && filteredRecords.length === 0">
+                        <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading...
+                    </div>
+                    <!--div class="alert alert-info" ng-if="!_loading && filteredRecords.length > 0 && isAccountSilenced()">
+                        <i class="glyphicon glyphicon-volume-off"></i>&nbsp; All alert notifications are silenced for this account.
+                        <br />
+                        <span ng-show="accountSilenceUntil()">
+                            The account will be automatically unsilenced {{accountSilenceUntil()}}
+                        </span>
+                    </div -->
+                    <crud-pagination></crud-pagination>
+                    <div class="table-responsive">
+                        <table class="table users-list">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <a href="" ng-click="order('name')">Name</a>
+                                        <span class="sortorder" ng-show="filter.predicate === 'name'" ng-class="{reverse: filter.reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <a href="" ng-click="order('target_type')">Target Type</a>
+                                        <span class="sortorder" ng-show="filter.predicate === 'target_type'" ng-class="{reverse: filter.reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <a href="" ng-click="order('target')">Target</a>
+                                        <span class="sortorder" ng-show="filter.predicate === 'target'" ng-class="{reverse: filter.reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <a href="" ng-click="order('status')">Status</a>
+                                        <span class="sortorder" ng-show="filter.predicate === 'status'" ng-class="{reverse: filter.reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <a href="" ng-click="order('updated_at')">Last Update</a>
+                                        <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <a href="" ng-click="order('created_by')">Created By</a>
+                                        <span class="sortorder" ng-show="filter.predicate === 'created_by'" ng-class="{reverse: filter.reverse}"></span>
+                                    </th>
+                                    <th>Actions</th>
+                                    <th class="account" ng-if="auth.isReseller() ||  auth.isRevadmin()">
+                                        <a href="" ng-click="order('companyName')">Account</a>
+                                        <span class="sortorder" ng-show="filter.predicate === 'companyName'" ng-class="{reverse: filter.reverse}"></span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="alertConf in filteredRecords | limitTo:filter.limit:filter.skip track by $index" id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)">
+                                    <td>
+                                        <a ui-sref=".edit({id: alertConf.id})" ng-if="!item.loading" uib-tooltip="Edit Alert Configuration">
+                                            {{alertConf.name}}
+                                        </a>
+                                    </td>
+                                    <td>{{alertConf.target_type}}</td>
+                                    <td>{{alertConf.target}}</td>
+                                    <td>
+                                        <label class="label" ng-class="alertConf.status === 'up' ? 'label-primary':'label-warning'" ng-bind="alertConf.status === 'up' ? 'Up' : 'Down'">{{alertConf.status}}</label>
+                                        <label ng-show="alertConf.silenced" uib-tooltip="{{getSilencedUntil(alertConf.silence_until)}}" class="label label-danger">Silenced</label>
+                                    </td>
+                                    <td>{{ getRelativeDate(alertConf.updated_at) }}</td>
+                                    <td>{{ alertConf.created_by }}</td>
+                                    <td class="actions">
+                                        <a ui-sref=".edit({id: alertConf.id})" uib-tooltip="Edit Alert Configuration">
+                                            <i class="glyphicon glyphicon-pencil"></i>
+                                        </a>
+                                        <a href="" ng-click="deleteConfig(alertConf)" ng-class="{'disabled':isReadOnly()}" uib-tooltip="Delete Alert Configuration">
+                                            <i class="glyphicon glyphicon-trash"></i>
+                                        </a>
+                                        <a href="" ng-click="alertConf.silenced ? unSilenceRule(alertConf) : silenceRule(alertConf)" ng-class="{'disabled':isReadOnly()}"
+                                            uib-tooltip="{{alertConf.silenced ? 'Unsilence' : 'Silence'}} Notifications For This Alert Configuration">
+                                            <i ng-class="alertConf.silenced ? 'glyphicon glyphicon-volume-up' : 'glyphicon glyphicon-volume-off'"></i>
+                                        </a>
+                                    </td>
+                                    <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
+                                        <a href="" ng-click="onGoToAccountInformation($event, user)" ng-if="!item.loading" tooltip-placement="left" tooltip-append-to-body="{{true}}"
+                                            uib-tooltip="View Account Resources">
+                                            <div class="company-names">{{alertConf.companyName}}</div>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
+                    <crud-pagination></crud-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
