@@ -1,4 +1,4 @@
-(function(angular, window) {
+(function (angular, window) {
   'use strict';
   angular
     .module('revapm.Portal.Config')
@@ -448,7 +448,11 @@
       TRAFFIC_ALERTS_RULE_TYPES: {
         Spike: 'Spike',
         statusCode_frequency: 'Status Code Frequency'
-      }
+      },
+      /**
+       * Interval delay for refresh Traffic Alerts List
+       */
+      TRAFFIC_ALERTS_TIME_REFRESH_SEC: 10, // 10 sec
     });
 
 })(angular, window);

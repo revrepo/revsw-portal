@@ -6,7 +6,7 @@
     .controller('TrafficAlertsController', TrafficAlertsController);
 
   // @ngInject
-  function TrafficAlertsController($scope, $q, NotificationLists, $uibModal, $injector, $stateParams,
+  function TrafficAlertsController($scope, $state, $interval, NotificationLists, $uibModal, $injector, $stateParams,
     User, AlertService, DomainsConfig, TrafficAlerts, Companies, CRUDController, $config) {
 
     $injector.invoke(CRUDController, this, {
@@ -66,17 +66,24 @@
     });
 
     $scope.$on('$stateChangeSuccess', function () {
-      $scope
-        .list(null)
-        .then(function (res) {
-          /*if (res && res.length > 0) {
-            res.forEach(function (rule) {
-              TrafficAlerts.status({ id: rule.id }).$promise.then(function (res_) {
-                rule.fileStatus = res_.status;
-              });
+      if ($state.is($scope.state)) {
+        $scope
+          .list(null)
+          .then(function (res) {
+            $scope.autoRefresh({
+              autorefresh: $config.TRAFFIC_ALERTS_TIME_REFRESH_SEC
             });
-          }*/
-        });
+            /*if (res && res.length > 0) {
+              res.forEach(function (rule) {
+                TrafficAlerts.status({ id: rule.id }).$promise.then(function (res_) {
+                  rule.fileStatus = res_.status;
+                });
+              });
+            }*/
+          });
+      } else {
+        $scope.autoRefresh();
+      }
     });
 
     $scope.$watch('model.target_type', function (newVal, oldVal) {
@@ -295,6 +302,42 @@
 
     $scope.accountSilenceUntil = function () {
       return;
+    };
+
+    /**
+     * @name onClickRefresh
+     * @description update data on page
+     */
+    $scope.onClickRefresh = function () {
+      $scope.$emit('list');
+      $scope.autoRefresh({
+        autorefresh: $config.TRAFFIC_ALERTS_TIME_REFRESH_SEC
+      });
+    };
+
+    var timeReload;
+    /**
+     * @name  autoRefresh
+     * @description
+     * @param  {Object} option
+     * @return
+     */
+    $scope.autoRefresh = function (option) {
+      if (!!timeReload) {
+        $interval.cancel(timeReload);
+      }
+
+      if (!!option && !!option.autorefresh && option.autorefresh !== '') {
+        timeReload = $interval(
+          function () {
+            if ($state.current.name !== 'index.accountSettings.trafficAlerts') {
+              // NOTE: don't run auto refresh if type of the page is changed
+              return;
+            }
+            $scope.$emit('list');
+            $scope.autoRefresh(option);
+          }, option.autorefresh * 1000, 1);
+      }
     };
   }
 })();
