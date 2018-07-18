@@ -408,10 +408,10 @@
         strict: 'Strict',
         on: 'On'
       },
-      WALLARM_PROCESS_TIME_LIMIT_BLOCK_SELECT:{
-       on: 'Always Block',
-       off:'Always Allow',
-       attack: 'Attack'
+      WALLARM_PROCESS_TIME_LIMIT_BLOCK_SELECT: {
+        on: 'Always Block',
+        off: 'Always Allow',
+        attack: 'Attack'
       },
       /**
        * @name WALLARM_PARSER_DISABLED_SELECT
@@ -443,7 +443,12 @@
         'and if you will continue receiving the same rate ',
         'limiting error please contact our support team using ',
         '“Help” button in bottom right corner of the page.'
-      ]  
+      ],
+      // Traffic Alerts
+      TRAFFIC_ALERTS_RULE_TYPES: {
+        Spike: 'Spike',
+        statusCode_frequency: 'Status Code Frequency'
+      }
     });
 
 })(angular, window);

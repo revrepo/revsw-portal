@@ -197,8 +197,8 @@
        */
       $scope.$watch('filter', function (newVal, oldVal) {
         // NOTE: store filter settings if set value for the private property "storageNameFilter_"
-        if(storageNameFilter_ && (newVal !== oldVal)){
-            $localStorage[storageNameFilter_] = newVal;
+        if (storageNameFilter_ && (newVal !== oldVal)) {
+          $localStorage[storageNameFilter_] = newVal;
         }
         // Apply filters here
         $scope.filterList();
@@ -505,8 +505,8 @@
         model.loading = true;
         // NOTE: user resource method "remove" for delete data.
         return $scope.resource.remove({
-          id: model.id
-        }).$promise
+            id: model.id
+          }).$promise
           .then(function (data) {
             $rootScope.$broadcast('update:searchData');
             if (data.statusCode === $config.STATUS.OK || data.statusCode === $config.STATUS.ACCEPTED) {
@@ -716,6 +716,10 @@
         }
         User.selectAccount(model);
         $state.go('index.accountSettings.accountresources');
+      };
+
+      $scope.getRelativeDate = function (datetime) {
+        return moment.utc(datetime).fromNow();
       };
     }
 
