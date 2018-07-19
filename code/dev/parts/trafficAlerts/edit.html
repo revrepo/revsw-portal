@@ -60,7 +60,7 @@
             <div class="col-sm-10">
               <select class="form-control inline-block" id="target_type" name="target_type" ng-model="model.target_type" ng-disabled="_loading"
                 ng-options="target_type for target_type in target_types" required>
-                <option value="">--- Select Target Type ---</option>
+                <option disabled value="">--- Select Target Type ---</option>
               </select>
               <label for="target_type" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select the configuration's target type.">
                 <i class="fa fa-question-circle"></i>
@@ -113,8 +113,8 @@
             <label for="rule_type" class="col-sm-2 control-label">Rule Type *</label>
             <div class="col-sm-10">
               <select class="form-control inline-block" id="rule_type" name="rule_type" ng-model="model.rule_type" ng-disabled="_loading"
-                ng-options="rule_type for rule_type in rule_types" required>
-                <option value="">--- Select Rule Type ---</option>
+                ng-options="name as key for (name,key) in ruleTypes" required>
+                <option disabled value="">--- Select Rule Type ---</option>
               </select>
               <label for="rule_type" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select the configuration's rule type.">
                 <i class="fa fa-question-circle"></i>

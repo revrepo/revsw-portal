@@ -1,4 +1,4 @@
-(function(angular, window) {
+(function (angular, window) {
   'use strict';
   angular
     .module('revapm.Portal.Config')
@@ -408,10 +408,10 @@
         strict: 'Strict',
         on: 'On'
       },
-      WALLARM_PROCESS_TIME_LIMIT_BLOCK_SELECT:{
-       on: 'Always Block',
-       off:'Always Allow',
-       attack: 'Attack'
+      WALLARM_PROCESS_TIME_LIMIT_BLOCK_SELECT: {
+        on: 'Always Block',
+        off: 'Always Allow',
+        attack: 'Attack'
       },
       /**
        * @name WALLARM_PARSER_DISABLED_SELECT
@@ -443,7 +443,16 @@
         'and if you will continue receiving the same rate ',
         'limiting error please contact our support team using ',
         '“Help” button in bottom right corner of the page.'
-      ]  
+      ],
+      // Traffic Alerts
+      TRAFFIC_ALERTS_RULE_TYPES: {
+        Spike: 'Spike',
+        statusCode_frequency: 'Status Code Frequency'
+      },
+      /**
+       * Interval delay for refresh Traffic Alerts List
+       */
+      TRAFFIC_ALERTS_TIME_REFRESH_SEC: 10, // 10 sec
     });
 
 })(angular, window);

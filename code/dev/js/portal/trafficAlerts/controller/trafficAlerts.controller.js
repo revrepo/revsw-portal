@@ -6,8 +6,8 @@
     .controller('TrafficAlertsController', TrafficAlertsController);
 
   // @ngInject
-  function TrafficAlertsController($scope, $q, NotificationLists, $uibModal, $injector, $stateParams,
-    User, Users, AlertService, DomainsConfig, TrafficAlerts, Companies, CRUDController) {
+  function TrafficAlertsController($scope, $state, $interval, NotificationLists, $uibModal, $injector, $stateParams,
+    User, AlertService, DomainsConfig, TrafficAlerts, Companies, CRUDController, $config) {
 
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -21,11 +21,7 @@
     $scope.auth = User;
     $scope.alertService = AlertService;
 
-    $scope.rule_types = [
-      'Spike',
-      'Status Code Frequency'
-    ];
-
+    $scope.ruleTypes = $config.TRAFFIC_ALERTS_RULE_TYPES;
     $scope.target_types = [
       'Domain'
     ];
@@ -36,7 +32,10 @@
           case 'Spike':
             if (!$scope.model.rule_config) {
               $scope.model.rule_config = {};
-              $scope.model.rule_config.spike_direction = { key: 'Both', value: 'both' };
+              $scope.model.rule_config.spike_direction = {
+                key: 'Both',
+                value: 'both'
+              };
             }
 
             break;
@@ -45,8 +44,8 @@
     });
 
     NotificationLists.query({}).$promise.then(function (res) {
-      $scope.notif_lists = res;
-    })
+        $scope.notif_lists = res;
+      })
       .catch(function (err) {
         AlertService.danger(err);
       });
@@ -67,17 +66,24 @@
     });
 
     $scope.$on('$stateChangeSuccess', function () {
-      $scope
-        .list(null)
-        .then(function (res) {
-          /*if (res && res.length > 0) {
-            res.forEach(function (rule) {
-              TrafficAlerts.status({ id: rule.id }).$promise.then(function (res_) {
-                rule.fileStatus = res_.status;
-              });
+      if ($state.is($scope.state)) {
+        $scope
+          .list(null)
+          .then(function (res) {
+            $scope.autoRefresh({
+              autorefresh: $config.TRAFFIC_ALERTS_TIME_REFRESH_SEC
             });
-          }*/
-        });
+            /*if (res && res.length > 0) {
+              res.forEach(function (rule) {
+                TrafficAlerts.status({ id: rule.id }).$promise.then(function (res_) {
+                  rule.fileStatus = res_.status;
+                });
+              });
+            }*/
+          });
+      } else {
+        $scope.autoRefresh();
+      }
     });
 
     $scope.$watch('model.target_type', function (newVal, oldVal) {
@@ -109,7 +115,8 @@
     });
 
     $scope.disableSubmit = function (model) {
-      return !model ||
+      return $scope._loading ||
+        !model ||
         !model.name ||
         !model.target_type ||
         !model.target ||
@@ -123,14 +130,7 @@
     };
 
     $scope.prepModelForAPI = function (model) {
-      switch (model.rule_type) {
-        case 'Status Code Frequency':
-          model.rule_type = 'statusCode_frequency';
-          break;
-        default:
-          break;
-      }
-
+      // NOTE: use this place for make additional cheks and transformations
       return model;
     };
 
@@ -138,20 +138,16 @@
 
       model = $scope.prepModelForAPI(model);
 
-      $scope._loading = true;
-
-      if (!model || $scope.disableSubmit === true) {
+      if (!model || $scope.disableSubmit(model) === true) {
         AlertService.danger('Please fill out the form before submitting');
-        $scope._loading = false;
       }
 
-      TrafficAlerts.create(model).$promise.then(function (res) {
-        AlertService.success(res);
-        $scope._loading = false;
-        $scope.model = {};
-      })
-        .catch(function (err) {
-          AlertService.danger(err);
+      $scope._loading = true;
+      $scope
+        .create(model)
+        .then($scope.alertService.success)
+        .catch($scope.alertService.danger)
+        .finally(function () {
           $scope._loading = false;
         });
     };
@@ -160,40 +156,36 @@
 
       model = $scope.prepModelForAPI(model);
 
-      $scope._loading = true;
-
-      if (!model || $scope.disableSubmit === true) {
+      if (!model || $scope.disableSubmit(model) === true) {
         AlertService.danger('Please fill out the form before submitting');
-        $scope._loading = false;
       }
 
-      TrafficAlerts.update(model).$promise.then(function (res) {
-        AlertService.success(res);
-        $scope.setModel($scope.model.id);
-        $scope._loading = false;
-      })
-        .catch(function (err) {
-          AlertService.danger(err);
+      $scope._loading = true;
+      $scope.update(model)
+        .then(function (res) {
+          $scope.alertService.success(res);
+          // $scope.setModel($scope.model.id); // TODO: is it need ???
+        })
+        .catch($scope.alertService.danger)
+        .finally(function () {
           $scope._loading = false;
         });
     };
 
     $scope.setModel = function (id) {
-      TrafficAlerts.get({ id: id }).$promise.then(function (res) {
-        $scope.model = JSON.parse(JSON.stringify(res));
-        var targetType = $scope.model.target_type.split('');
-        targetType[0] = targetType[0].toUpperCase();
-        $scope.model.target_type = targetType.join('');
-        $scope.model.rule_type = res.rule_type;
+      // TrafficAlerts.get({
+      //   id: id
+      // }).$promise
+      $scope.get(id)
+        .then(function (res) {
+          $scope.model = JSON.parse(JSON.stringify(res));
+          var targetType = $scope.model.target_type.split('');
+          targetType[0] = targetType[0].toUpperCase();
+          $scope.model.target_type = targetType.join('');
+          $scope.model.rule_type = res.rule_type;
 
-        switch ($scope.model.rule_type) {
-          case 'statusCode_frequency':
-            $scope.model.rule_type = 'Status Code Frequency';
-            break;
-        }
-
-        $scope.model.rule_config = res.rule_config;
-      });
+          $scope.model.rule_config = res.rule_config;
+        });
     };
 
     $scope.deleteConfig = function (model) {
@@ -208,10 +200,6 @@
             .then($scope.alertService.success)
             .catch($scope.alertService.danger);
         });
-    };
-
-    $scope.getRelativeDate = function (datetime) {
-      return moment.utc(datetime).fromNow();
     };
 
     $scope.silenceRule = function (model) {
@@ -234,20 +222,20 @@
         _model.silenced = true;
         _model.silence_until = $scope.getSilenceDate(result);
 
-        $scope._loading = true;
-
         if (!_model) {
           return false;
         }
-
-        TrafficAlerts.update(_model).$promise.then(function (res) {
-          AlertService.success('Successfully silenced the alert configuration');
-          model.silenced = true;
-          model.silence_until = $scope.getSilenceDate(result);
-          $scope._loading = false;
-        })
-          .catch(function (err) {
-            AlertService.danger('Error silencing the alert configuration, ' + err);
+        $scope._loading = true;
+        $scope.update(_model)
+          .then(function (res) {
+            $scope.alertService.success('Successfully silenced the alert configuration');
+            model.silenced = true;
+            model.silence_until = $scope.getSilenceDate(result);
+          })
+          .catch(function () {
+            $scope.alertService.danger('Error silencing the alert configuration, ' + err);
+          })
+          .finally(function () {
             $scope._loading = false;
           });
       });
@@ -261,20 +249,21 @@
       _model.silenced = false;
       _model.silence_until = null;
 
-      $scope._loading = true;
-
       if (!_model) {
         return false;
       }
 
-      TrafficAlerts.update(_model).$promise.then(function (res) {
-        AlertService.success('Successfully unsilenced the alert configuration');
-        model.silenced = false;
-        model.silence_until = null;
-        $scope._loading = false;
-      })
-        .catch(function (err) {
-          AlertService.danger('Error unsilencing the alert configuration, ' + err);
+      $scope._loading = true;
+      $scope.update(_model)
+        .then(function (res) {
+          $scope.alertService.success('Successfully unsilenced the alert configuration');
+          model.silenced = false;
+          model.silence_until = null;
+        })
+        .catch(function () {
+          $scope.alertService.danger('Error silencing the alert configuration, ' + err);
+        })
+        .finally(function () {
           $scope._loading = false;
         });
     };
@@ -313,6 +302,42 @@
 
     $scope.accountSilenceUntil = function () {
       return;
+    };
+
+    /**
+     * @name onClickRefresh
+     * @description update data on page
+     */
+    $scope.onClickRefresh = function () {
+      $scope.$emit('list');
+      $scope.autoRefresh({
+        autorefresh: $config.TRAFFIC_ALERTS_TIME_REFRESH_SEC
+      });
+    };
+
+    var timeReload;
+    /**
+     * @name  autoRefresh
+     * @description
+     * @param  {Object} option
+     * @return
+     */
+    $scope.autoRefresh = function (option) {
+      if (!!timeReload) {
+        $interval.cancel(timeReload);
+      }
+
+      if (!!option && !!option.autorefresh && option.autorefresh !== '') {
+        timeReload = $interval(
+          function () {
+            if ($state.current.name !== 'index.accountSettings.trafficAlerts') {
+              // NOTE: don't run auto refresh if type of the page is changed
+              return;
+            }
+            $scope.$emit('list');
+            $scope.autoRefresh(option);
+          }, option.autorefresh * 1000, 1);
+      }
     };
   }
 })();
