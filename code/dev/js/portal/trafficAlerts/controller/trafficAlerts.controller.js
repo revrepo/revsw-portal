@@ -5,7 +5,7 @@
     .module('revapm.Portal.TrafficAlerts')
     .controller('TrafficAlertsController', TrafficAlertsController);
 
-  // @ngInject
+  /*@ngInject*/
   function TrafficAlertsController($scope, $state, $interval, NotificationLists, $uibModal, $injector, $stateParams,
     User, AlertService, DomainsConfig, TrafficAlerts, Companies, CRUDController, $config) {
 
@@ -173,9 +173,6 @@
     };
 
     $scope.setModel = function (id) {
-      // TrafficAlerts.get({
-      //   id: id
-      // }).$promise
       $scope.get(id)
         .then(function (res) {
           $scope.model = JSON.parse(JSON.stringify(res));
