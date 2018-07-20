@@ -5,7 +5,7 @@
     .module('revapm.Portal.Keys')
     .controller('KeysEditController', KeysEditController);
 
-  // @ngInject
+  /*@ngInject*/
   function KeysEditController($scope, $rootScope, $injector, $stateParams, $location, CRUDController, ApiKeys, Companies, $config, DomainsConfig, Groups, User) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
@@ -107,7 +107,7 @@
         })
         .$promise
         .then(function(key) {
-          $scope.key = key;          
+          $scope.key = key;
           $scope.model = _.clone(key, true);
           $scope.model.group = $scope.key.group_id || 'null';
           if (!$scope.model.permissions) {
@@ -235,7 +235,7 @@
           $scope.setGroup();
           $rootScope.$broadcast('update:searchData');
           $scope.alertService.success(data);
-          $scope.$parent.list();          
+          $scope.$parent.list();
         })
         .catch($scope.alertService.danger)
         .finally(function() {
@@ -336,9 +336,9 @@
     if (!model) {
       return;
     }
-    if (model.role === 'reseller' && User.getUser().role === 'reseller') {      
+    if (model.role === 'reseller' && User.getUser().role === 'reseller') {
       $scope.key.account_id = User.getUser().account_id;
-      return false;        
+      return false;
     } else if (model.role === 'admin' && User.getUser().role === 'reseller'){
       return true;
     } else if (User.getUser().role === 'revadmin') {
