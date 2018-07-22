@@ -38,10 +38,10 @@
             <label for="company" class="col-sm-2 control-label">Account *</label>
             <div class="col-sm-10">
               <!-- For "admin" select only one account-->
-              <span ng-show="!_loading && companies.length==0" class="loader--waite-company">
+              <span ng-show="_loading ||(!_loading && companies.length==0)" class="loader--waite-company">
                 <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
               <ui-select ng-if="!_loading && companies.length>0" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.account_id"
-                id="company" name="accountId" on-select="onOneAccountSelect($model)">
+                id="company" name="accountId" on-select="onAccountSelect($model)">
                 <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
                 <ui-select-choices repeat="item.id as  item in companies | filter: {companyName: $select.search}">
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
@@ -59,7 +59,7 @@
             <label for="target_type" class="col-sm-2 control-label">Target Type *</label>
             <div class="col-sm-10">
               <select class="form-control inline-block" id="target_type" name="target_type" ng-model="model.target_type" ng-disabled="_loading"
-                ng-options="target_type for target_type in target_types" required>
+                ng-options="name as key for (name,key) in targetTypes" required>
                 <option disabled value="">--- Select Target Type ---</option>
               </select>
               <label for="target_type" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select the configuration's target type.">
@@ -70,33 +70,36 @@
               </div>
             </div>
           </div>
-          <div class="form-group" ng-class="{'has-error': createForm.target.$invalid && createForm.target.$dirty}" ng-if="model.target_type">
+          <div class="form-group" ng-class="{'has-error': createForm.target.$invalid && createForm.target.$dirty}" ng-if="model.target_type && model.target_type == 'Domain'">
             <label for="target" class="col-sm-2 control-label">Target *</label>
             <div class="col-sm-10">
-              <span ng-show="!_loading && targets.length==0" class="loader--waite-company">
+              <span ng-show="_loading ||(!_loading && (getAccountsDomainNameList().length==0 && companies.length==0))">
                 <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-              <ui-select ng-if="!_loading && targets.length>0" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.target"
-                id="target" name="accountId" on-select="onOneAccountSelect($model)">
-                <ui-select-match placeholder="Select Target">{{$select.selected.name}}</ui-select-match>
-                <ui-select-choices repeat="item.name as  item in targets | filter: {name: $select.search}">
-                  <div ng-bind-html="item.name|highlight: $select.search"></div>
+              <ui-select ng-if="!_loading && (getAccountsDomainNameList().length>0 || companies.length>0)" theme="select2"
+                ng-disabled="_loading" ng-model="model.target" id="target" name="target">
+                <ui-select-match placeholder="{{domainPlaceholder}}">{{$select.selected.domain_name}}</ui-select-match>
+                <ui-select-choices repeat="item.domain_name as item  in getAccountsDomainNameList()| filter: {domain_name: $select.search}">
+                  <div ng-bind-html="item.domain_name|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
-              <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select the configuration's target, the alerts will be dispatched when the target meets the configuration.">
+              <label for="target" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select the configuration's target, the alerts will be dispatched when the target meets the configuration.">
                 <i class="fa fa-question-circle"></i>
               </label>
+              <div class="error-messages" ng-messages="createForm.target.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
-          <div class="form-group" ng-class="{'has-error': createForm.notifications_list_id.$invalid && createForm.notifications_list_id.$dirty}"
-            ng-if="notif_lists">
-            <label for="target" class="col-sm-2 control-label">Notifications List *</label>
+          <div class="form-group" ng-class="{'has-error': createForm.notificationsListId.$invalid && createForm.notificationsListId.$dirty}">
+            <label for="notificationsListId" class="col-sm-2 control-label">Notifications List *</label>
             <div class="col-sm-10">
-              <span ng-show="!_loading && notif_lists.length==0" class="loader--waite-company">
+              <span ng-show="_loading && notif_lists.length==0" class="loader--waite-company">
                 <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-              <ui-select ng-if="!_loading && notif_lists.length>0" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.notifications_list_id"
-                id="target" name="accountId" on-select="onOneAccountSelect($model)">
+              <ui-select ng-if="_loading ||(!_loading && notif_lists.length>0)" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.notifications_list_id"
+                id="notificationsListId" name="notificationsListId" on-select="createForm.notificationsListId.$dirty = true;"
+                ng-click="createForm.notificationsListId.$dirty = true" ng-required="true">
                 <ui-select-match placeholder="Select Notification List">{{$select.selected.list_name}}</ui-select-match>
-                <ui-select-choices repeat="item.id as  item in notif_lists | filter: {list_name: $select.search}">
+                <ui-select-choices repeat="item.id as  item in getNotificationList() | filter: {list_name: $select.search}">
                   <div ng-bind-html="item.list_name|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
@@ -106,6 +109,9 @@
               <a ui-sref="index.accountSettings.notificationsList" class="btn btn-sm btn-primary" id="btn-manage-notif-lists" uib-tooltip="Manage Notifications Lists"
                 ng-disabled="_loading">
                 <i class="fa fa-list-alt"></i> Manage Notifications Lists</a>
+              <div class="error-messages" ng-messages="createForm.notificationsListId.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <hr>

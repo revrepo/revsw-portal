@@ -449,6 +449,9 @@
         Spike: 'Spike',
         statusCode_frequency: 'Status Code Frequency'
       },
+      TRAFFIC_ALERTS_TARGET_TYPES:{
+        Domain: 'Domain '
+      },
       /**
        * Interval delay for refresh Traffic Alerts List
        */
