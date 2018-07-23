@@ -20,8 +20,8 @@
         </div>
       </div>
       <div class="panel-body">
-        <form name="createForm" class="form-horizontal form--user" confirm-on-exit novalidate>
-          <div class="form-group" ng-class="{'has-error': createForm.name.$invalid && createForm.name.$dirty}">
+        <form name="editForm" class="form-horizontal form--user" confirm-on-exit novalidate>
+          <div class="form-group" ng-class="{'has-error': editForm.name.$invalid && editForm.name.$dirty}">
             <label for="name" class="col-sm-2 control-label">Name *</label>
             <div class="col-sm-10">
               <input type="text" autofocus class="form-control inline-block" id="name" name="name" placeholder="Name" ng-model="model.name"
@@ -29,19 +29,19 @@
               <label for="name" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="The configuration's name, this name will be the alert's title.">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <div class="error-messages" ng-messages="createForm.name.$error" role="alert" ng-messages-multiple>
+              <div class="error-messages" ng-messages="editForm.name.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
           </div>
-          <div class="form-group" ng-class="{'has-error': createForm.accountId.$invalid && createForm.accountId.$dirty}" ng-if="(auth.isReseller() || auth.isRevadmin())">
+          <div class="form-group" ng-class="{'has-error': editForm.accountId.$invalid && editForm.accountId.$dirty}" ng-if="(auth.isReseller() || auth.isRevadmin())">
             <label for="company" class="col-sm-2 control-label">Account *</label>
             <div class="col-sm-10">
               <!-- For "admin" select only one account-->
-              <span ng-show="!_loading && companies.length==0" class="loader--waite-company">
+              <span ng-show="_loading ||(!_loading && companies.length==0)" class="loader--waite-company">
                 <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
               <ui-select ng-if="!_loading && companies.length>0" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.account_id"
-                id="company" name="accountId" on-select="onOneAccountSelect($model)">
+                id="company" name="accountId" on-select="onAccountSelect($model)">
                 <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
                 <ui-select-choices repeat="item.id as  item in companies | filter: {companyName: $select.search}">
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
@@ -55,7 +55,7 @@
                 <i class="fa fa-list-alt"></i> Manage Accounts</a>
             </div>
           </div>
-          <div class="form-group" ng-class="{'has-error': createForm.target_type.$invalid && createForm.target_type.$dirty}">
+          <div class="form-group" ng-class="{'has-error': editForm.target_type.$invalid && editForm.target_type.$dirty}">
             <label for="target_type" class="col-sm-2 control-label">Target Type *</label>
             <div class="col-sm-10">
               <select class="form-control inline-block" id="target_type" name="target_type" ng-model="model.target_type" ng-disabled="_loading"
@@ -65,51 +65,57 @@
               <label for="target_type" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select the configuration's target type.">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <div class="error-messages" ng-messages="createForm.target_type.$error" role="alert" ng-messages-multiple>
+              <div class="error-messages" ng-messages="editForm.target_type.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
           </div>
-          <div class="form-group" ng-class="{'has-error': createForm.target.$invalid && createForm.target.$dirty}" ng-if="model.target_type">
+          <div class="form-group" ng-class="{'has-error': editForm.target.$invalid && editForm.target.$dirty}" ng-if="model.target_type">
             <label for="target" class="col-sm-2 control-label">Target *</label>
             <div class="col-sm-10">
-              <span ng-show="!_loading && targets.length==0" class="loader--waite-company">
+              <span ng-show="!_loading && (getAccountsDomainNameList().length==0 && companies.length==0)">
                 <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-              <ui-select ng-if="!_loading && targets.length>0" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.target"
-                id="target" name="accountId" on-select="onOneAccountSelect($model)">
-                <ui-select-match placeholder="Select Target">{{$select.selected.name}}</ui-select-match>
-                <ui-select-choices repeat="item.name as  item in targets | filter: {name: $select.search}">
-                  <div ng-bind-html="item.name|highlight: $select.search"></div>
+              <ui-select ng-if="!_loading && (getAccountsDomainNameList().length>0 || companies.length>0)" ng-animate-disabled theme="select2"
+                ng-disabled="_loading" ng-model="model.target" id="target" name="target">
+                <ui-select-match placeholder="{{domainPlaceholder}}">{{$select.selected.domain_name}}</ui-select-match>
+                <ui-select-choices repeat="item.domain_name as item  in getAccountsDomainNameList()| filter: {domain_name: $select.search}">
+                  <div ng-bind-html="item.domain_name|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
-              <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select the configuration's target, the alerts will be dispatched when the target meets the configuration.">
+              <label for="target" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select the configuration's target, the alerts will be dispatched when the target meets the configuration.">
                 <i class="fa fa-question-circle"></i>
               </label>
+              <div class="error-messages" ng-messages="editForm.target.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
-          <div class="form-group" ng-class="{'has-error': createForm.notifications_list_id.$invalid && createForm.notifications_list_id.$dirty}"
-            ng-if="notif_lists">
-            <label for="target" class="col-sm-2 control-label">Notifications List *</label>
+          <div class="form-group" ng-class="{'has-error': editForm.notificationsListId.$invalid && editForm.notificationsListId.$dirty}">
+            <label for="notificationsListId" class="col-sm-2 control-label">Notifications List *</label>
             <div class="col-sm-10">
-              <span ng-show="!_loading && notif_lists.length==0" class="loader--waite-company">
+              <span ng-show="_loading ||(!_loading && notif_lists.length==0)" class="loader--waite-company">
                 <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
               <ui-select ng-if="!_loading && notif_lists.length>0" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.notifications_list_id"
-                id="target" name="accountId" on-select="onOneAccountSelect($model)">
+                id="notificationsListId" name="notificationsListId" on-select="onOneAccountSelect($model)" ng-click="editForm.notificationsListId.$dirty=true"
+                ng-required="true">
                 <ui-select-match placeholder="Select Notification List">{{$select.selected.list_name}}</ui-select-match>
-                <ui-select-choices repeat="item.id as  item in notif_lists | filter: {list_name: $select.search}">
+                <ui-select-choices repeat="item.id as  item in getNotificationList() | filter: {list_name: $select.search}">
                   <div ng-bind-html="item.list_name|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
-              <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select the configuration's notifications list, the alerts will be dispatched via the notifications list configuration.">
+              <label for="notificationsListId" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select the configuration's notifications list, the alerts will be dispatched via the notifications list configuration.">
                 <i class="fa fa-question-circle"></i>
               </label>
               <a ui-sref="index.accountSettings.notificationsList" class="btn btn-sm btn-primary" id="btn-manage-notif-lists" uib-tooltip="Manage Notifications Lists"
                 ng-disabled="_loading">
                 <i class="fa fa-list-alt"></i> Manage Notifications Lists</a>
+              <div class="error-messages" ng-messages="editForm.notificationsListId.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <hr>
-          <div class="form-group" ng-class="{'has-error': createForm.rule_type.$invalid && createForm.rule_type.$dirty}">
+          <div class="form-group" ng-class="{'has-error': editForm.rule_type.$invalid && editForm.rule_type.$dirty}">
             <label for="rule_type" class="col-sm-2 control-label">Rule Type *</label>
             <div class="col-sm-10">
               <select class="form-control inline-block" id="rule_type" name="rule_type" ng-model="model.rule_type" ng-disabled="_loading"
@@ -119,7 +125,7 @@
               <label for="rule_type" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select the configuration's rule type.">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <div class="error-messages" ng-messages="createForm.rule_type.$error" role="alert" ng-messages-multiple>
+              <div class="error-messages" ng-messages="editForm.rule_type.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>

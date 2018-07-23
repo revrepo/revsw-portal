@@ -121,7 +121,12 @@
        * @type {array}
        */
       $scope.filterKeys = [];
-
+      /**
+       * List actions dependencies for data return
+       *
+       * @type {array<Promises>}
+       */
+      $scope.dependencies = [];
       /**
        * Private property for store filter settings
        *
@@ -483,6 +488,10 @@
             $scope.records = null;
             return null;
           }).$promise
+          .then(function(){
+            return $scope.dependenciesData()
+              .then($scope.dependenciesListAction);
+          })
           .finally(function () {
             $scope.loading(false);
           });
@@ -720,6 +729,34 @@
 
       $scope.getRelativeDate = function (datetime) {
         return moment.utc(datetime).fromNow();
+      };
+
+      $scope.dependenciesData = function(){
+        if($scope.dependencies.length>0){
+          var keys = [];
+          var promises = [];
+          for(var index in $scope.dependencies){
+            var depObj= $scope.dependencies[index];
+            for(var key in depObj ){
+              keys.push(key);
+              promises.push(depObj[key]);
+            }
+          }
+          return $q.all(promises).then(function(data){
+            var response = {};
+            for(var i=0; i< keys.length;i++){
+              response[keys[i]]=data[i];
+            }
+            return $q.when(response);
+          });
+        }else{
+          return $q.when({});
+        }
+      };
+
+      // NOTE: default action after load list of data
+      $scope.dependenciesListAction = function(data){
+        return $q.when({success: true});
       };
     }
 

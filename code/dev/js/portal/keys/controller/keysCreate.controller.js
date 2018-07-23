@@ -5,7 +5,7 @@
     .module('revapm.Portal.Keys')
     .controller('KeysCreateController', KeysCreateController);
 
-  // @ngInject
+  /*@ngInject*/
   function KeysCreateController($scope, $uibModalInstance, companies) {
 
     /**

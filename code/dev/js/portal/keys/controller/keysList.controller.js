@@ -5,7 +5,7 @@
     .module('revapm.Portal.Keys')
     .controller('KeysListController', KeysListController);
 
-  // @ngInject
+  /*@ngInject*/
   function KeysListController($scope, $rootScope, $q, CRUDController, ApiKeys, $injector, $stateParams, Companies, DomainsConfig, $state, $uibModal, clipboard,
     User, $config) {
 

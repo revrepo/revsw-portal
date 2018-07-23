@@ -5,7 +5,7 @@
     .module('revapm.Portal.Notifications')
     .controller('NotificationListsController', NotificationListsController);
 
-  // @ngInject
+  /*@ngInject*/
   function NotificationListsController($scope, $q, NotificationLists, $uibModal, User, Users, AlertService) {
     $scope.auth = User;
     $scope.alertService = AlertService;

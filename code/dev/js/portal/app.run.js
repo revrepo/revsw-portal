@@ -1,9 +1,19 @@
-(function () {
+(function (angular, window, _) {
   'use strict';
 
   angular
     .module('revapm.Portal')
     .config(stopLocationChanges)
+    .run(function(){
+      // NOTE: mixin lodash for find objects
+      _.mixin({
+        'findByValues': function (collection, property, values) {
+          return _.filter(collection, function (item) {
+            return _.contains(values, item[property]);
+          });
+        }
+      });
+    })
     .run(runApp);
 
   /*@ngInject*/
@@ -25,7 +35,7 @@
         AlertService.clear();
       });
     $rootScope.$on('$stateChangeSuccess',
-      function(event, toState, toParams, fromState, fromParams){       
+      function(event, toState, toParams, fromState, fromParams){
         User.checkEnforce2FA(event, toState, fromState);
         User.checkPermissions();
         // Clear alerts when routes change //TODO:check comment
@@ -109,4 +119,4 @@
       });
     } checkVendor();
   }
-})();
+})(angular, window, _);
