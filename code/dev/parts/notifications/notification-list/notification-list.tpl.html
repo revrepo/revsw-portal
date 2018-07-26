@@ -5,13 +5,13 @@
         <!-- collapse -->
         <a class="btn btn-default btn-xs" href="" title="Collapse Notification List" ng-show="!$ctrl.notificationList.$$blockState.isCollapsed"
           ng-click="$ctrl.notificationList.$$blockState.isCollapsed = !$ctrl.notificationList.$$blockState.isCollapsed">
-                <i class="glyphicon glyphicon-chevron-up"></i>
-              </a>
+          <i class="glyphicon glyphicon-chevron-up"></i>
+        </a>
         <!-- expend -->
         <a class="btn btn-default btn-xs" href="" title="Expand Notification List" ng-show="$ctrl.notificationList.$$blockState.isCollapsed"
           ng-click="$ctrl.notificationList.$$blockState.isCollapsed = !$ctrl.notificationList.$$blockState.isCollapsed">
-                <i class="glyphicon glyphicon-chevron-down"></i>
-              </a>
+          <i class="glyphicon glyphicon-chevron-down"></i>
+        </a>
         <!-- TODO: Add up and down -->
         <!-- Notification List Up  -->
         <!-- <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onUpNotificationList($event,item)"><i class="glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a> -->
@@ -21,11 +21,19 @@
       </div>
       <div class="pull-right panel-button-right">
         <div class="col-sm-12">
+          <a ng-click="$ctrl.onUpdateName($event,$ctrl.notificationList.id)" class="btn btn-success btn-xs " title="Edit name of Notification List" opover-append-to-body="{{true}}"
+            popover-trigger="mouseenter" popover-placement="left" uib-popover="Click here to update name for notification list">
+            <i class="glyphicon glyphicon-pencil"></i>
+          </a>
           <a ng-click="$ctrl.onAddNewNotificationDestination(true)" class="btn btn-primary btn-xs " title="Add New Notification Destination"
             opover-append-to-body="{{true}}" popover-trigger="mouseenter" popover-placement="left" uib-popover="Click here to add a new notification destination like email address, portal user, webbook, etc. You can add several destinations
-            for the same destination type."><i class="glyphicon glyphicon-plus"></i></a>
+            for the same destination type.">
+            <i class="glyphicon glyphicon-plus"></i>
+          </a>
           <a ng-click="$ctrl.onDelete($event,$ctrl.notificationList.id)" class="btn btn-danger btn-xs " title="Delete Notification List"
-            opover-append-to-body="{{true}}" popover-trigger="mouseenter" popover-placement="left" uib-popover="Click here to delete Notification List"><i class="glyphicon glyphicon-remove"></i></a>
+            opover-append-to-body="{{true}}" popover-trigger="mouseenter" popover-placement="left" uib-popover="Click here to delete Notification List">
+            <i class="glyphicon glyphicon-remove"></i>
+          </a>
         </div>
       </div>
       <div class="panel-title">
@@ -47,16 +55,15 @@
           <tr ng-repeat="notifier in $ctrl.notificationList.destinations">
             <td>
               <span class="badge text-info">
-            <i ng-show="notifier.destination_type=='email'" class="fa fa-envelope-o" aria-hidden="true"></i>
-            <i ng-show="notifier.destination_type=='user'" class="fa fa-user" aria-hidden="true"></i>
-            <!-- TODO: use it later -->
-            <!-- <i ng-show="notifier.destination_type=='webhook'" class="fa sign-out" aria-hidden="true"></i>
+                <i ng-show="notifier.destination_type=='email'" class="fa fa-envelope-o" aria-hidden="true"></i>
+                <i ng-show="notifier.destination_type=='user'" class="fa fa-user" aria-hidden="true"></i>
+                <!-- TODO: use it later -->
+                <!-- <i ng-show="notifier.destination_type=='webhook'" class="fa sign-out" aria-hidden="true"></i>
             <i ng-show="notifier.destination_type=='pagerduty'" class="datasource-icon" aria-hidden="true">&#xe800;</i>
             <i ng-show="notifier.destination_type=='slack'" class="fa fa-slack" aria-hidden="true">&#xe801;</i>
             <i ng-show="notifier.destination_type=='hipchat'" class="datasource-icon" aria-hidden="true">&#xe802;</i> -->
-            &nbsp;&nbsp;
-            {{$ctrl.destinationsType[notifier.destination_type]|uppercase}}
-          </span>
+                &nbsp;&nbsp; {{$ctrl.destinationsType[notifier.destination_type]|uppercase}}
+              </span>
             </td>
             <td>
               <span ng-if="notifier.destination_type=='email'">{{notifier[notifier.destination_type]}}</span>
@@ -68,12 +75,12 @@
               </button>
               <button ng-disabled="isReadOnly()" class="btn btn-link" ng-class="{'disabled': isReadOnly()}" ng-click="$ctrl.onDuplicateDestinationItem(notifier)"
                 uib-tooltip="Duplicate" style="padding: 0;">
-                      <i class="fa fa-clone"></i>
-                    </button>
+                <i class="fa fa-clone"></i>
+              </button>
               <button ng-disabled="isReadOnly()" class="btn btn-link" ng-class="{'disabled': isReadOnly()}" ng-click="$ctrl.onDeleteDestinationItem(notifier,$index)"
                 uib-tooltip="Delete" style="padding: 0;">
-                      <i class="glyphicon glyphicon-trash"></i>
-                    </button>
+                <i class="glyphicon glyphicon-trash"></i>
+              </button>
             </td>
           </tr>
         </tbody>

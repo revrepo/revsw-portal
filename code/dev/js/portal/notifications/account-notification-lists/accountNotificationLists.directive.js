@@ -62,7 +62,7 @@
                 $scope.model = model;
                 $scope.newLocationName = '';
                 $scope.exists_names = exists_names || [];
-                $scope.users_list =
+                $scope.users_list = [];
                 $scope.ok = function(newLocationName) {
                   $uibModalInstance.close(newLocationName);
                 };
@@ -108,6 +108,58 @@
               $ctrl.loading = false;
             });
         };
+        /**
+         * @name  onEditNameNotificationList
+         * @description update Name for Notification List
+         *
+         * @param  {number} index
+         * @return
+         */
+        this.onEditNameNotificationList = function(index) {
+          if (index === null || index === undefined) {
+            return;
+          }
+
+          if ($ctrl.loading) {
+            return false;
+          }
+
+          var resolve = {
+            model: function() {
+              return $ctrl.notificationLists[index];
+            },
+            exists_names: function() {
+              return _.map($ctrl.notificationLists, function(item) {
+                return item.list_name;
+              });
+            }
+          };
+
+          var modalInstance = $uibModal.open({
+            animation: false,
+            templateUrl: 'parts/notifications/modals/edit-name-notification-list.tpl.html',
+            controller: /*ngInject*/ function($scope, $uibModalInstance, model, exists_names) {
+              $scope.model = model;
+              $scope.newLocationName = '';
+              $scope.exists_names = exists_names || [];
+              $scope.users_list = [];
+              $scope.ok = function(newLocationName) {
+                $uibModalInstance.close(newLocationName);
+              };
+              $scope.cancel = function() {
+                $uibModalInstance.dismiss('cancel');
+              };
+            },
+            resolve: resolve
+          });
+          $ctrl.loading = true;
+          modalInstance.result.then(function(newName) {
+              $ctrl.notificationLists[index].list_name = _.trim(newName);
+            })
+            .finally(function() {
+              $ctrl.loading = false;
+            });
+        };
 
         /**
          * @name  onDelete
@@ -116,7 +168,7 @@
          * @return
          */
         this.onDeleteNotificationList = function(index) {
-          if(index === null || index === undefined){
+          if (index === null || index === undefined) {
             return;
           }
           var modalInstance = $uibModal.open({
