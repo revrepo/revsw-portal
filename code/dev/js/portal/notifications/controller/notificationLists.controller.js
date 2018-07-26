@@ -70,16 +70,13 @@
             list_name: item_.list_name,
             destinations: item_.destinations
           };
-          return NotificationLists.update({
-            id: item_.id
-          }, dataUpdate).$promise;
+          return NotificationLists.update(params, dataUpdate).$promise;
         })(item));
       });
       // TODO: !!! MAKE SYNC !!! send one by one
       $q.all(promises)
-        .then(function(data) {
-          // TODO: change text
-          $scope.alertService.success('All data was saved');
+        .then(function() {
+          $scope.alertService.success('The information has been successfully saved');
         })
         .catch($scope.alertService.danger)
         .finally(function() {
