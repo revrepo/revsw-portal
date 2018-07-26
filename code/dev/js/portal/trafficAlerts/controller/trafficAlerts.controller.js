@@ -7,7 +7,9 @@
 
   /*@ngInject*/
   function TrafficAlertsController($scope, $state, $interval, NotificationLists, $uibModal, $injector, $stateParams,
-    User, AlertService, DomainsConfig, TrafficAlerts, Companies, CRUDController, $config) {
+    User, AlertService, DomainsConfig, TrafficAlerts, Companies, CRUDController, $config, $localStorage) {
+
+    var STORAGE_NAME_LIST_FILTER_ = 'traffic_alert_page_filter';
 
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -16,6 +18,7 @@
 
     $scope.setState('index.accountSettings.trafficAlerts');
     $scope.setResource(TrafficAlerts);
+    $scope.setStorageNameForFilterSettings(STORAGE_NAME_LIST_FILTER_);
 
     $scope.model = {};
     $scope.auth = User;
@@ -90,6 +93,17 @@
      * @return {Promise}
      */
     $scope.$on('$stateChangeSuccess', function() {
+      //NOTE: use last stored filter data
+      if ($localStorage[STORAGE_NAME_LIST_FILTER_]) {
+        angular.extend($scope.filter, $localStorage[STORAGE_NAME_LIST_FILTER_]);
+        delete $scope.filter.filter; // NOTE: not use data last search
+      } else {
+        angular.extend($scope.filter, {
+          predicate: 'updated_at',
+          reverse: true
+        });
+      }
+
       if ($state.is($scope.state)) {
         $scope
           .list(null)
