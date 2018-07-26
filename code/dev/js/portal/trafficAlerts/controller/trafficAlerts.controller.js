@@ -127,6 +127,27 @@
           if ($scope.companies.length === 0 || $scope.domains.length === 0 || $scope.notif_lists.length === 0) {
             $scope._loading = true;
             $scope.dependenciesData()
+              .then(function() {
+                // NOTE: Only for new Traffic Alert
+                if ($state.is($scope.state + '.new')) {
+                  var targetTypes = Object.keys($scope.targetTypes);
+                  // NOTE: used first type in list by default
+                  if (targetTypes.length > 0) {
+                    $scope.model.target_type = targetTypes[0];
+                  }
+                  if ($scope.companies.length === 1) {
+                    $scope.model.account_id = $scope.companies[0].id;
+                    var domainsList = $scope.getAccountsDomainNameList();
+                    var notificationList = $scope.getAccountNotificationList();
+                    if (domainsList.length === 1) {
+                      $scope.model.target = domainsList[0];
+                    }
+                    if (notificationList.length === 1) {
+                      $scope.model.notifications_list_id = notificationList[0].id;
+                    }
+                  }
+                }
+              })
               .finally(function() {
                 $scope._loading = false;
               });
@@ -356,7 +377,7 @@
       }
     };
     // NOTE: method return Notification List only for current Account Id
-    $scope.getNotificationList = function() {
+    $scope.getAccountNotificationList = function() {
       var account_id = $scope.model.account_id;
       return _.sortBy(_.filter($scope.notif_lists, function(item) {
         return (!!account_id && account_id.indexOf(item.account_id) > -1);
