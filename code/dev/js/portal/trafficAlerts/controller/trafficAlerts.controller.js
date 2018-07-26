@@ -171,8 +171,26 @@
       $scope.model = {};
     };
 
-    $scope.prepModelForAPI = function(model) {
-      // NOTE: use this place for make additional cheks and transformations
+    $scope.prepModelForAPI = function(model_current) {
+      // NOTE: use this place for make additional cheks and transformations before send to API
+      var model;
+      if (model_current.toJSON === undefined) {
+        model = _.clone(model_current, true);
+      } else {
+        model = _.clone(model_current.toJSON(), true);
+      }
+      var ruleConfigKeys = [];
+      switch (model.rule_type) {
+        case 'Spike':
+          ruleConfigKeys = ['timeframe_type', 'timeframe', 'spike_direction', 'spike_amount'];
+          break;
+        case 'statusCode_frequency':
+          ruleConfigKeys = ['timeframe_type', 'timeframe', 'responses', 'status_code'];
+          break;
+        default:
+          break;
+      }
+      model.rule_config = _.pick(model.rule_config, ruleConfigKeys);
       return model;
     };
 
@@ -252,9 +270,7 @@
 
       modalInstance.result.then(function(result) {
 
-        model = $scope.prepModelForAPI(model);
-
-        var _model = JSON.parse(JSON.stringify(model));
+        var _model = $scope.prepModelForAPI(model);
 
         _model.silenced = true;
         _model.silence_until = $scope.getSilenceDate(result);
@@ -279,9 +295,8 @@
     };
 
     $scope.unSilenceRule = function(model) {
-      model = $scope.prepModelForAPI(model);
 
-      var _model = JSON.parse(JSON.stringify(model));
+      var _model = $scope.prepModelForAPI(model);
 
       _model.silenced = false;
       _model.silence_until = null;
@@ -387,7 +402,6 @@
      * @name  getAccountsDomainNameList
      * @description method get array of domains for selected Account
      *
-     * @param  {[type]} account_id [description]
      * @return {Array}            [description]
      */
     $scope.getAccountsDomainNameList = function() {
