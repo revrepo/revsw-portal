@@ -171,12 +171,23 @@
       $scope.update(model)
         .then(function(res) {
           $scope.alertService.success(res);
-          // $scope.setModel($scope.model.id); // TODO: is it need ???
+          $scope.getTrafficAlert($scope.model.id);
         })
         .catch($scope.alertService.danger)
         .finally(function() {
           $scope._loading = false;
         });
+    };
+
+    /**
+     * @name getTrafficAlert
+     * @description get data from server by id
+     *
+     * @param {string} id
+     */
+    $scope.getTrafficAlert = function(id) {
+      $scope.get(id)
+        .catch($scope.alertService.danger);
     };
 
     $scope.deleteConfig = function(model) {
