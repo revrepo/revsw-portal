@@ -20,6 +20,7 @@
       bindToController: {
         notificationList: '=ngModel',
         onDelete: '&onDelete',
+        onUpdateName: '&onUpdateName',
         usersList: '='
       },
       templateUrl: 'parts/notifications/notification-list/notification-list.tpl.html',

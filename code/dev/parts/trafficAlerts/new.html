@@ -99,7 +99,7 @@
                 id="notificationsListId" name="notificationsListId" on-select="createForm.notificationsListId.$dirty = true;"
                 ng-click="createForm.notificationsListId.$dirty = true" ng-required="true">
                 <ui-select-match placeholder="Select Notification List">{{$select.selected.list_name}}</ui-select-match>
-                <ui-select-choices repeat="item.id as  item in getNotificationList() | filter: {list_name: $select.search}">
+                <ui-select-choices repeat="item.id as  item in getAccountNotificationList() | filter: {list_name: $select.search}">
                   <div ng-bind-html="item.list_name|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>

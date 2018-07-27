@@ -6,8 +6,10 @@
     .controller('TrafficAlertsController', TrafficAlertsController);
 
   /*@ngInject*/
-  function TrafficAlertsController($scope, $state, $interval, NotificationLists, $uibModal, $injector, $stateParams,
-    User, AlertService, DomainsConfig, TrafficAlerts, Companies, CRUDController, $config) {
+  function TrafficAlertsController($scope, $q, $state, $interval, NotificationLists, $uibModal, $injector, $stateParams,
+    User, AlertService, DomainsConfig, TrafficAlerts, Companies, CRUDController, $config, $localStorage) {
+
+    var STORAGE_NAME_LIST_FILTER_ = 'traffic_alert_page_filter';
 
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -16,6 +18,7 @@
 
     $scope.setState('index.accountSettings.trafficAlerts');
     $scope.setResource(TrafficAlerts);
+    $scope.setStorageNameForFilterSettings(STORAGE_NAME_LIST_FILTER_);
 
     $scope.model = {};
     $scope.auth = User;
@@ -90,6 +93,17 @@
      * @return {Promise}
      */
     $scope.$on('$stateChangeSuccess', function() {
+      //NOTE: use last stored filter data
+      if ($localStorage[STORAGE_NAME_LIST_FILTER_]) {
+        angular.extend($scope.filter, $localStorage[STORAGE_NAME_LIST_FILTER_]);
+        delete $scope.filter.filter; // NOTE: not use data last search
+      } else {
+        angular.extend($scope.filter, {
+          predicate: 'updated_at',
+          reverse: true
+        });
+      }
+
       if ($state.is($scope.state)) {
         $scope
           .list(null)
@@ -102,7 +116,7 @@
           //     });
           //   }*/
           // })
-          .then(function() {
+          .finally(function() {
             $scope.autoRefresh({
               autorefresh: $config.TRAFFIC_ALERTS_TIME_REFRESH_SEC
             });
@@ -110,13 +124,35 @@
       } else {
         $scope.autoRefresh();
         if ($state.includes($scope.state + '.*')) {
+          $scope._loading = true;
+          var dependenciesData = $q.when();
           if ($scope.companies.length === 0 || $scope.domains.length === 0 || $scope.notif_lists.length === 0) {
-            $scope._loading = true;
-            $scope.dependenciesData()
-              .finally(function() {
-                $scope._loading = false;
-              });
+            dependenciesData = $scope.dependenciesData();
           }
+          dependenciesData.then(function() {
+              // NOTE: Only for new Traffic Alert
+              if ($state.is($scope.state + '.new')) {
+                var targetTypes = Object.keys($scope.targetTypes);
+                // NOTE: used first type in list by default
+                if (targetTypes.length > 0) {
+                  $scope.model.target_type = targetTypes[0];
+                }
+                if ($scope.companies.length === 1) {
+                  $scope.model.account_id = $scope.companies[0].id;
+                  var domainsList = $scope.getAccountsDomainNameList();
+                  var notificationList = $scope.getAccountNotificationList();
+                  if (domainsList.length === 1) {
+                    $scope.model.target = domainsList[0];
+                  }
+                  if (notificationList.length === 1) {
+                    $scope.model.notifications_list_id = notificationList[0].id;
+                  }
+                }
+              }
+            })
+            .finally(function() {
+              $scope._loading = false;
+            });
         }
       }
     });
@@ -136,8 +172,26 @@
       $scope.model = {};
     };
 
-    $scope.prepModelForAPI = function(model) {
-      // NOTE: use this place for make additional cheks and transformations
+    $scope.prepModelForAPI = function(model_current) {
+      // NOTE: use this place for make additional cheks and transformations before send to API
+      var model;
+      if (model_current.toJSON === undefined) {
+        model = _.clone(model_current, true);
+      } else {
+        model = _.clone(model_current.toJSON(), true);
+      }
+      var ruleConfigKeys = [];
+      switch (model.rule_type) {
+        case 'Spike':
+          ruleConfigKeys = ['timeframe_type', 'timeframe', 'spike_direction', 'spike_amount'];
+          break;
+        case 'statusCode_frequency':
+          ruleConfigKeys = ['timeframe_type', 'timeframe', 'responses', 'status_code'];
+          break;
+        default:
+          break;
+      }
+      model.rule_config = _.pick(model.rule_config, ruleConfigKeys);
       return model;
     };
 
@@ -171,12 +225,23 @@
       $scope.update(model)
         .then(function(res) {
           $scope.alertService.success(res);
-          // $scope.setModel($scope.model.id); // TODO: is it need ???
+          $scope.getTrafficAlert($scope.model.id);
         })
         .catch($scope.alertService.danger)
         .finally(function() {
           $scope._loading = false;
         });
+    };
+
+    /**
+     * @name getTrafficAlert
+     * @description get data from server by id
+     *
+     * @param {string} id
+     */
+    $scope.getTrafficAlert = function(id) {
+      $scope.get(id)
+        .catch($scope.alertService.danger);
     };
 
     $scope.deleteConfig = function(model) {
@@ -206,9 +271,7 @@
 
       modalInstance.result.then(function(result) {
 
-        model = $scope.prepModelForAPI(model);
-
-        var _model = JSON.parse(JSON.stringify(model));
+        var _model = $scope.prepModelForAPI(model);
 
         _model.silenced = true;
         _model.silence_until = $scope.getSilenceDate(result);
@@ -233,9 +296,8 @@
     };
 
     $scope.unSilenceRule = function(model) {
-      model = $scope.prepModelForAPI(model);
 
-      var _model = JSON.parse(JSON.stringify(model));
+      var _model = $scope.prepModelForAPI(model);
 
       _model.silenced = false;
       _model.silence_until = null;
@@ -331,7 +393,7 @@
       }
     };
     // NOTE: method return Notification List only for current Account Id
-    $scope.getNotificationList = function() {
+    $scope.getAccountNotificationList = function() {
       var account_id = $scope.model.account_id;
       return _.sortBy(_.filter($scope.notif_lists, function(item) {
         return (!!account_id && account_id.indexOf(item.account_id) > -1);
@@ -341,7 +403,6 @@
      * @name  getAccountsDomainNameList
      * @description method get array of domains for selected Account
      *
-     * @param  {[type]} account_id [description]
      * @return {Array}            [description]
      */
     $scope.getAccountsDomainNameList = function() {

@@ -29,7 +29,7 @@
       <p class="text text-info">No notification lists are configured. Please click on “+” sign to add a new Notification List.</p>
     </div>
     <div ng-repeat="item in $ctrl.notificationLists">
-      <notification-list ng-model="item" users-list="$ctrl.accountUsersList" on-delete="$ctrl.onDeleteNotificationList($index)"></notification-list>
+      <notification-list ng-model="item" users-list="$ctrl.accountUsersList" on-delete="$ctrl.onDeleteNotificationList($index)" on-update-name="$ctrl.onEditNameNotificationList($index)"></notification-list>
     </div>
   </div>
 </div>
