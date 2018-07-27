@@ -221,10 +221,7 @@
 
       $scope._loading = true;
       $scope.update(model)
-        .then(function(res) {
-          $scope.alertService.success(res);
-          $scope.getTrafficAlert($scope.model.id);
-        })
+        .then($scope.alertService.success)
         .catch($scope.alertService.danger)
         .finally(function() {
           $scope._loading = false;
