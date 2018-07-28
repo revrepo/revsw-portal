@@ -1,4 +1,4 @@
-(function () {
+(function(angular) {
   'use strict';
 
   angular
@@ -6,14 +6,12 @@
     .controller('AlertRuleTypeConfigsController', AlertRuleTypeConfigsController);
 
   /*@ngInject*/
-  function AlertRuleTypeConfigsController($scope, $q, Users, $rootScope,
-    User, $injector, $state, $stateParams, Companies,
-    DomainsConfig, $attrs) {
+  function AlertRuleTypeConfigsController($scope) {
 
-    $scope.spikeDirections = [
-      { key: 'Both', value: 'both' },
-      { key: 'Up', value: 'up' },
-      { key: 'Down', value: 'down' }
-    ];
+    $scope.spikeDirections = {
+      both: 'Both',
+      up: 'Up',
+      down: 'Down'
+    };
   }
-})();
+})(angular);

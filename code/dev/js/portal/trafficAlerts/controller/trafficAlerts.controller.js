@@ -34,11 +34,9 @@
       if (newVal !== oldVal) {
         switch (newVal) {
           case 'Spike':
-            if (!$scope.model.rule_config) {
-              $scope.model.rule_config = {};
-              $scope.model.rule_config.spike_direction = {
-                key: 'Both',
-                value: 'both'
+            if (!$scope.model.rule_config || !$scope.model.rule_config.spike_direction) {
+              $scope.model.rule_config = {
+                spike_direction: 'both'
               };
             }
 
@@ -223,10 +221,7 @@
 
       $scope._loading = true;
       $scope.update(model)
-        .then(function(res) {
-          $scope.alertService.success(res);
-          $scope.getTrafficAlert($scope.model.id);
-        })
+        .then($scope.alertService.success)
         .catch($scope.alertService.danger)
         .finally(function() {
           $scope._loading = false;

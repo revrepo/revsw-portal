@@ -59,7 +59,7 @@
             <label for="target_type" class="col-sm-2 control-label">Target Type *</label>
             <div class="col-sm-10">
               <select class="form-control inline-block" id="target_type" name="target_type" ng-model="model.target_type" ng-disabled="_loading"
-                ng-options="target_type for target_type in target_types" required>
+                ng-options="name as key for (name,key) in targetTypes" required>
                 <option disabled value="">--- Select Target Type ---</option>
               </select>
               <label for="target_type" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select the configuration's target type.">
