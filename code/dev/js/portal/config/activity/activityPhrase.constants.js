@@ -44,7 +44,9 @@
         'dnszone':'DNS Zone',
         'dnsrecord': 'DNS Zone Record',
         'wafrule': 'WAF Rule',
-        'group': 'Group'
+        'group': 'Group',
+        'notification_list': 'Notification List',
+        'traffic_alert': 'Traffic Alert'
       },
       /**
        * @name  EVENT_TYPES
