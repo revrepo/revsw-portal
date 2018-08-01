@@ -123,7 +123,7 @@
         $scope.autoRefresh();
         if ($state.includes($scope.state + '.*')) {
           $scope._loading = true;
-          var dependenciesData = $q.when();
+          var dependenciesData = $q.when({});
           if ($scope.companies.length === 0 || $scope.domains.length === 0 || $scope.notif_lists.length === 0) {
             dependenciesData = $scope.dependenciesData();
           }
