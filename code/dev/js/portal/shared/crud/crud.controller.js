@@ -488,9 +488,15 @@
             $scope.records = null;
             return null;
           }).$promise
-          .then(function(){
+          .then(function(data){
+            // NOTE: get additional data for controller and execute additional actions with data
             return $scope.dependenciesData()
-              .then($scope.dependenciesListAction);
+              .then($scope.dependenciesListAction)
+              .catch(function(err) {
+                $scope.alertService.danger(err);
+                return data;
+              })
+              .then(function() { return data; });
           })
           .finally(function () {
             $scope.loading(false);

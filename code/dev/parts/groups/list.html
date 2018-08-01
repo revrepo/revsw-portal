@@ -90,7 +90,9 @@
                       <i class="glyphicon glyphicon-refresh spin"></i>
                     </span>
                     <span ng-if="group.users.count === 0">None</span>
-                    <div ng-repeat="user in group.users.users">{{user.email || user.key_name}}<span ng-if="!$last">,</span></div>
+                    <div class="group_item" ng-repeat="user in group.users.users"><span>{{user.email || user.key_name}}</span>
+                      <span ng-if="!$last">,</span>
+                    </div>
                   </td>
                   <td>{{ getRelativeDate(group.updated_at) }}</td>
                   <td>

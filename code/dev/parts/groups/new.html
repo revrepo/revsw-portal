@@ -37,7 +37,7 @@
           <div class="form-group" ng-class="{'has-error': createForm.accountId.$invalid && createForm.accountId.$dirty}" ng-if="auth.isReseller() || auth.isRevadmin()">
             <label for="company" class="col-sm-2 control-label">Account *</label>
             <div class="col-sm-10">
-              <span ng-show="!_loading && companies.length==0" class="loader--waite-company">
+              <span ng-show="_loading && companies.length==0" class="loader--waite-company select2-container">
                 <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
               <ui-select ng-if="!_loading && companies.length>0" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.account_id"
                 id="company" name="accountId">
@@ -49,8 +49,8 @@
               <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here account the Group should be associated with">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <a ui-sref="{{auth.hasAccessTo('accounts') ? 'index.accountSettings.companies' : '.'}}" class="btn btn-sm btn-primary" id="btn-manage-accounts" uib-tooltip="Manage Accounts"
-                ng-disabled="_loading || !auth.hasAccessTo('accounts')">
+              <a ui-sref="{{auth.hasAccessTo('accounts') ? 'index.accountSettings.companies' : '.'}}" class="btn btn-sm btn-primary" id="btn-manage-accounts"
+                uib-tooltip="Manage Accounts" ng-disabled="_loading || !auth.hasAccessTo('accounts')">
                 <i class="fa fa-list-alt"></i> Manage Accounts</a>
             </div>
           </div>
