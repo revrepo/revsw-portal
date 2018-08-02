@@ -25,7 +25,7 @@
     $scope.setState('index.accountSettings.groups');
     $scope.setResource(Groups);
 
-    $scope.groups = [];
+    $scope.companies = [];
 
     if (!$scope.model) {
       initModel();
@@ -118,27 +118,52 @@
     };
 
     $scope.setGroup = function (id) {
-      Groups.get({ id: id }).$promise.then(function (data) {               
+      Groups.get({
+        id: id
+      }).$promise.then(function (data) {
         $scope.model = data;
       });
 
-      Groups.users({ id: id }).$promise.then(function (data) {
+      Groups.users({
+        id: id
+      }).$promise.then(function (data) {
         $scope.users = data;
       });
     };
 
-    $scope.getRelativeDate = function (datetime) {
-      return moment.utc(datetime).fromNow();
+    $scope.dependencies.push({
+      companies: Companies.query().$promise
+        .then(function (data) {
+          return _.sortBy(data, 'companyName');
+        })
+        .then(function (data) {
+          $scope.companies = data;
+          return data;
+        })
+    });
+
+    // NOTE: additional actions after load list of resources and get all dependencies data
+    $scope.dependenciesListAction = function (data) {
+      $scope.records.forEach(function (group) {
+        group.accountName = $scope.companies.find(function (acc) {
+          return acc.id === group.account_id;
+        }).companyName;
+
+        Groups.users({
+            id: group.id
+          }).$promise
+          .then(function (users) {
+            group.users = users;
+          });
+      });
     };
 
-    // Init everyting on `viewContentLoading` event because it starts slightly before the DOM renders.
-    $rootScope.$on('$viewContentLoading', function (state) {      
-      angular.extend($scope.filter,{
+    $scope.$on('$stateChangeSuccess', function () {
+      angular.extend($scope.filter, {
         predicate: 'updated_at',
         reverse: true
       });
       var data = null;
-      // NOTE: set filter params for specific state
       if ($state.is('index.accountSettings.accountresources')) {
         $scope.filter.limit = $config.MIN_LIMIT_RECORDS_IN_TABLE;
         data = {
@@ -146,61 +171,30 @@
             account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
           }
         };
+        $scope._loading = true;
+        $scope.list(data);
+        return;
       }
-
-      $scope.list(data)
-        .then(function (res) {
-          // set our groups
-          $scope.groups = res;
-          // get companies and set the company names
-          Companies.query().$promise.then(function (accs) {
-            $scope.companies = accs;
-            $scope.groups.forEach(function (group) {
-              accs.forEach(function (account) {
-                if (group.account_id === account.id) {
-                  group.accountName = account.companyName;
-                }
-              });
-            });
-          });
-          $scope.groups.forEach(function (group) {
-            Groups.users({id: group.id}).$promise.then(function (users) {
-              group.users = users;
-            });
-          });
-        });
-    });
-
-    $scope.$on('$stateChangeSuccess', function () {
-      if ($state.is('index.accountSettings.accountresources')) {
-        $scope.filter.limit = $config.MIN_LIMIT_RECORDS_IN_TABLE;
-        var data = {
-          filters: {
-            account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
-          }
-        };
+      if ($state.is($scope.state)) {
+        $scope._loading = true;
         $scope.list(data)
-          .then(function (res) {
-            $scope.records = res;        
-            $scope.records.forEach(function (group) {
-              Groups.users({id: group.id}).$promise.then(function (users) {
-                group.users = users;
-              });
-            });
-            Companies.query().$promise.then(function (accs) {
-              $scope.companies = accs;
-              $scope.records.forEach(function (group) {
-                accs.forEach(function (account) {
-                  if (group.account_id === account.id) {
-                    group.accountName = account.companyName;
-                  }
-                });
-              });
-            });
+          .finally(function () {
+            $scope._loading = false;
           });
+      } else {
+        if ($state.includes($scope.state + '.*')) {
+          $scope._loading = true;
+          var dependenciesDataCall = $q.when({});
+          if ($scope.companies.length === 0) {
+            dependenciesDataCall = $scope.dependenciesData();
+          }
+          dependenciesDataCall
+            .finally(function () {
+              $scope._loading = false;
+            });
+        }
       }
     });
-
     /**
      * @name  deleteGroup
      * @description
@@ -216,7 +210,7 @@
       }
       $scope.confirm('confirmModal.html', model)
         .then(function () {
-          $scope
+          return $scope
             .delete(model)
             .then($scope.alertService.success)
             .catch($scope.alertService.danger);
@@ -234,9 +228,7 @@
           $scope.clearModel();
           $scope.alertService.success(data);
         })
-        .catch(function (err) {
-          $scope.alertService.danger(err);          
-        });
+        .catch($scope.alertService.danger);
     };
 
     $scope.updateGroup = function (model) {
@@ -251,9 +243,7 @@
           $scope.alertService.success(data);
           User.reloadUser();
         })
-        .catch(function (err) {
-          $scope.alertService.danger(err);
-        });
+        .catch($scope.alertService.danger);
     };
 
     $scope.disableSubmit = function (model) {
@@ -302,7 +292,7 @@
         $scope.users.users.forEach(function (user) {
           returnString += user.email || user.key_name;
           if ($scope.users.users.indexOf(user) !== $scope.users.users.length - 1) {
-            returnString += ', ';
+            returnString += ',';
           }
         });
 
