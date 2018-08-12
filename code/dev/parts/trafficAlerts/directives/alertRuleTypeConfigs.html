@@ -11,7 +11,8 @@
             ng-disabled="_loading" ng-options="name as key for (name,key) in spikeDirections" required>
             <option disabled value="">--- Select Spike Direction ---</option>
           </select>
-          <label for="spikeDirection" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select the direction of the spike event, if set to 'up', when requests spike up, the alert will be triggred.">
+          <label for="spikeDirection" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" 
+            uib-popover="The field defines the direction of monitored traffic spike. If set to 'Up' the system will alert on traffic level increase, if set to 'Down' - on traffic decrease, and if set to 'Both' the system will monitor traffic level changes in both directions.">
             <i class="fa fa-question-circle"></i>
           </label>
           <div class="error-messages" ng-messages="formEditRuleType.spikeDirection.$error" role="alert" ng-messages-multiple>
@@ -22,10 +23,10 @@
       <div class="form-group" ng-class="{ 'has-error': formEditRuleType.spikeAmount.$invalid && formEditRuleType.spikeAmount.$dirty }">
         <label for="spikeAmount" class="col-sm-2 control-label">Spike Amount *</label>
         <div class="col-sm-10">
-          <input type="number" class="form-control inline-block" id="spikeAmount" name="spikeAmount" placeholder="Spike Amount" ng-model="model.rule_config.spike_amount"
+          <input type="number" class="form-control inline-block" id="spikeAmount" name="spikeAmount" placeholder="Spike Height" ng-model="model.rule_config.spike_amount"
             ng-max="150" ng-min="1" max="150" min="1" ng-disabled="_loading" required>
           <label for="spikeAmount" class="text text-info inline-block" popover-append-to-body="{{true}}" popover-trigger="mouseenter"
-            uib-popover="TODO TEXT --> Host name for FTP, SFTP and ElasticSearch destinations, S3 bucket name for S3 destination">
+            uib-popover="The field defines the ratio of requests handled in the current period of time (defined in 'Timeframe' field below) to the previous period of time. If the ratio is above the defined amount an alert will be triggered. For example, if the defined ratio is 5 and the time period is set to 10 minutes, an alert will be triggered if the current level of traffic (as monitored and averaged for 10 minutes) exceeds the level for the previous 10 minutes for more than 5 times.">
             <i class="fa fa-question-circle"></i>
           </label>
           <div class="error-messages" ng-messages="formEditRuleType.spikeAmount.$error" role="alert" ng-messages-multiple>
@@ -51,7 +52,8 @@
           </div>
 
           <div class="col-sm-2 no-padding">
-            <label for="timeframe" class="text text-info" popover-trigger="mouseenter" uib-popover="Set the timeframe for the rule to check traffic spikes.">
+            <label for="timeframe" class="text text-info" popover-trigger="mouseenter" 
+              uib-popover="Use the field to define the time period to be used to average the number of handled request">
               <i class="fa fa-question-circle"></i>
             </label>
             <div class="error-messages" ng-messages="formEditRuleType.timeframe.$error" role="alert" ng-messages-multiple>
@@ -69,7 +71,8 @@
         <div class="col-sm-4">
           <input type="number" class="form-control half-width inline-block" id="statusCode" placeholder="500" name="ruleConfigStatusCode"
             ng-model="model.rule_config.status_code" ng-maxlength="3" ng-minlength="1" ng-disabled="_loading" required>
-          <label for="ruleConfigStatusCode" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The status code that will trigger the alert">
+          <label for="ruleConfigStatusCode" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" 
+            uib-popover="The HTTP status code to monitor. For example, use 404 to monitor 'Page Not Found' responses.">
             <i class="fa fa-question-circle"></i>
           </label>
           <div class="error-messages" ng-messages="formEditRuleType.ruleConfigStatusCode.$error" role="alert" ng-messages-multiple>
@@ -82,7 +85,8 @@
         <div class="col-sm-4">
           <input type="number" class="form-control inline-block half-width" id="ruleConfigResponses" placeholder="1" name="ruleConfigResponses"
             ng-model="model.rule_config.responses" ng-max="10000000" ng-min="1" min="1" max="10000000" ng-disabled="_loading" required>
-          <label for="ruleConfigResponses" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The amount of responses with the configured status code that will trigger the alert">
+          <label for="ruleConfigResponses" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" 
+            uib-popover="Use the field to define the maximum number of requests allowed with the defined timeframe for the defined HTTP response code. For example, if the field is set to 20, the 'Status Code' field above is set to 404 and Timeframe field below is set to 10 minutes, the system will generate an alert if amount of 404 responses exceeds 20 within 10 minutes.">
             <i class="fa fa-question-circle"></i>
           </label>
           <div class="error-messages" ng-messages="formEditRuleType.ruleConfigResponses.$error" role="alert" ng-messages-multiple>
@@ -108,7 +112,8 @@
           </div>
 
           <div class="col-sm-2 no-padding">
-            <label for="timeframe" class="text text-info" popover-trigger="mouseenter" uib-popover="Set the timeframe for the rule to check traffic spikes.">
+            <label for="timeframe" class="text text-info" popover-trigger="mouseenter" 
+              uib-popover="Defines the period of time which will be used to watch for specified number of responses with defined HTTP status code">
               <i class="fa fa-question-circle"></i>
             </label>
             <div class="error-messages" ng-messages="formEditRuleType.timeframe.$error" role="alert" ng-messages-multiple>

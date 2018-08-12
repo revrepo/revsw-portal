@@ -4,7 +4,7 @@
 <div class="modal-body">
   <form class="form-horizontal" name="currentNotificationListForm">
     <div class="form-group">
-      <label class="col-sm-12"> Please enter new Name for Notification List:</label>
+      <label class="col-sm-12"> Please enter a new name for the Notification List:</label>
     </div>
     <div class="form-group" ng-class="{ 'has-error': currentNotificationListForm.notificationListName.$invalid && currentNotificationListForm.notificationListName.$dirty }">
       <div class="col-sm-12">
@@ -12,7 +12,7 @@
           id="notificationListName" placeholder="New List Name" ng-maxlength="150" validate-uniqueness-in-array-notification-lists="exists_names"
           required>
         <label for="notificationListName" class="text-info" popover-append-to-body="{{false}}" popover-trigger="mouseenter" popover-placement="left"
-          uib-popover="Specify here the unique name of the notification list (150 characters max). The name is for reference purpose only.">
+          uib-popover="Specify here an unique name of the notification list (150 characters max). The name is for reference purpose only.">
           <i class="fa fa-question-circle"></i>
         </label>
         <div class="error-messages" ng-messages="currentNotificationListForm.notificationListName.$error" role="alert" ng-messages-multiple>
