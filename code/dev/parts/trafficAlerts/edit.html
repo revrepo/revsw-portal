@@ -76,9 +76,9 @@
               <span ng-show="!_loading && (getAccountsDomainNameList().length==0 && companies.length==0)">
                 <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
               <ui-select ng-if="!_loading && (getAccountsDomainNameList().length>0 || companies.length>0)" ng-animate-disabled theme="select2"
-                ng-disabled="_loading" ng-model="model.target" id="target" name="target">
+                ng-disabled="_loading" ng-model="model.target" id="target" name="target" on-select="onTargeSelect($model)">
                 <ui-select-match placeholder="{{domainPlaceholder}}">{{$select.selected.domain_name}}</ui-select-match>
-                <ui-select-choices repeat="item.domain_name as item  in getAccountsDomainNameList()| filter: {domain_name: $select.search}">
+                <ui-select-choices repeat="item.domain_name as item in getAccountsDomainNameList()| filter: {domain_name: $select.search}">
                   <div ng-bind-html="item.domain_name|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>

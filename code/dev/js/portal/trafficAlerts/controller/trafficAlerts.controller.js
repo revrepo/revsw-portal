@@ -205,6 +205,7 @@
       $scope
         .create(model)
         .then($scope.alertService.success)
+        .then($scope.clearModel)
         .catch($scope.alertService.danger)
         .finally(function() {
           $scope._loading = false;
@@ -429,6 +430,15 @@
     $scope.onAccountSelect = function(model) {
       $scope.model.target = '';
       $scope.model.notifications_list_id = '';
+    };
+
+    /**
+     * @name onTargeSelect
+     * @description action after user change Target
+     * @param {*} model
+     */
+    $scope.onTargeSelect = function(model) {
+      // TODO: check target
     };
   }
 })();
