@@ -48,6 +48,11 @@
               }
             }
           },
+          xAxis: {
+            title: {
+              text: 'ms'
+            },
+          },
           tooltip: {
             formatter: function() {
               return '<strong>'+ this.x + '÷' + ( this.x + $scope._ims ) +
