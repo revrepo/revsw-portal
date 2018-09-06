@@ -51,7 +51,7 @@
           return params;
         }
 
-        $scope.heading = 'Secondary Cache Efficiency Hits';
+        $scope.heading = 'Secondary Cache Efficiency';
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
         $scope.popoverHelpHTML = $sce.trustAsHtml('For domains with secondary cache storage (like domains with enabled ImageEngine ' +
           'feature) the line chart reports the level of secondary cache efficiency');
