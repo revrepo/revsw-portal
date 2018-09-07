@@ -173,7 +173,7 @@ var Constants = {
     TITLE: 'Edge Cache Reports',
     EDGE_CACHE_EFFICIENCY_HITS: 'Edge Cache Efficiency Hits',
     EDGE_CACHE_HIT_MISS_RATIO: 'Edge Cache Hit/Miss Ratio',
-    SECONDARY_CACHE_EFFICIENCY_HITS: 'Secondary Cache Efficiency Hits',
+    SECONDARY_CACHE_EFFICIENCY_HITS: 'Secondary Cache Efficiency',
     SECONDARY_CACHE_HIT_MISS_RATIO: 'Secondary Cache Hit/Miss Ratio',
     CACHE_HIT_RATIO_BY_CONTENT_TYPE: 'Cache Hit Ratio For Top 20 Object Content Types'
   },

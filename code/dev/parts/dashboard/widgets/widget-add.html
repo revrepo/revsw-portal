@@ -44,19 +44,6 @@
           <dd ng-repeat-end ng-if="widget.description">{{::widget.description}}</dd>
         </dl>
       </div>
-      <div uib-accordion-group is-open="accordionState.isBusinessHeaderOpen">
-        <uib-accordion-heading>
-          <span class="widget-group-title h5">Business Analytics
-          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordionState.isBusinessHeaderOpen, 'glyphicon-chevron-right': !accordionState.isBusinessHeaderOpen}"></i>
-          </span>
-        </uib-accordion-heading>
-        <dl class="dl-horizontal">
-          <dt ng-repeat-start="(key, widget) in widgets | orderWidgets: 'business' ">
-            <a href="" ng-click="addWidget(key)">{{::widget.title}}</a>
-          </dt>
-          <dd ng-repeat-end ng-if="widget.description">{{::widget.description}}</dd>
-        </dl>
-      </div>
       <div uib-accordion-group is-open="accordionState.isSecurityHeaderOpen">
         <uib-accordion-heading>
           <span class="widget-group-title h5">Security Analytics

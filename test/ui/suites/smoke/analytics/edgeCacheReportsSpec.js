@@ -59,7 +59,7 @@ describe('Smoke', function () {
         expect(Portal.edgeCachePage.getChartTitle()).toContain(titleChart);
     });
 
-    it('should display default "Secondary Cache Efficiency Hits" report with empty data',
+    it('should display default "Secondary Cache Efficiency" report with empty data',
       function () {
         var titleChart = Constants.edgeCache.SECONDARY_CACHE_EFFICIENCY_HITS;
         expect(Portal.edgeCachePage.getSelectedDomain()).toEqual(noDomain);

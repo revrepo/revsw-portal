@@ -118,11 +118,6 @@ describe('Smoke', function () {
           expect(checkDisplay('getCommentTxtIn')).toBe(true);
         });
 
-        it('should display "Blue Triangle Tech. Key"', function () {
-          expect(checkDisplay('getBlueTriangleTechKeyTxtIn')).toBe(true);
-        });
-
-
       });
     });
   });

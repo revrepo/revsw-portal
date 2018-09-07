@@ -405,24 +405,6 @@
                 </div>
               </div>
               <hr>
-              <!--  Third-party integrations -->
-              <div class="form-group" ng-class="{'has-error': editForm.bttKey.$invalid && editForm.bttKey.$dirty}">
-                <label for="third-party-integrations" class="col-sm-3 control-label">
-                  Blue Triangle Tech. Key
-                </label>
-                <div class="col-md-9">
-                  <input id="blueTriangleTechKey" type="text" class="form-control inline-block" ng-disabled="_loading || _isEditLocked" name="bttKey"
-                    ng-model="model.btt_key" placeholder="BTT API key for the domain" ng-pattern="/^[0-9a-fA-F]{32}$/">
-                  <label for="bttKey" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="If the domain is also provisioned in Blue Triangle Technologies' platform, it is possible to specify here the domain's BTT ID. This will allow you to see the domain's business reports in the Dashboard section.">
-                    <i class="fa fa-question-circle"></i>
-                  </label>
-                  <div class="error-messages" ng-messages="editForm.bttKey.$error" role="alert" ng-messages-multiple>
-                    <div ng-message="pattern" class="alert-text alert-text--pattern">The BTT key format is not correct</div>
-                    <div ng-messages-include="parts/shared/error-messages.html"></div>
-                  </div>
-                </div>
-              </div>
-              <hr>
             </uib-tab>
             <uib-tab index="1" id="domainTabOriginHealthMonitoring" active="active[1]" select="selectTab(1)" heading="Origin Health Monitoring" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="You can manage here whether we should monitor the origin health status and what monitoring parameters to use">
               <!-- BLOCK Origin Health Monitoring -->

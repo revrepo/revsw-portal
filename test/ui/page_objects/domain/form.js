@@ -804,23 +804,6 @@ var DomainForm = {
     return element(by.id(this.locators.textInputs.originHostHeader.id));
   },
 
-  getBlueTriangleTechKeyTxtIn: function () {
-    return element(by.id(this.locators.textInputs.blueTriangleTechKey.id));
-  },
-
-  clearBlueTriangleTechKey: function () {
-    return this
-      .getBlueTriangleTechKeyTxtIn()
-      .clear();
-  },
-
-  setBlueTriangleTechKey: function (value) {
-    return this
-      .getBlueTriangleTechKeyTxtIn()
-      .sendKeys(value);
-  },
-
-
   getWildcardDomainAliasTxtIn: function () {
     return element(by.id(this.locators.textInputs.wildcardDomainAlias.id));
   },
